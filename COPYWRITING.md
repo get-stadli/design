@@ -14,6 +14,7 @@ Exemples de plusieurs slogans, venant de marques variés:
 - On s'en va-tu jouer dehors?
 - Plus haut, plus vite, plus nous.
 - On prend votre cause à cœur.
+- On prend votre cause à cœur.
 - Le droit est compliqué. Pas nous.
 - La meilleure cause est celle qui ne va jamais en cour.
 - Votez vrai.
@@ -58,3 +59,13 @@ Exemples de plusieurs slogans, venant de marques variés:
 > "Money is rarely about money. It's about the trip you keep postponing, the call you dread, the freedom to say no. We can't make those choices for you. We can make them feel possible."
 
 > "Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They're not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can't do is ignore them. Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do."
+
+## Longer examples in french
+
+> Il y a un moment, vers la fin de l'automne, où la lumière change et où l'on cesse de s'habiller pour être vu. On s'habille pour avoir chaud, pour soi, pour le plaisir d'une belle laine sur la peau. C'est cette saison-là qu'on préfère.
+
+> On n'a pas choisi l'hiver. L'hiver nous a choisis. Il a façonné notre patience, notre humour, notre manière de tenir une porte ouverte pour le suivant. Six mois de froid, ça ne se subit pas — ça se devient.
+
+> Il y a un silence qui n'existe qu'avant six heures. Avant les courriels, avant le trafic sur le pont, avant que la journée demande quoi que ce soit. C'est pour ce silence-là qu'on s'est levés avant vous.
+
+> L'argent, ce n'est presque jamais une question d'argent. C'est le chalet qu'on n'achète jamais, l'appel qu'on repousse, la liberté de dire non. On ne fera pas ces choix-là à votre place. On peut juste les rendre possibles.
