@@ -1,0 +1,459 @@
+---
+name: Stadli
+version: 11.0
+description: "Monochrome editorial sports-franchise platform. Near-black canvas, white Helvetica display at weight 500 with tight negative tracking. A strict split — admin chrome stays monochrome; atmospheric marketing surfaces are where Spectrum color lives, and there color behaves as light — halo gradients rising out of the black, never flat fills. Meaning is carried by type, tabular numerals, dot-matrix data, and photography — not iconography. A mono annotation register signals real software and real data. On product surfaces, color is rationed exception-first — it marks the deviation, the direction of movement, and the single story — never the expected static state. The product is monochrome on purpose so that people are what's in color when they show up. v10 folds in the zone model as a structural and consistency layer — zones organize the dashboard and scope consistent encoding but never claim a hue — keeps exception-first as the colour spine, and adds one scoped carve-out: affirmative green on live health and uptime monitors, where \"opérationnel\" is a measured pass rather than an idle resting state. The Spectrum is consolidated to seven hues — three v9 pairs (green+teal, cyan+blue, violet+magenta) merged for colour-blind safety, their meanings told apart by form and word where they must coexist. v11 tightens the colour mechanics on top of that set: sequential fields are built as true lightness ramps rather than opacity fades; meaning-free charts take hues in a fixed reach order (azure → green → purple → rose) so two authors converge on one palette; each hue runs at two saturations — hot for small marks, stepped-down for large fills so they don't vibrate on black; and directional encoding moves to azure/red, retiring the colour-blind-unsafe green/red pair and standing as the system's only sanctioned two-hue pairing."
+
+colors:
+  # Surface (dark — the default and the marketing canvas)
+  canvas: "#010101"
+  surface: "#080808"
+  surface-elevated: "#1a1a1a"
+  hairline: "#161616"
+  hairline-strong: "#303030"
+  # Text
+  ink: "#ffffff"
+  body: "#e8e8e8"
+  muted: "#929292"
+  muted-soft: "#6a6a6a"
+  # Spectrum — gated to atmospheric surfaces, data viz, and dots. Each carries an assigned meaning (see "The spectrum, by meaning"); never a default, never on chrome. v10 consolidates v9's ten hues to seven — the three hardest-to-distinguish pairs merged (green+teal, cyan+blue, violet+magenta) for colour-blind safety and an unmistakable set — keeping broadcast saturation on a raised lightness floor for #010101 and rationing product-surface usage exception-first (see "Exception-first — the color budget"). Each token below is the hot, small-mark value; large fills step the same hue down in saturation so they don't vibrate on black (see "Saturation steps down as area grows").
+  spec-red: "#ff4b3e"          # negative · error · decline · downward delta
+  spec-orange: "#ff9d2e"       # at-risk · warning · needs intervention
+  spec-lime: "#f2e23a"         # spike · new · breakout · just-updated
+  spec-green: "#22c55e"        # positive · success · resolved  +  benchmark · active   (v9 green + teal)
+  spec-azure: "#3f86f2"        # KPI series — primary headline and secondary alike   (v9 cyan + blue)
+  spec-purple: "#b85cf2"       # forecast · projection  +  outlier · notification · premium   (v9 violet + magenta)
+  spec-rose: "#ff5c9e"         # fan sentiment · loyalty · favourite
+  # House gradients — halo construction: glows rising out of near-black (see "The halo"). Use by name, never compose new ones. All three sit at equal weight; pick by what the section is saying, never as a default. Glow rgba values track the v11 spectrum.
+  grad-stadium: "radial-gradient(85% 110% at 12% 112%, rgba(184,92,242,.60), transparent 56%), radial-gradient(75% 95% at 80% 118%, rgba(255,92,158,.50), transparent 60%), #020202"   # Matchnight, primetime, fans-on-their-feet
+  grad-pitch:   "radial-gradient(85% 110% at 88% 112%, rgba(242,226,58,.48), transparent 52%), radial-gradient(80% 100% at 18% 116%, rgba(34,197,94,.55), transparent 58%), #020202"   # Daylight, training, growth, ops moments
+  grad-tribune: "radial-gradient(85% 110% at 14% 114%, rgba(255,157,46,.56), transparent 55%), radial-gradient(80% 100% at 82% 116%, rgba(255,92,158,.58), transparent 60%), #020202"   # Crowd warmth, season-ticket nostalgia
+
+colors-light:
+  # Light theme — product parity only. Chrome surfaces exclusively; see "Light theme."
+  canvas: "#f2f2f1"
+  surface: "#fafafa"
+  surface-elevated: "#ffffff"
+  hairline: "#e6e6e6"
+  hairline-strong: "#d0d0d0"
+  ink: "#0a0a0a"
+  body: "#232323"
+  muted: "#6d6d6d"
+  muted-soft: "#9b9b9b"
+
+typography:
+  fontFamily: "Helvetica Neue, Helvetica Now, Inter, sans-serif"
+  mono: "JetBrains Mono, ui-monospace, monospace"
+  # All display weight capped at 500. Negative tracking scales with size. tabular-nums on every metric.
+  manifesto: "clamp(52px, 10vw, 118px) / 1.02 / weight 500 / tracking ~-3.5%"
+  display:   "clamp(48px, 7.5vw, 100px) / 1.05 / weight 500 / tracking ~-3%"
+  heading:   "clamp(34px, 4.5vw, 62px)  / 1.10 / weight 500 / tracking ~-2%"
+  title:     "22px / 1.3 / weight 600"
+  body:      "17px / 1.55 / weight 400"
+  label:     "12px / 1.3 / weight 700 / uppercase / tracking +1px"
+  annotation: "11px JetBrains Mono / weight 400 / muted-soft"   # the forensic voice — see "The annotation register"
+
+rounded:
+  sm: 6px      # buttons, inputs
+  lg: 8px      # cards
+  xl: 12px     # mockup frames
+  pill: 9999px # badges, tooltip pills only
+
+spacing:
+  scale: "4 / 8 / 12 / 16 / 24 / 32 / 48"
+  section: "152px desktop, 96px mobile (top + bottom on every product section)"
+
+breakpoints:
+  compact: 560px   # single-column everything, stacked CTAs
+  mobile: 760px    # section padding drops to 96px, nav collapses to « Menu → »
+  collapse: 900px  # 2-col grids and specimen pairs go single-column
+  cap: 1280px      # max content width (atmosphere overrides, full-bleed)
+---
+
+# Stadli Design
+
+## Essence
+
+Near-pure black canvas, white display type in Helvetica Neue at weight 500, negative tracking scaled to size. The product is monochrome on purpose so that *people are what's in color when they show up* — fans, players, staff, shot full-bleed in documentary color and anchored by a film-grain overlay.
+
+When color does appear, it behaves as **light**: glows rising out of the black like stadium floodlights seen from the street — never flat fills, never diagonal washes. And when data appears, it can become **points**: matrices of dots where every dot maps to a real person or a real number.
+
+Hierarchy comes from size, whitespace, and tabular numerals. Not color. Not shadows. Not weight beyond 500. Not icons.
+
+Surface language is French (Québec). Dark is the marketing canvas; light theme exists for product parity only.
+
+## Six principles
+
+1. **Monochrome chrome, vivid signal.** Admin chrome — buttons, inputs, cards, navbars, anything inside a mockup frame — stays strictly black/white/gray. Spectrum color is reserved for atmospheric surfaces, data viz, and dots. Color carries meaning, never decoration. On product surfaces, meaning itself is rationed: color marks the exception and the single story, never the expected state.
+2. **Color is light.** On atmospheric surfaces, Spectrum color arrives as a halo — a glow rising from an edge of the frame out of near-black, with the system's grain over it. The black canvas is never replaced; it is illuminated. This is the construction behind the three house gradients and the brand's signature move.
+3. **Editorial confidence over UI noise.** Cards are flat. Borders are quiet. No drop shadows. No icons. Depth comes from surface contrast (`canvas` → `surface` → `surface-elevated`) and from light against black, and meaning comes from type and number — not glyphs bolted onto the interface.
+4. **Mockups are first-class storytelling.** Every product mockup is a container-query-driven frame, paired with a human moment in the same section — inset photo, photographic strip, or sidebar fan card. Never a screenshot floating alone.
+5. **Atmosphere is product.** Between product sections the page breathes through fan photography, halo-lit editorial breaks, dot-matrix data art, and exactly one oversized manifesto per page. Atmosphere is the rhythm device that prevents the page from reading as "tech."
+6. **Motion is reveal, not decoration.** Scroll-revealed content fades with a blur-and-rise. AI-related surfaces shimmer subtly (see "AI surfaces"). Everything respects `prefers-reduced-motion`.
+
+## No icons
+
+Stadli is a type-and-photography system. The interface earns its meaning the editorial way — through word, weight, size, tabular number, and the human face in the photograph — not through iconography. Avoid icons as far as the work allows: no nav glyphs, no button icons, no feature-grid pictograms, no decorative line-art, no logo-mark stand-ins for words. Where a convention seems to demand an icon, spell it out in a label or let layout and number do the work instead. Status is no exception — see the dot pill under "The spectrum, by meaning" for the type-first way to show state. Required form fields are no exception either — write « requis », never an asterisk.
+
+The single permitted exception is the directional arrow `→` that closes a CTA. It is typography, set in the brand family, not an icon — it reads as punctuation, not ornament. Nothing else qualifies for the exception.
+
+## The split — the brand's spine
+
+The line between monochrome chrome and atmospheric color is non-negotiable. Spectrum and the three house gradients are gated by **surface**, not by element type.
+
+No Spectrum color or gradient is more important than another. Every color choice is semantic — picked for what the moment is saying (mood, contrast, content), never assigned as a default. The same atmosphere section can run on any of the three gradients depending on context.
+
+**Allowed:** atmosphere breaks, fan-voice sections, manifesto sections, charts and data viz, dot matrices, narrative pills and tags, cursor tags on photography, hero accent words.
+
+**Forbidden:** buttons, inputs, cards, navbars, hover states, error borders, icons of any kind, anything inside a mockup frame.
+
+If you reach for a `spec-*` color on a button or a card, the brand is drifting. The same is true the moment you reach for an icon.
+
+## The halo — color is light
+
+The signature. Stadli never fills a surface with color; it lets color **rise out of the black**, the way stadium floodlights bloom into a night sky. Every house gradient is built this way: two or three radial glows anchored to an edge of the frame (bottom by default), fading into near-black (`#020202`), with the system grain over the whole surface.
+
+- **Glows rise from an edge.** Bottom is the default — the floodlight reading. A side edge is acceptable when composition demands it. Glows never float free in the middle of a frame.
+- **The optical center stays near black.** A halo illuminates the canvas; it never saturates it edge-to-edge. If less than a third of the surface reads as near-black, the halo has become a fill.
+- **Type sits on the dark zone.** White display type rests where the surface is still black or nearly so. Contrast is structural, not corrective.
+- **Grain over light.** The ~6% colorless grain rides on top of every halo surface — light through film, not light through glass.
+- **Halos are the gradients.** The three house pairs (`grad-stadium`, `grad-pitch`, `grad-tribune`) are the only halo recipes. Composing a new glow combination is composing a new gradient — forbidden.
+- The flat 135° diagonal gradient is retired. If a surface needs to be one solid Spectrum color (a solid block over a photo, a color-blocked editorial panel), that is a **block**, not a gradient — blocks stay flat and saturated by design.
+
+## The dot matrix — data as points
+
+The dot is Stadli's only colored atom — the dot pill proved it at 8px. The dot matrix scales the same atom into data art: fields of dots where **every dot maps to a real quantity**. A crowd rendered one-dot-per-fan in `spec-rose`. A season of attendance as columns of points. A stadium section map where density is occupancy.
+
+- **Every dot is data.** A dot field is a chart, not a texture. It always ships with an annotation-register line citing what a dot is and how many there are (`18 442 points · 1 point = 1 personne · source billetterie`). If the dots don't map to anything, delete them.
+- **One color per field.** A matrix carries one spec color against canvas, per the one-color-per-element rule. Value is encoded in density or size; opacity steps of that single hue are reserved for **categorical shares** — separable categories, not a continuous gradient (see "Sequential scales ride lightness, not opacity"). Never a second hue.
+- **Dots read as dots.** Keep the resolution coarse enough that individual points are visible at arm's length. If it blurs into a gradient, it stops being data and starts being decoration.
+- **Allowed surfaces:** atmosphere and marketing breaks, data viz, manifesto accompaniments. Never inside chrome or mockup frames.
+- This is the brand's literal thesis rendered: *people are what's in color* — and in a dot matrix, every point of color is a person.
+
+## The annotation register
+
+The system's second voice. Where display type carries emotion, a quiet JetBrains Mono line carries **evidence** — the forensic layer that signals real software, real engineering, real data. The file-path label under mockups was the first register; the full set:
+
+- **File-path** — `stadli/app/(admin)/billetterie/dashboard.tsx` — above or below every product mockup.
+- **Timestamp** — `maj il y a 12 s`, `synchronisé · 21 h 04` — on live data surfaces.
+- **Data citation** — `n = 18 442 · source billetterie · saison 2026` — under every chart and dot matrix.
+- **Coordinates** — `SEC 104 · R12 · S07`, `PORTE B` — on tickets, seat maps, venue surfaces.
+- **Version & meta** — `v11 · FR-CA` — on system surfaces and documentation.
+
+Rules: 12px JetBrains Mono, weight 400, `muted-soft`. **The register annotates; it never titles.** One annotation line per element. It belongs to product and data surfaces — never on the manifesto, never as the headline of an atmosphere break, never inside a fan quote. The forensic voice and the emotional voice don't speak at the same time from the same line.
+
+## The spectrum, by meaning
+
+"Pick by context" is the rule, but context needs a vocabulary. Every `spec-*` color carries an assigned meaning, and the meaning it activates depends on the surface it lands on. This is what makes "every color choice is semantic" operable rather than aspirational: choosing which color, like choosing which gradient, is a reading of what the moment is saying.
+
+These meanings live **only on the surfaces "The split" already allows** — data viz, narrative pills and tags, dot matrices, cursor tags, atmosphere and marketing. Assigning a meaning never licenses a color onto chrome. If a surface spans contexts and you're unsure, the stricter reading wins: treat it as chrome and stay monochrome.
+
+The v10 set consolidates v9's ten hues to seven, fusing the three pairs that were hardest to tell apart as small dots or thin series — green + teal into one green, cyan + blue into one azure, violet + magenta into one purple. Broadcast saturation is kept and the lightness floor stays raised so every hue reads against `#010101`; the seven sit at distinct luminances with deliberate hue spacing, which also makes them robust for colour-blind viewers. Each merged hue carries both parent meanings — disambiguated by form and word in the rare moment those two meanings must coexist (see the note under the table).
+
+| Spectrum | Token | Hex | On data viz | On narrative pills & status dots | On atmosphere & marketing |
+|---|---|---|---|---|---|
+| **Red** | `spec-red` | `#ff4b3e` | Negative delta · churn · loss · decline | Error · cancelled · blocked · the downward delta | Urgency · scarcity · countdown · limited-time |
+| **Orange** | `spec-orange` | `#ff9d2e` | At-risk metric · caution threshold · near-miss | Warning · approaching a limit · draft | Energy · hype · the warm call-to-action |
+| **Lime** | `spec-lime` | `#f2e23a` | Spike · trending anomaly · breakout metric | New · just-updated · highlight | Disruption · freshness · novelty |
+| **Green** | `spec-green` | `#22c55e` | Target met · goal achieved · resolved-positive — **and** benchmark · baseline · comparison anchor | Success · confirmed · resolved · the standing positive state — **and** active · selected · toggled-on | Momentum · wins · the go-signal |
+| **Azure** | `spec-azure` | `#3f86f2` | KPI series — headline metric **and** secondary volume alike — **and** the positive direction of a delta (gain · above forecast · up) | Informational · hint · guidance · the upward delta (in-progress states stay monochrome) | Authority · confidence · openness · clarity |
+| **Purple** | `spec-purple` | `#b85cf2` | Forecast · projection · modeled estimate — **and** outlier · anomaly flag | Notification · unread · system alert — **and** premium · gated · pro, when the gate matters | Exclusivity · vision · the standout |
+| **Rose** | `spec-rose` | `#ff5c9e` | Fan sentiment · engagement score · NPS positive | Favourite · loyalty · saved | Passion · fandom · emotion · connection |
+
+**Where two merged meanings must coexist in one view, form and word separate them — never a second hue:**
+
+- **Green (positive + benchmark).** The colour goes to the outcome. A benchmark or baseline that must read as distinct from a positive value drops to a monochrome `muted` reference line rather than taking the hue.
+- **Azure (primary + secondary KPI).** One hue for every KPI series; lead versus supporting is carried by stroke weight and position, not by colour.
+- **Purple (forecast + outlier).** A forecast is a **dashed** line; an outlier is a **single highlighted point**. Same hue, different form — the shape names which meaning is in play.
+
+The three house gradients keep the meanings already noted in their tokens — `grad-stadium` for matchnight and primetime, `grad-pitch` for daylight and ops, `grad-tribune` for crowd warmth and season-ticket nostalgia. As with the single colors, no gradient is a default; pick the one whose meaning matches the section.
+
+### The reach order — which hue when meaning is silent
+
+Sometimes a chart needs colour but the data carries no inherent meaning — three product lines, four regions, a set of series that are simply *different*, not good or bad. Picking by meaning fails here because there is no meaning to read. So the hues are taken in a **fixed sequence**, and two authors building two different charts land on the same first colour:
+
+**azure → green → purple → rose.**
+
+- One coloured series → **azure.** Two → **azure + green.** Three → add **purple.** Four → add **rose.** No further — the three-spec ceiling and the one-story-hue budget still bind (see "Exception-first — the color budget").
+- **`lime` and `red` are never reached for by order.** They stay reserved for their assigned meanings only — `lime` for the spike, the just-in, the breakout; `red` for decline and failure. Pulling either into a neutral rotation would teach the operator to ignore the one signal it exists to carry.
+- **Meaning overrides the order.** The sequence is the default, not a law: a fan-sentiment story opens on `rose`, a directional encoding opens on `azure`/`red` (below), a forecast on `purple`. When the data carries a meaning, the meaning table picks the hue and the order steps aside.
+
+The reach order is what makes "pick by context" reproducible: the same data shape resolves to the same palette no matter who builds the chart or when.
+
+### Direction is azure/red, never green/red
+
+The one place two hues are unambiguously correct is **encoding direction** — above/below forecast, gain/loss, up/down. Use **`azure` for positive and `red` for negative** — *not* green/red.
+
+The reason is the colour-blind discipline that drove the v9→v10 consolidation: the green/red pair collapses for red-green colour-blind readers (~8% of men), the single most common failure in data colour. `azure`/`red` survives every form of colour-blindness, sits at two clearly separated luminances, and stays on-brand. So the upward delta, the gain, the above-forecast bar wears **azure**; the downward delta, the loss, the below-forecast bar wears **red**.
+
+- **This retires green-for-up.** Green no longer carries direction. It keeps its *state* meanings — success, confirmed, resolved, benchmark, active, the measured health pass — but a delta or any up/down movement now reads azure-up / red-down. Red is unchanged: it was already negative for both state and direction.
+- **It is the lone exception to "one story hue per viewport."** A directional encoding is allowed both its hues at once; nothing else in the system pairs two spectrum hues in one element or one field. This is the only sanctioned two-hue pairing.
+- **Over large fills, both step down in saturation** per "Saturation steps down as area grows" — a diverging bar field reads azure-vs-red without vibrating on black.
+- **The forecast line stays purple.** Direction colours the *variance* (above/below), not the forecast itself — a dashed purple forecast can sit behind an azure/red variance encoding without conflict.
+
+### Saturation steps down as area grows
+
+A hue is rendered at **two saturations**, chosen by how much surface it fills. Lightness and hue stay put — saturation is the only lever that moves.
+
+- **Small marks wear the hot value.** Dots, status pills, single lines, single highlighted points take the fully-saturated Spectrum value as tokenised — the broadcast hue on its raised lightness floor.
+- **Large fills step down.** Bars, area charts, map regions, dot-matrix fields step the same hue down in saturation so it doesn't vibrate against the black canvas. The reader still reads it as the same colour — the difference is *felt, not named.*
+- This is distinct from a sequential ramp (below): saturation-by-area moves only saturation; a sequential scale moves only lightness. Two different levers — don't confuse them.
+
+### Sequential scales ride lightness, not opacity
+
+A sequential field — heatmap, choropleth, intensity grid — is built as a **true lightness ramp**: from a dark, saturated version of the hue up to a bright one. It is never one flat fill faded with opacity.
+
+- **Cover a wide lightness range** — aim for 60+ points end to end — so adjacent steps stay separable.
+- **Let the hue shift slightly as it darkens.** Most hues can't stay saturated when dark, so the ramp drifts (`lime` → green, `rose` → magenta) rather than muddying into grey. The drift is correct, not a defect.
+- **Opacity-tinting is for categorical shares, not continuous scales.** Fading one flat colour by opacity is the DotMatrix construction, where each step is a *separate category.* On a continuous scale it compresses the lightness range and the steps stop being separable — forbidden.
+- **Empty / zero cells take a near-black surface tint** (`surface` / `surface-elevated`), never the lightest ramp step. Zero is the absence of the quantity, not its smallest value.
+
+### Exception-first — the color budget
+
+The meaning table says what each color means; this rule says **when a color is allowed to speak at all.** On product surfaces, a spec color marks an outcome, a movement, or a call for attention — never a moment still in flight. Pending, in-progress, and routine category states carry a **monochrome ink dot** (`muted` on dark, `muted-soft` for secondary states), not a colored one.
+
+The reasoning is signal theory: color reports what has *happened* or what *needs to happen* — a state still in flight has nothing to report yet, and coloring it turns the column into noise. The operator's eye sweeps a screen and reads it as outcomes: green resolved, red failed or declining, orange needing intervention, gray still moving.
+
+- **States are resolved or pending.** A state that has resolved successfully — « Confirmée », « Complétée », « Remboursée » when that was the goal — wears `spec-green`; a failed or cancelled one — « Annulée », « Refusée » — wears `spec-red`. Everything still in flight — « En traitement », « Paiement en attente », any pending or in-progress state — carries the monochrome ink dot, as do pure category labels (« Abonnement saison »). `spec-orange` is reserved for the state that cannot resolve without the operator's intervention.
+- **Health monitors are the one affirmative-green carve-out.** A component whose job is to report whether a system is *up right now* — a service-health or uptime monitor — may colour its healthy rows `spec-green`, because there « opérationnel » is a live measured pass, not an idle resting label. The `spec-red` (« hors service ») and `spec-orange` (« dégradé ») rows still carry the alert and still read against the green field, because hue — not the mere presence of colour — separates them. The test before granting green: is the positive state being *measured* right now, or is it only the thing's default category? Only the measured pass earns green; a routine category label or a pending state stays the ink dot. This is the lone exception to "don't colour the expected state" — everywhere else exception-first holds unchanged.
+- **Deltas are directional.** A delta — movement against a target or a prior period — is inherently a signal, not a state, so its dot always carries its direction: `spec-azure` for the upward move, `spec-red` for the downward one, `spec-orange` for the at-risk threshold. « +12,1 % vs match précédent » wears azure; « −0,8 % du revenu » wears red. A flat or exactly-as-forecast delta may go ink. Direction is the one meaning azure and red carry on every product surface without needing to be exceptional — and it is the sole sanctioned two-hue pairing (see "Direction is azure/red, never green/red"). Green stays for resolved positive *states*, never for the direction of a move.
+- **One story hue per viewport.** At most one large colored field — a chart's story series *or* a dot matrix — per screen. When two stories share a viewport, one goes monochrome: white-versus-gray carries a comparison on the black canvas with full legibility. The colored one is the page's editorial statement.
+- **Budget arithmetic.** A healthy product view shows one story hue plus only the alert dots that are real. If more than three hues are visible at once, something on the screen is decoration wearing a meaning.
+- **Atmosphere is exempt.** Marketing and atmosphere surfaces keep their full expressive range — the budget governs product surfaces, where color is an instrument, not a mood.
+- **Toasts are exempt.** A toast is itself an event — transient feedback on an action just taken — so its severity dot (green confirmed, red error, orange warning) keeps its color.
+
+### One spectrum color per element
+
+A chart series, a narrative tag, a status dot, a dot matrix, a cursor tag, or a color block carries **one** spec color — never two. A card built on `spec-purple` does not also reach for `spec-green`; an insight tagged "forecast" in purple does not also wear a second hue. If a composition needs to say two things, it needs two elements, each monochrome around its single color, with canvas or surface as the neutral between them. One color, one meaning, one element.
+
+### The dot pill — status without a glyph
+
+Where a lesser system reaches for a colored icon or a fully-saturated badge to show state, Stadli isolates the meaning to a single small dot and leaves everything else monochrome. The dot carries the one spec (or semantic) color; the text beside it stays white or `body`, the border stays a quiet hairline. This is the type-first, icon-free way to show status — the editorial answer to a status glyph, and the construction principle behind the "narrative pills and tags" surface.
+
+- The **dot is the only colored element.** Pill background and border stay monochrome; the text never takes a spec color.
+- Pill text is set in neutral body or title case — **not** the all-caps `label` style — and **never wraps.** The dot signals; the word names.
+- **One color per pill**, per the rule above. A pill says one thing.
+- **Exception-first applies.** A pill naming a pending or in-flight state carries the monochrome ink dot; outcome pills wear their resolution color (green resolved, red failed), and orange marks the pill asking for intervention. The construction is identical either way — only the dot's fill changes.
+- **The health-monitor carve-out.** The one place a pill's dot may wear `spec-green` for a *standing* positive state is a live health or uptime monitor, where « opérationnel » is a measured pass rather than an idle label (see "Exception-first — the color budget"). Everywhere else green stays reserved for resolution and standing positive states, never the expected resting state.
+
+## Zones — structure, not color
+
+A product view is organized into zones — Revenue, Engagement, Reliability, Growth, and the like. In Stadli a zone is a **structural and editorial** device, never a coloring one. It governs where a widget lives, how the view is grouped and read top-left-first, and which widgets share a consistency contract — but it does not hand out a hue. The "four colour territories" dashboard, where every region wears its own colour, is explicitly **not** the Stadli look: it would colour the expected state across the whole surface and break exception-first and its budget. Earlier explorations of a zone-keyed palette were resolved in favour of the spine — the zone survives as architecture, the colour stays exception-first.
+
+What a zone *does* carry is **consistency**. When a zone's chart earns its one story hue, the meaning→hue mapping stays identical across every chart in that zone and across sessions — a forecast is the same purple in every Revenue chart, a benchmark the same green. The zone is the scope inside which "same meaning, same colour" is guaranteed; the meaning table (see "The spectrum, by meaning") still chooses *which* hue, and exception-first still decides *whether* colour appears at all. Put plainly: zone scopes consistency, meaning picks the colour, exception-first rations it.
+
+- **Zones group and order; they never tint.** Region identity is carried by headings, layout, and the top-left lead — not by a regional colour. A Revenue card and a Growth card look identical in chrome.
+- **Consistency is zone-scoped.** Within a zone a given data meaning always resolves to the same spectrum hue, so an operator learns the mapping once and it holds.
+- **One story hue per viewport still wins.** A view spanning several zones shows at most one coloured story field; its neighbours run monochrome, exactly as the budget requires. Zones never license a second colour into the viewport.
+
+## Data viz — the chart is a poster
+
+A Stadli chart is an editorial composition, not a widget. It earns a heading-size title, generous space, and an annotation-register citation — the way a magazine treats a chart as an artwork with a caption. Never a shrunken panel crowded with controls.
+
+- **One story series.** The series carrying the story takes the spec color whose data-viz meaning matches it (azure for the headline metric, purple for the forecast, green for the benchmark…). When the series carry no inherent meaning, take hues in the reach order — azure → green → purple → rose (see "The reach order"). Comparison and context series stay monochrome — `muted` and `muted-soft` strokes. Prefer one colored series; never exceed three spec colors in a single chart.
+- **Monochrome comparison is first-class.** A two-series comparison reads perfectly as `ink` versus `muted-soft` on the black canvas — contrast does the work color was doing, and the chart gains authority. Per the color budget, only one chart or matrix per viewport carries a colored story; the others run monochrome.
+- **Hairline structure.** Gridlines and axes in `hairline` / `hairline-strong` only. No zebra striping, no filled plot backgrounds, no border boxes around the plot area.
+- **Flat color in data.** Series colors are flat — no gradients on bars or areas. Light belongs to atmosphere; data is matter-of-fact. Large fills (bars, areas, map regions) take the hue's stepped-down saturation so they don't vibrate on black (see "Saturation steps down as area grows"); small marks and lines keep the hot value. Area fills under a line sit at ≤10% alpha of the series color, or not at all.
+- **Sequential fields ride lightness.** Heatmaps, choropleths, and intensity grids are built as a lightness ramp of one hue — dark-saturated up to bright, the hue drifting slightly as it darkens — never one flat fill faded by opacity, with empty cells on a near-black surface tint (see "Sequential scales ride lightness, not opacity").
+- **Direction is the sanctioned two-hue chart.** A diverging encoding — above/below forecast, gain/loss — uses `spec-azure` for positive and `spec-red` for negative, never green/red. It is the one chart permitted two story hues (see "Direction is azure/red, never green/red").
+- **Type rules apply.** Axis titles in `label` style; every figure in tabular numerals, FR-CA format. Direct-label series at the line's end where space allows, instead of a detached legend.
+- **Tooltips are chrome.** `surface-elevated` card, hairline border, monochrome text; the series is identified by its dot + word, per the dot-pill convention.
+- **The dot matrix is a first-class chart type** — density maps, crowd maps, one-dot-per-unit columns. Same citation duty as every chart.
+- **Every chart carries a citation.** An annotation-register line states n, source, and freshness (`n = 18 442 · source billetterie · maj il y a 12 s`).
+- **The title states the insight.** A chart answers a question, and its title is the answer — « La saison 2026 dépasse 2025 dès le printemps », not « Billets vendus par mois ». A reader holds the takeaway within five seconds.
+- **A number alone means nothing.** Every KPI ships with its context — target, prior period, or benchmark — carried by the delta line and its dot, set at 12px in `muted`. The dot is directional: azure for the upward move, red for the downward, orange at-risk — a flat or as-forecast delta may go ink. Static state labels elsewhere on the tile stay monochrome per exception-first.
+- **Honest by construction.** Bars start at zero; a non-zero line baseline is declared in the citation. Never dual y-axes — they manufacture correlation. Aspect ratios stay honest, never stretched to dramatize a slope. Actuals are solid; forecasts and objectives are dashed (and purple, per the meaning table).
+- **Dots scale by area, not radius.** In dot matrices and any size encoding, perceived area must track the quantity.
+- **Sort by value, not alphabet.** Sorted bars communicate; alphabetical order rarely does.
+- **Round to meaning.** `4,2 M` rather than `4 218 377,18` — and a percentage always travels with its base through the citation (`+12,1 % · n = 3 204`).
+- No 3D, no donut-with-icon centers, no rounded bar caps beyond `sm`, no sparkline confetti. One chart, one statement.
+
+## AI surfaces
+
+AI-touched surfaces get one consistent, quiet signal — never a robot icon, never a sparkle glyph. The no-icons rule holds here too: the signal is motion and a word, not a picture.
+
+- **The AI badge.** A single shimmering badge marks anything AI-generated — a slow, low-contrast sheen travelling across an otherwise monochrome pill, paired with a word (`IA`, `Généré par IA`). The shimmer is the only animation the badge carries, and it is the system's consistent tell that a surface is machine-made. Same badge everywhere; the consistency is the point.
+- **Insight cards.** AI narrative output lives in insight cards — short, editorial cards that read like a sentence and are tagged with a narrative pill (the dot pill above). This is the home for the "narrative pills and tags" surface — and exception-first governs it: routine outputs (a scheduled forecast, a recurring sentiment digest) carry the ink dot, while the spec color goes to the insight that demands action — `spec-purple` for the detected outlier, `spec-red` for the metric in decline. The card itself stays monochrome either way.
+- **Shimmer skeletons.** While AI content loads, show a skeleton that matches the *shape* of the final content — the same line count, the same rough widths — filled with a monochrome shimmer rather than a spinner. The skeleton sits inside the same card or grid as the real content, so nothing shifts when it resolves.
+
+All three resolve to a static resting state under `prefers-reduced-motion`: the badge sheen freezes, the skeleton holds without animation.
+
+## Type
+
+One family, scaled. Helvetica Neue (Inter is the open-source fallback that ships in production) covers display, body, nav, and buttons. JetBrains Mono belongs to exactly one voice: the annotation register.
+
+- **Display weight caps at 500.** Visual heaviness comes from size and tight tracking, not stroke. Sub-titles step to 600 only at ≤22px.
+- **The scale jumps.** Steps between levels are deliberately large — display sizes run big, utility sizes run small — so hierarchy reads at a glance. If two adjacent levels look interchangeable, the scale has been flattened; restore the jump rather than adding weight.
+- **Negative tracking scales with size.** ~-3% at display ≥56px, -1% to -2% at 32–50px, 0 on body. The compression is the brand voice — without it, headlines lose their editorial feel.
+- **Tabular numerals are mandatory** on every metric, dashboard, KPI tile, and table. Number is the brand's substitute for the icon — where a lesser system would set a pictogram, Stadli sets a figure.
+- **Line length is 45–75 characters.** Body copy past ~75ch slows reading and breaks the editorial feel; cap measure with `max-width`, not smaller type.
+- **All-caps is an eyebrow, not a sentence.** The `label` style stays a few words long. Long uppercase slows reading — the moment a label becomes a phrase, it becomes `body` or `title`.
+
+## Photography & mockups
+
+Photography carries the warmth the chrome refuses to.
+
+**The image is never colored.** No duotone, no black-and-white, no grayscale, no color tints, no gradient overlays, no semi-transparent color washes. Photography ships full-color and untouched. The one thing applied is a fine film-grain texture (~6% opacity, no color) — that's what anchors imagery to the editorial tone and stops it reading as stock.
+
+**Documentary color** is the treatment direction: slightly desaturated, film-not-Instagram. Used everywhere photography appears — hero, atmosphere breaks, fan portraits, testimonials, product-pairing strips.
+
+**Color combines with photography through solid blocks, never overlays.** When a composition needs both color and an image, the color sits in a solid panel — canvas, surface, or Spectrum — containing copy or content, layered on top. The block carries the color; the image stays clean. Examples: a canvas card with a quote sitting over a fan photo; a purple panel with display type anchored to the corner of a stadium image; a manifesto bar resting across the lower third of a hero shot.
+
+**Cursor tags — naming the people in color.** The smallest solid block: a compact spec-color rectangle carrying a real person's name in the annotation register's mono (11–12px, uppercase), pinned beside them on the photograph like a collaborator's cursor. The tag makes the thesis literal — people are what's in color, and here color names a person.
+
+- Real first names only, with consent. Never a fictional name, never a stock subject given an invented identity.
+- One spec color per tag, picked by meaning (`spec-rose` for a fan, `spec-green` for staff on duty, `spec-purple` for a season-ticket member…). The tag is the colored element; nothing else on the photo takes color.
+- The tag sits **beside** its person — never covering a face, never more than three tags per photograph.
+- Text on the tag must clear contrast: dark text on lime and green; white on the rest.
+- Photography surfaces only. A cursor tag on chrome is a color violation and an icon-adjacent one.
+
+**Subject hierarchy:** faces (mid-emotion, not posed) → crowds → stadium architecture → operational moments.
+
+**Real faces beat stock faces** — a stock smile can underperform no face at all. This is the reason the forbidden list exists, and the reason cursor tags carry real names: specificity is what makes a face persuasive.
+
+**Faces direct gaze.** Readers follow the subject's eyes — compose so they point into the copy, the number, or the CTA, never off the edge of the page.
+
+**One treatment, everywhere.** Documentary color + grain is identity glue: the same image treatment across every page, channel, and campaign is what makes the photography read as one brand.
+
+**Forbidden imagery** (markers of B2B SaaS): laptops/screens showing the product, conference-room team meetings, handshakes, smiling-businessperson stock headshots, drone-from-outside establishing shots, empty seats in marketing, posed "diverse team" group shots, lens flares, competitor branded apparel.
+
+**Mockup pairing rule:** every product mockup ships with a human moment in the same section. The mockup proves the software exists; the photo proves who it is for.
+
+## Chrome, extended
+
+The monochrome contract, applied to the rest of the product surface.
+
+### The interaction contract
+
+- **Buttons look like buttons.** Monochrome never means ambiguous — primary is solid, secondary is lifted, ghost is hairlined. Affordance beats minimalism: if an element is interactive, it must read as interactive.
+- **Prevent errors before messaging them.** Constrain, disable, and format as the user types rather than validating after the fact. Inputs are forgiving — accept dates, phone numbers, and amounts the way people in Québec actually type them, then normalize to FR-CA on display.
+- **Prefer undo over confirm.** Let people act and recover. Confirmation dialogs are reserved for destructive, irreversible actions — overusing them trains operators to click through.
+- **Status is always visible.** Saving, syncing, live, failing — say it; the annotation register's timestamps are part of this duty. Respond under 400 ms to preserve flow; past one second, show a skeleton in the shape of the coming content, never a spinner.
+- **Smart defaults do the work.** The default does the right thing for 80% of operators. Experts get accelerators (recents, shortcuts, saved filters); novices never have to notice them.
+- **Every action has an exit.** Undo, cancel, back — the operator is never trapped.
+
+### Data tables
+
+- Header row on `surface-elevated`, cells in `label` style. Body rows separated by `hairline` — no zebra striping, no outer box heavier than `hairline`.
+- Numeric columns right-aligned, tabular numerals, FR-CA format. Text columns left-aligned. Row height ≥48px.
+- Status lives in a dot pill column: resolved states wear their outcome color (green confirmed, red cancelled), pending and in-progress states carry the monochrome ink dot, and orange flags what needs the operator's intervention. The status column is a scanner — gray means in flight, color means something happened. A live service- or system-health column is the carve-out: healthy rows wear `spec-green` because there the up/down reading is itself the reported value (see "Exception-first — the color budget"). Metadata (IDs, refs, timestamps) may use the annotation register inside a cell.
+- Row hover lifts to `surface`; selection lifts to `surface-elevated`. Never a colored row.
+
+### Empty states
+
+An empty screen is an invitation to act, set in type. A `heading`-scale line (≤32px), one body sentence saying what will appear here, one primary CTA closing with `→`. Optionally one annotation-register line stating the fact (`0 résultat · filtre « annulé » actif`). No illustration, no icon, no Spectrum color, no oversized sad whitespace — the canvas is already the whitespace.
+
+### Errors, validation & toasts
+
+- **Voice:** say what happened and how to fix it, in the interface's voice. Errors never apologize and are never vague. « Le courriel doit contenir un @ », not « Oups! Quelque chose s'est mal passé ».
+- **Inline field errors:** the message line below the field carries a `spec-red` dot + the sentence in body at 14px. **The input border stays monochrome** — it may darken to the focus value (`#454545`), but it never turns red. The dot carries the severity; the words carry the meaning. Wire the message with `aria-describedby`.
+- **Required fields** are marked in words — « requis » in `muted`, beside the label. Never an asterisk.
+- **Toasts:** the pill construction scaled to a bar — `surface-elevated`, hairline border, the dot carrying severity (green confirmed, red error, orange warning), text in body, an optional text action closing with `→`. One toast at a time. Confirmations auto-dismiss; errors persist until dismissed. Toasts are exempt from exception-first — a toast is itself an event, so its dot keeps its color.
+
+## Light theme
+
+Light exists for **product parity only** — operators who need a bright admin in a sunlit box office. It is a chrome theme, not a brand surface.
+
+- Tokens map per `colors-light`: lift still reads as lift (`canvas` `#f2f2f1` → `surface` `#fafafa` → `surface-elevated` `#ffffff`); hairlines invert to `#e6e6e6` / `#d0d0d0`; text inverts to near-black ink.
+- **No atmosphere in light.** No halos, no gradients, no manifesto, no dot-matrix art, no grain. Marketing and atmosphere ship dark, always. If a marketing surface appears in light theme, the theme has leaked.
+- Spectrum survives only where the split already allows inside product: data viz series and status dots — exception-first applies in light exactly as in dark, with the ink dot inverting to near-black. The azure/red direction pairing carries over unchanged. The health-monitor green carve-out carries over too, with its `green` dots taking the 1px ring below. On light surfaces, `lime`, `green`, and `azure` dots gain a 1px `hairline-strong` ring for definition.
+- Focus rings: black at 12% alpha. Film grain: never in light.
+
+## Layout & rhythm
+
+- Max content width 1280px. Atmosphere sections are full-bleed and override this cap.
+- Section padding 152px desktop / 96px mobile, top and bottom on every product section. Generous on purpose.
+- The dark canvas *is* the whitespace. Long stretches of black are the brand's breathing room.
+- The page reads like a magazine cut into bands: black product band → full-bleed halo atmosphere → back to black.
+- Surface lift marks hierarchy: `canvas` → `surface` → `surface-elevated`. Not opacity changes on white type.
+- **Top-left carries the lead.** The eye lands top-left first — the headline metric or message starts there, and importance decays along the reading path.
+- **One idea per band.** Each section makes one statement — one scroll-stop. The black between bands is the punctuation. If a section argues two things, it's two sections.
+- **Product views hold 5–9 widgets.** Past nine, split into tabs or pages. A monitoring dashboard fits one screen — nothing critical lives below the fold.
+
+## Responsive
+
+Breakpoints are named in the tokens: `compact` 560 / `mobile` 760 / `collapse` 900 / `cap` 1280.
+
+- **≤760 (mobile):** section padding drops to 96px; the top nav collapses to a single text button — « Menu → » — opening a full-screen type list set in `title` scale. No hamburger; the no-icons rule does not pause on small screens.
+- **≤900 (collapse):** two-column specimen pairs, mockup-plus-photo pairings, and the photo-doc grid go single-column. The pairing rule survives stacking — the human moment follows its mockup, never gets cut.
+- **≤560 (compact):** KPI grids go 4 → 2 → 1; CTAs stack full-width; data tables scroll horizontally inside their frame with an annotation hint (`faire défiler →`).
+- **Touch targets ≥44px** on every interactive element — buttons, rows, pills acting as filters.
+- Display scales are already fluid (`clamp`); the manifesto never wraps past three lines on mobile — shorten the words before shrinking the type.
+- Halos stay anchored to the bottom edge on mobile; the dark zone above remains the type area.
+- **Mobile-first, not mobile-shrunk.** For most fans the phone *is* the brand — the small screen is designed as a first-class composition, then expanded, never the desktop layout squeezed down.
+- Test on the smallest real screen in use, not the design monitor.
+
+## Voice & naming
+
+- Surface language is **French (Québec).** UI labels, marketing copy, CTAs. Documentation is English.
+- **Title case** for English titles, headings, buttons, and labels (e.g. "Save Changes", "New Event"). Sentence case is not required on chrome. French copy follows French convention (sentence case) — French does not title-case.
+- **FR-CA number format:** thin-space thousands, comma decimal, currency mark after the figure with one space (`142 850,00 $`).
+- CTAs end with a directional arrow `→`. This arrow is type, not an icon, and is the only glyph the system permits.
+- **Clarity beats cleverness.** A confused reader doesn't buy a ticket. Write at the level of the bleachers, even for the boardroom.
+- **More « vous » than « nous ».** The copy talks about the fan and the operator, not about Stadli.
+- **Specific beats superlative.** « Complet en 41 minutes » beats « ultra-rapide » — the tabular numeral is the brand's form of proof.
+- **Front-load every line.** People scan the first two words of a sentence, a bullet, a button. The key word goes first.
+- **CTAs state value, not mechanics.** « Voir les billets → », « Créer une promotion → » — never « Soumettre », never « Cliquez ici ».
+- **Microcopy is the brand at its most intimate.** Error messages, empty states, and button labels are written with the same care as the manifesto — they're where the voice is actually heard.
+- The mono voice belongs to **the annotation register** (see its section): file-paths, timestamps, citations, coordinates, versions. It annotates product and data surfaces and never touches the manifesto, atmosphere headlines, fan voice, or photography captions meant to carry emotion.
+
+## Trust
+
+Trust is built in drops and lost in buckets. Stadli's honesty devices — tabular numerals, the annotation register, real names — are trust mechanics, not decoration.
+
+- **Proof is specific.** A testimonial carries a full name, a face, and a real outcome — the cursor tag is the visual form of this rule. Anonymous praise is decoration and reads as such.
+- **Numbers move.** « Joignez-vous à 12 480 partisans » beats « des milliers de partisans » — and the figure is live, its freshness declared in the annotation register.
+- **Scarcity is real or absent.** « Il reste 48 places en section 104 » must be true to the seat. A fake countdown or invented stock destroys trust permanently.
+- **No dark patterns.** No confirm-shaming, no hidden costs, no forced continuity. Cancelling un abonnement is as easy as buying one — the exit is the last brand impression and the seed of the return.
+- **The same number matches everywhere.** A metric shown twice reconciles exactly, or every other number on the page becomes suspect.
+- **Color that cries wolf is a dark pattern too.** Exception-first is a trust mechanic: when a colored dot always means something real, operators learn to act on it. A dot whose color carries no information teaches them to ignore every dot.
+
+## Don't
+
+- Don't put Spectrum color on admin chrome. Gating is by surface, not element type.
+- Don't color the pending state. In-progress, awaiting, routine category labels — these carry the monochrome ink dot. Green marks resolution and the standing positive state; the upward delta is azure (direction is azure/red, never green/red); red marks failure, cancellation, decline, and the downward delta; orange marks what needs intervention. A spec color on a product surface means outcome, direction, attention, or the one story. The lone exception is a live health or uptime monitor (see the carve-out under "Exception-first — the color budget"), where a measured « opérationnel » pass may wear green.
+- Don't run two colored stories in one viewport. One chart or matrix carries the colored series; the neighbor goes monochrome — `ink` versus `muted-soft` carries a comparison on black.
+- Don't color both series of a two-series comparison. White against gray is the Stadli comparison; the spec color is reserved for the single story series when the viewport's budget allows it.
+- Don't push display weight past 500. Hierarchy is size and tracking, not stroke.
+- Don't add drop shadows. Cards are flat by contract; depth is built from surface contrast.
+- Don't reach for icons. The interface communicates through type, tabular numerals, dots, and photography — not glyphs, pictograms, or line-art. The directional arrow `→` on CTAs is the only permitted mark, and it is typography, not an icon.
+- Don't build a flat or diagonal gradient fill. Color is light: it rises from an edge out of near-black, per the halo. A surface that needs one solid color is a block, not a gradient.
+- Don't let a halo saturate its frame. If less than a third of the surface still reads near-black, the light has become a fill — pull it back.
+- Don't compose new gradients or new glow combinations. The three house halos are exhaustive.
+- Don't scatter dots as texture. Every dot field maps to a real quantity and ships with its citation. Decorative dots are decoration — forbidden.
+- Don't mix two spec colors in one dot field, one chart series, one element of any kind. Two meanings need two elements. The lone exception is a directional encoding, which is allowed azure (positive) and red (negative) together.
+- Don't encode direction with green/red. Up/down, gain/loss, above/below forecast use `spec-azure` for positive and `spec-red` for negative — the green/red pair fails for red-green colour-blind readers (~8% of men). The azure/red pairing is the only sanctioned two-hue encoding.
+- Don't build a sequential scale by fading one flat colour with opacity. A heatmap, choropleth, or intensity grid is a lightness ramp of the hue (dark-saturated → bright); opacity steps are for categorical shares only, and zero cells take a near-black surface tint, not the lightest ramp step.
+- Don't run a large colour fill at the hot small-mark saturation. Bars, areas, and map regions step the hue down in saturation so it doesn't vibrate on black; lightness and hue stay put.
+- Don't color a status pill's text or background. The dot carries the one color; the text stays monochrome and never goes all-caps `label` style.
+- Don't treat a spectrum color as decoration once it's assigned a meaning — a green dot means the win worth flagging, not "a green dot." If the meaning doesn't fit the moment, pick the color whose meaning does — or, if the moment is the expected state, no color at all.
+- Don't let the annotation register headline. Mono annotates — it never titles, and it never speaks on the manifesto or atmosphere headlines.
+- Don't tag a photograph with an invented name. Cursor tags carry real first names with consent, sit beside their person, and never cover a face.
+- Don't color an input border for errors. The message line's red dot carries the severity; the border stays monochrome.
+- Don't mark required fields with an asterisk. Write « requis ».
+- Don't exceed three spec colors in one chart — and prefer one story series with monochrome companions.
+- Don't ship atmosphere in the light theme. No halos, gradients, manifesto, dot matrices, or grain in light — light is product parity only.
+- Don't mark AI surfaces with an icon. The signal is the shimmer plus a word, never a sparkle or robot glyph.
+- Don't ship a mockup floating alone — pair it with a human moment.
+- Don't run more than three product sections without an atmosphere break.
+- Don't ship more than one manifesto section per page.
+- Don't tint, color, or overlay images — no duotone, B&W, grayscale, color washes, or gradient overlays. Only the colorless grain texture touches the image. For color + photo compositions, layer a solid color block on top instead.
+- Don't treat any gradient or Spectrum color as a default — pick by context.
+- Don't run photography without the grain overlay. Stock-photo look is the failure mode.
+- Don't plot dual y-axes, truncate a bar baseline, or stretch an aspect ratio. The honesty rules in "Data viz" are non-negotiable.
+- Don't ship a carousel hero. One hero, one statement, one CTA — slide two is where attention goes to die.
+- Don't fake scarcity or urgency. Real counts and real deadlines, or nothing.
+- Don't use dark patterns — confirm-shaming, hidden costs, forced continuity. The exit stays as easy as the entrance.
+
+## Accessibility
+
+- Every shimmer, reveal, parallax, and rotating-word transition is disabled under `prefers-reduced-motion: reduce`, with final states forced to their resting values. This includes the AI badge sheen and the shimmer skeleton, which freeze to static.
+- Focus rings: white at 12% alpha on dark, black at 12% on light. No Spectrum on focus rings inside admin chrome.
+- The halo makes contrast structural — white type sits on the near-black zone of every atmosphere surface. Verify AAA anyway; if a glow has crept under the type, move the type or pull the glow back toward its edge.
+- Because the system avoids icons, never lean on a glyph to convey state or action — label it in words so meaning survives without visual decoding. A status dot always travels with its word; the dot is never the only carrier of meaning. Exception-first reinforces this: because the ink dot and the spec dot share one construction, the word — never the color — is what names the state.
+- Chart series are never distinguished by color alone — direct-label the lines or pair each legend entry with its dot and word. Every chart and dot matrix carries its annotation-register citation, and the key takeaway is stated in copy, so the data survives without the picture.
+- Inline error messages are wired to their field with `aria-describedby`; toasts announce via a polite live region.
+- On light surfaces, `lime`, `green`, and `azure` dots carry a 1px `hairline-strong` ring.
+- Cursor tags repeat the person's name in the photograph's alt text.
+- Body text meets WCAG AA contrast (4.5:1) on every surface, dark and light; display type on atmosphere targets AAA, per the halo's structural-contrast rule.
+- Every interactive element is keyboard-reachable, and chart tooltips have a touch and keyboard equivalent — hover is never the only path to a value.
+- Every photograph carries descriptive alt text.
