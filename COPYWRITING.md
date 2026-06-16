@@ -1,0 +1,1 @@
+Copywriting rules and examples:
