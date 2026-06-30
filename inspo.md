@@ -1,0 +1,10 @@
+https://dice.fm/
+https://www.nike.com/ca/
+https://www.cosmos.so/careers
+https://savee.com/
+https://www.are.na/editorial
+https://runwayml.com/
+https://www.krea.ai/
+https://openai.com/
+https://www.pentagram.com/
+https://wearecollins.com/
