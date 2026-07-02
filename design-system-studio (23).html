@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Realtime — Design System Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────  TOOL CHROME (self, prefixed --ui-)  ───────────────────────── */
+:root{
+  --ui-bg:#0c0e13;
+  --ui-panel:#12141b;
+  --ui-panel-2:#171a22;
+  --ui-field:#1c202a;
+  --ui-line:#242835;
+  --ui-line-2:#2f3442;
+  --ui-text:#e8eaf0;
+  --ui-text-dim:#9aa1b1;
+  --ui-text-faint:#616779;
+  --ui-accent:#7c6cff;
+  --ui-accent-2:#8f7dff;
+  --ui-accent-press:#6857f0;
+  --ui-good:#3fb56b;
+  --ui-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --ui-mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ui-bg);color:var(--ui-text);
+  font-family:var(--ui-sans);font-size:13px;line-height:1.4;
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer}
+::selection{background:rgba(124,108,255,.35)}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-thumb{background:var(--ui-line-2);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:#3a3f50;background-clip:content-box}
+
+/* ── Top bar ── */
+.topbar{
+  height:52px;display:flex;align-items:center;gap:14px;
+  padding:0 16px;border-bottom:1px solid var(--ui-line);
+  background:linear-gradient(180deg,#12141b,#0e1016);
+  position:relative;z-index:20;
+}
+.brand{display:flex;align-items:center;gap:10px;user-select:none}
+.brand .glyph{
+  width:26px;height:26px;border-radius:7px;flex:none;
+  background:conic-gradient(from 210deg,#7c6cff,#4f46e5,#22d3ee,#7c6cff);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 4px 14px rgba(124,108,255,.35);
+}
+.brand h1{font-size:13px;font-weight:700;letter-spacing:-.2px;margin:0}
+.brand h1 .dim{color:var(--ui-text-faint);font-weight:500}
+.topbar .spacer{flex:1}
+.tb-actions{display:flex;align-items:center;gap:8px}
+.btn{
+  height:32px;padding:0 13px;border-radius:8px;border:1px solid var(--ui-line-2);
+  background:var(--ui-field);color:var(--ui-text);font-size:12.5px;font-weight:600;
+  display:inline-flex;align-items:center;gap:7px;letter-spacing:-.1px;
+  transition:background .12s,border-color .12s,transform .06s;
+}
+.btn:hover{background:#222633;border-color:#3a4052}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:14px;height:14px}
+.btn.ghost{background:transparent}
+.btn.primary{
+  background:var(--ui-accent);border-color:transparent;color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 6px 18px -6px rgba(124,108,255,.7);
+}
+.btn.primary:hover{background:var(--ui-accent-2)}
+.btn.primary:active{background:var(--ui-accent-press)}
+
+/* ── Layout ── */
+.main{display:flex;height:calc(100% - 52px)}
+.config{
+  width:456px;flex:none;height:100%;overflow-y:auto;overflow-x:hidden;
+  background:var(--ui-panel);border-right:1px solid var(--ui-line);
+  scrollbar-gutter:stable;
+}
+.preview-pane{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;background:#0a0b0f}
+
+/* ── Left mini-nav (sticky) ── */
+.subnav{
+  position:sticky;top:0;z-index:10;display:flex;gap:6px;padding:10px 14px;
+  background:rgba(18,20,27,.86);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--ui-line);
+}
+.subnav a{
+  flex:1;text-align:center;text-decoration:none;font-size:12px;font-weight:600;
+  color:var(--ui-text-dim);padding:7px 0;border-radius:7px;border:1px solid transparent;
+  letter-spacing:.2px;transition:.12s;
+}
+.subnav a:hover{color:var(--ui-text);background:var(--ui-field)}
+.subnav a.active{color:#fff;background:var(--ui-accent);border-color:transparent}
+
+/* ── Section headers ── */
+.section-head{
+  padding:20px 16px 6px;
+}
+.section-head .kicker{
+  font-family:var(--ui-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ui-accent-2);font-weight:600;
+}
+.section-head h2{margin:6px 0 2px;font-size:17px;font-weight:700;letter-spacing:-.4px}
+.section-head p{margin:0;color:var(--ui-text-faint);font-size:11.5px;max-width:40ch}
+
+/* ── Accordions ── */
+.group{border-bottom:1px solid var(--ui-line)}
+.group>summary{
+  list-style:none;cursor:pointer;user-select:none;
+  display:flex;align-items:center;gap:9px;padding:12px 16px;
+  font-size:12.5px;font-weight:600;letter-spacing:-.1px;color:var(--ui-text);
+}
+.group>summary::-webkit-details-marker{display:none}
+.group>summary:hover{background:var(--ui-panel-2)}
+.group>summary .chev{width:13px;height:13px;color:var(--ui-text-faint);transition:transform .18s}
+.group[open]>summary .chev{transform:rotate(90deg)}
+.group>summary .count{
+  margin-left:auto;font-family:var(--ui-mono);font-size:10px;color:var(--ui-text-faint);
+  background:var(--ui-field);padding:2px 7px;border-radius:99px;border:1px solid var(--ui-line);
+}
+.group>summary .swrow{margin-left:auto;display:flex;gap:3px}
+.group>summary .swrow i{width:12px;height:12px;border-radius:3px;border:1px solid rgba(255,255,255,.12)}
+.group-body{padding:4px 16px 16px}
+
+/* ── Fields ── */
+.fld{margin-bottom:11px}
+.fld:last-child{margin-bottom:0}
+.fld label{display:block;font-size:11px;color:var(--ui-text-dim);margin-bottom:5px;font-weight:500}
+.fld .hint{color:var(--ui-text-faint);font-size:10px;margin-top:4px;font-family:var(--ui-mono)}
+input[type=text],input[type=url],select,textarea{
+  width:100%;background:var(--ui-field);border:1px solid var(--ui-line);color:var(--ui-text);
+  border-radius:7px;padding:8px 10px;font-size:12px;font-family:var(--ui-sans);
+  transition:border-color .12s,box-shadow .12s;
+}
+input.mono,textarea.mono{font-family:var(--ui-mono);font-size:11.5px}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--ui-accent);box-shadow:0 0 0 3px rgba(124,108,255,.16);
+}
+textarea{resize:vertical;line-height:1.55;min-height:64px}
+select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23616779' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 9px center;padding-right:26px}
+
+/* color row */
+.color-row{display:grid;grid-template-columns:1fr 118px 34px;gap:8px;align-items:center;margin-bottom:8px}
+.color-row .lab{font-size:11.5px;color:var(--ui-text-dim);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.color-row input[type=text]{font-family:var(--ui-mono);font-size:11px;text-align:center;padding:7px 6px}
+.color-row .swatch{position:relative;height:30px;border-radius:7px;border:1px solid var(--ui-line-2);overflow:hidden;cursor:pointer}
+.color-row .swatch input[type=color]{position:absolute;inset:-6px;width:150%;height:150%;border:none;padding:0;cursor:pointer;background:none}
+.color-row .lab em{font-style:normal;font-family:var(--ui-mono);font-size:8.5px;color:var(--ui-text-faint);text-transform:uppercase;letter-spacing:.4px;background:var(--ui-field);padding:1px 4px;border-radius:4px;margin-left:4px}
+.color-row .swatch .rm-color{position:absolute;top:-1px;right:-1px;z-index:2;width:15px;height:15px;border:none;border-radius:0 6px 0 6px;background:rgba(10,11,15,.72);color:#fff;font-size:11px;line-height:15px;padding:0;display:none;place-items:center}
+.color-row:hover .swatch .rm-color{display:grid}
+.color-row .swatch .rm-color:hover{background:#c0392b}
+.add-color{display:grid;grid-template-columns:1fr 96px auto;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--ui-line-2)}
+.add-color input{padding:7px 9px;font-size:11px}
+
+/* type card */
+.type-card{background:var(--ui-panel-2);border:1px solid var(--ui-line);border-radius:9px;padding:10px 11px;margin-bottom:9px}
+.type-card .tc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.type-card .tc-head b{font-size:11.5px;font-weight:600;letter-spacing:-.1px}
+.type-card .tc-head span{font-family:var(--ui-mono);font-size:9.5px;color:var(--ui-text-faint)}
+.tc-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:7px}
+.tc-grid .mini label{font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--ui-text-faint);margin-bottom:3px}
+.tc-grid input{padding:6px 8px;font-size:11px}
+.tc-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:7px}
+
+/* scale kv */
+.kv{display:grid;grid-template-columns:80px 1fr;gap:8px;align-items:center;margin-bottom:7px}
+.kv .k{font-family:var(--ui-mono);font-size:11px;color:var(--ui-text-dim)}
+.kv input{font-family:var(--ui-mono);font-size:11px;padding:6px 9px}
+.subgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+
+/* asset image repeater */
+.img-item{background:var(--ui-panel-2);border:1px solid var(--ui-line);border-radius:8px;padding:9px;margin-bottom:8px;position:relative}
+.img-item .rm{position:absolute;top:7px;right:7px;width:22px;height:22px;border-radius:6px;border:1px solid var(--ui-line-2);background:var(--ui-field);color:var(--ui-text-faint);display:grid;place-items:center;font-size:12px}
+.img-item .rm:hover{color:#ff6b6b;border-color:#5a2b2b}
+.add-btn{width:100%;border:1px dashed var(--ui-line-2);background:transparent;color:var(--ui-text-dim);border-radius:8px;padding:9px;font-weight:600;font-size:11.5px;margin-top:2px}
+.add-btn:hover{border-color:var(--ui-accent);color:var(--ui-accent-2)}
+
+/* live css block */
+.live-css{border-top:1px solid var(--ui-line);background:#0a0b10}
+.live-css .lc-head{display:flex;align-items:center;gap:8px;padding:11px 16px 8px}
+.live-css .lc-head .dot{width:8px;height:8px;border-radius:99px;background:var(--ui-good);box-shadow:0 0 8px var(--ui-good)}
+.live-css .lc-head b{font-size:11px;font-weight:600;letter-spacing:.3px}
+.live-css .lc-head .mini-note{margin-left:auto;font-size:10px;color:var(--ui-text-faint)}
+.live-css textarea{
+  border:none;border-radius:0;background:#08090d;color:#c9cee0;
+  font-family:var(--ui-mono);font-size:11px;line-height:1.7;padding:6px 16px 18px;min-height:220px;
+}
+.live-css textarea:focus{box-shadow:none;border:none}
+
+/* guidance textarea block */
+.guide-fld{margin-bottom:14px}
+.guide-fld .gl{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.guide-fld .gl b{font-size:11.5px;font-weight:600;color:var(--ui-text)}
+.guide-fld .gl span{font-family:var(--ui-mono);font-size:9px;color:var(--ui-text-faint)}
+.guide-note{font-size:10.5px;color:var(--ui-text-faint);margin:-2px 0 8px;line-height:1.45}
+
+/* ── Preview toolbar ── */
+.pv-toolbar{
+  height:44px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;
+  border-bottom:1px solid var(--ui-line);background:#0d0f14;
+}
+.pv-toolbar .lbl{font-family:var(--ui-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ui-text-faint)}
+.pv-toolbar .spacer{flex:1}
+.seg{display:flex;background:var(--ui-field);border:1px solid var(--ui-line);border-radius:8px;padding:2px}
+.seg button{background:transparent;border:none;color:var(--ui-text-dim);font-size:11px;font-weight:600;padding:5px 11px;border-radius:6px}
+.seg button.on{background:var(--ui-accent);color:#fff}
+.pv-scroll{flex:1;min-height:0;overflow:hidden;padding:22px;display:flex;justify-content:center;align-items:stretch;
+  background:
+    radial-gradient(circle at 1px 1px, #1b1e28 1px, transparent 0) 0 0/22px 22px,
+    #0a0b0f;
+}
+.device{
+  width:100%;max-width:1080px;height:100%;transition:max-width .25s ease;
+  border-radius:14px;overflow:hidden;border:1px solid #20232e;display:block;position:relative;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.03);
+  background:#fff;
+}
+.device.mobile{max-width:400px}
+.device iframe{position:absolute;top:0;left:0;width:100%;height:100%;transform-origin:top left;border:none;display:block;background:#fff}
+
+.hidden{display:none!important}
+.min-only{display:none}
+#config.mode-minimal .full-only{display:none}
+#config.mode-minimal .min-only{display:block}
+.mode-seg{display:flex;width:100%}
+.mode-seg button{flex:1}
+#seedControls .color-row{grid-template-columns:1fr 118px 34px}
+#config input,#config select,#config textarea,#config .color-row,#config .type-card{scroll-margin-top:66px}
+.edit-flash{animation:editFlash 1.3s ease}
+@keyframes editFlash{
+  0%{box-shadow:0 0 0 2px var(--ui-accent),0 0 0 7px rgba(124,108,255,.30);border-radius:8px}
+  70%{box-shadow:0 0 0 2px var(--ui-accent),0 0 0 7px rgba(124,108,255,0);border-radius:8px}
+  100%{box-shadow:none}
+}
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ui-panel-2);border:1px solid var(--ui-line-2);color:var(--ui-text);
+  padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;
+  box-shadow:0 12px 40px -8px rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:.25s;z-index:50;
+  display:flex;align-items:center;gap:8px;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ic{color:var(--ui-good)}
+
+@media(max-width:920px){
+  body{overflow:auto}
+  .main{flex-direction:column;height:auto}
+  .config{width:100%;height:auto;max-height:none;border-right:none;border-bottom:1px solid var(--ui-line)}
+  .preview-pane{height:80vh}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="glyph"></div>
+    <h1>Realtime <span class="dim">/ Design System Studio</span></h1>
+  </div>
+  <div class="spacer"></div>
+  <div class="tb-actions">
+    <input type="file" id="importFile" accept=".md,.markdown,text/markdown" class="hidden">
+    <button class="btn ghost" id="loadBtn" title="Load an existing DESIGN.md">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+      Load .md
+    </button>
+    <button class="btn ghost" id="copyCssBtn" title="Copy the :root token block">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+      Copy CSS
+    </button>
+    <button class="btn ghost" id="downloadHtmlBtn" title="Download the live preview as a standalone .html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 9l-3 3 3 3m6-6l3 3-3 3"/><path d="M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Download HTML
+    </button>
+    <button class="btn primary" id="downloadBtn" title="Download design.md">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+      Download design.md
+    </button>
+  </div>
+</div>
+
+<div class="main">
+  <!-- LEFT: configuration -->
+  <div class="config" id="config">
+    <div class="subnav">
+      <a href="#sec-tokens" class="active" data-nav="tokens">① Tokens</a>
+      <a href="#sec-guidance" data-nav="guidance">② Brand &amp; Guidance</a>
+    </div>
+
+    <!-- SECTION 1: TOKENS -->
+    <div id="sec-tokens">
+      <div class="section-head">
+        <div class="kicker">Section 1 · Renderable</div>
+        <h2>Tokens</h2>
+        <p>CSS design tokens, assets and structural values — everything the live preview renders. Exported as the machine-readable front-matter.</p>
+      </div>
+
+      <div class="section-head" style="padding-top:6px">
+        <div class="fld"><label>Brand name</label><input type="text" data-grp="meta" data-key="name" id="metaName"></div>
+        <div class="fld"><label>Description <span style="color:var(--ui-text-faint)">(design-language paragraph)</span></label><textarea data-grp="meta" data-key="description" id="metaDesc" style="min-height:70px"></textarea></div>
+        <div class="fld" style="margin-bottom:0"><label>Token mode</label>
+          <div class="seg mode-seg" id="tokenModeSeg">
+            <button data-mode="minimal" class="on">Minimal</button>
+            <button data-mode="advanced">Advanced</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="seedPanel" class="min-only">
+        <div class="group-body" id="seedControls" style="padding-top:14px"></div>
+        <p class="guide-note" style="padding:0 16px 16px;border-bottom:1px solid var(--ui-line)">Everything else — the full ink ramp, surfaces, type scale, spacing and radius steps, and the dark theme — is generated from these seeds. Switch to <b>Advanced</b> to fine-tune any individual token.</p>
+      </div>
+
+      <details class="group full-only" open id="grp-colors">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Colors <span class="swrow" id="colorMiniSw"></span></summary>
+        <div class="group-body" id="colorControls"></div>
+      </details>
+
+      <details class="group full-only" id="grp-dark">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Dark theme <span class="count">auto</span></summary>
+        <div class="group-body" id="darkControls"></div>
+      </details>
+
+      <details class="group full-only" id="grp-type">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Typography <span class="count" id="typeCount"></span></summary>
+        <div class="group-body" id="typeControls"></div>
+      </details>
+
+      <details class="group full-only" id="grp-scale">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Radius &amp; Spacing</summary>
+        <div class="group-body">
+          <div class="subgrid">
+            <div>
+              <div class="guide-note" style="margin-bottom:8px;color:var(--ui-accent-2)">rounded</div>
+              <div id="roundedControls"></div>
+            </div>
+            <div>
+              <div class="guide-note" style="margin-bottom:8px;color:var(--ui-accent-2)">spacing</div>
+              <div id="spacingControls"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="group full-only" id="grp-layout">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Container &amp; grid</summary>
+        <div class="group-body" id="layoutControls"></div>
+      </details>
+
+      <details class="group full-only" id="grp-comp">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Component knobs</summary>
+        <div class="group-body" id="compControls"></div>
+      </details>
+
+      <details class="group" id="grp-assets">
+        <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> Assets</summary>
+        <div class="group-body" id="assetControls"></div>
+      </details>
+
+      <div class="live-css">
+        <div class="lc-head">
+          <span class="dot"></span><b>:root — live CSS tokens</b>
+          <span class="mini-note">editable · parses back into the form</span>
+        </div>
+        <textarea id="cssMirror" class="mono" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 2: GUIDANCE -->
+    <div id="sec-guidance">
+      <div class="section-head">
+        <div class="kicker">Section 2 · Natural language</div>
+        <h2>Brand &amp; Guidance</h2>
+        <p>Decisions, concepts and rules that can't be rendered — the "why" and the "don't". Exported as the markdown body of design.md.</p>
+      </div>
+      <div id="guidanceControls"></div>
+      <div style="height:40px"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: preview -->
+  <div class="preview-pane">
+    <div class="pv-toolbar">
+      <span class="lbl">Live preview · click any element to edit</span>
+      <div class="seg" id="modeSeg">
+        <button data-m="tokens" class="on">Tokens</button>
+        <button data-m="guidance">Guidance</button>
+      </div>
+      <span class="spacer"></span>
+      <div class="seg" id="themeSeg" title="Preview theme">
+        <button data-t="light" class="on">Light</button>
+        <button data-t="dark">Dark</button>
+      </div>
+      <div class="seg" id="zoomSeg" title="Preview scale — lower shows a wider viewport">
+        <button data-z="1">100%</button>
+        <button data-z="0.75">75%</button>
+        <button data-z="0.5" class="on">50%</button>
+      </div>
+      <div class="seg" id="viewSeg">
+        <button data-w="desktop" class="on">Desktop</button>
+        <button data-w="mobile">Mobile</button>
+      </div>
+    </div>
+    <div class="pv-scroll">
+      <div class="device" id="device"><iframe id="pv" title="preview"></iframe></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="ic">✓</span><span id="toastMsg">Done</span></div>
+
+<script>
+"use strict";
+/* ══════════════════════════════════════════════════════════════════
+   SCHEMA + DEFAULT STATE
+   ══════════════════════════════════════════════════════════════════ */
+const BASE_COLORS = [
+  ["primary","Primary / accent"],["on-primary","On-primary"],
+  ["primary-hover","Primary hover"],["primary-focus","Primary focus"],
+  ["ink","Ink (strong)"],["ink-muted","Ink muted"],["ink-subtle","Ink subtle"],["ink-tertiary","Ink tertiary"],
+  ["canvas","Canvas"],["surface-1","Surface 1"],["surface-2","Surface 2"],["surface-3","Surface 3"],
+  ["hairline","Hairline"],["hairline-strong","Hairline strong"],
+  ["semantic-success","Success"],["semantic-error","Error"],["semantic-warning","Warning"],
+];
+const TYPE_ROLES = ["display-xl","display-lg","display-md","headline","card-title","subhead","body-lg","body","body-sm","caption","button","eyebrow","mono"];
+const ROUNDED_KEYS = ["xs","sm","md","lg","xl","xxl","pill","full"];
+const SPACING_KEYS = ["xxs","xs","sm","md","lg","xl","xxl","section"];
+const LAYOUT_KEYS = [
+  ["container","Content max-width","--container"],
+  ["wide","Wide max-width","--container-wide"],
+  ["narrow","Narrow / reading","--container-narrow"],
+  ["gutter","Page gutter / grid gap","--gutter"],
+  ["columns","Grid columns","--columns"],
+];
+
+const state = {
+  meta:{ name:"Minimal Monochrome", description:"A stark, monochrome design language built entirely in black, white, and gray. There is no accent color — hierarchy is carried by contrast, weight, and spacing alone. Inter is used for every text role, from display headlines to captions, kept at default tracking with only slight negative letter-spacing on larger sizes. Buttons are pill-shaped, cards are flat with hairline borders, and the overall mood is quiet, technical, and restrained." },
+  colors:{
+    "primary":"#000000","on-primary":"#ffffff","primary-hover":"#1a1a1a","primary-focus":"#000000",
+    "ink":"#000000","ink-muted":"#4d4d4d","ink-subtle":"#808080","ink-tertiary":"#b3b3b3",
+    "canvas":"#ffffff","surface-1":"#ffffff","surface-2":"#f7f7f7","surface-3":"#f0f0f0",
+    "hairline":"#ebebeb","hairline-strong":"#d4d4d4",
+    "semantic-success":"#000000","semantic-error":"#000000","semantic-warning":"#000000",
+  },
+  type:{
+    "display-xl":{family:"Inter, sans-serif",size:"48px",weight:"600",line:"48px",tracking:"-2.4px"},
+    "display-lg":{family:"Inter, sans-serif",size:"32px",weight:"600",line:"40px",tracking:"-1.28px"},
+    "display-md":{family:"Inter, sans-serif",size:"24px",weight:"600",line:"32px",tracking:"-0.6px"},
+    "headline":{family:"Inter, sans-serif",size:"20px",weight:"600",line:"28px",tracking:"-0.4px"},
+    "card-title":{family:"Inter, sans-serif",size:"18px",weight:"600",line:"24px",tracking:"-0.2px"},
+    "subhead":{family:"Inter, sans-serif",size:"16px",weight:"500",line:"24px",tracking:"0px"},
+    "body-lg":{family:"Inter, sans-serif",size:"18px",weight:"400",line:"28px",tracking:"0px"},
+    "body":{family:"Inter, sans-serif",size:"16px",weight:"400",line:"24px",tracking:"0px"},
+    "body-sm":{family:"Inter, sans-serif",size:"14px",weight:"400",line:"20px",tracking:"0px"},
+    "caption":{family:"Inter, sans-serif",size:"12px",weight:"400",line:"16px",tracking:"0px"},
+    "button":{family:"Inter, sans-serif",size:"14px",weight:"500",line:"20px",tracking:"0px"},
+    "eyebrow":{family:"Inter, sans-serif",size:"12px",weight:"500",line:"16px",tracking:"1px"},
+    "mono":{family:"Inter, ui-monospace, monospace",size:"13px",weight:"400",line:"20px",tracking:"0px"},
+  },
+  rounded:{ xs:"2px",sm:"4px",md:"8px",lg:"12px",xl:"16px",xxl:"24px",pill:"999px",full:"50%" },
+  spacing:{ xxs:"2px",xs:"4px",sm:"8px",md:"16px",lg:"24px",xl:"40px",xxl:"64px",section:"96px" },
+  layout:{ container:"1320px", wide:"1558px", narrow:"898px", gutter:"24px", columns:"12" },
+  seeds:{ ink:"#000000", canvas:"#ffffff", accent:"#000000", fontFamily:"Inter, sans-serif", baseSize:"16px", ratio:"1.25", spaceUnit:"8px", radius:"8px", container:"1320px", gutter:"24px" },
+  comp:{ btnRadius:"pill", cardRadius:"lg", inputRadius:"md", btnPad:"10px 18px", cardPad:"lg" },
+  assets:{
+    logos:{
+      primary:"https://placehold.co/220x60/ededed/737373?text=Logo",
+      mark:"https://placehold.co/64x64/ededed/737373?text=Icon",
+      wordmark:"https://placehold.co/220x56/ededed/737373?text=Wordmark",
+      inverse:"https://placehold.co/220x60/1a1a1a/ededed?text=Logo+(inverse)"
+    },
+    images:[
+      {name:"hero",url:"https://placehold.co/1200x600/f5f5f5/737373?text=Hero+image",alt:"Hero image"},
+      {name:"feature",url:"https://placehold.co/800x450/ededed/737373?text=Feature+image",alt:"Feature image"}
+    ],
+  },
+  guide:{
+    overview:"A minimal marketing/product surface rendered entirely in black, white, and gray. The core visual thesis is contrast-as-hierarchy: no color is used to signal importance, only weight, size, and spacing. The one thing to get right is restraint — resist adding an accent color or decorative flourish.",
+    colors_brand:"There is no accent color in this system. \"Primary\" is pure black, used only for the default button fill and focus states — never as a decorative highlight.",
+    colors_surface:"Canvas is pure white. Surface-2 and surface-3 are barely-there grays used to differentiate cards and elevated panels from the base canvas without introducing shadow.",
+    colors_text:"Ink ramps from pure black (headlines, primary body copy) down through muted and subtle grays (secondary text, placeholders) to a near-invisible tertiary gray for disabled or decorative text.",
+    colors_semantic:"Success, error, and warning states are all rendered in black — differentiated by icon and copy, not color, to preserve the monochrome system.",
+    type_family:"Inter is the only typeface in the system, used for display, body, and mono roles alike. There is no secondary display face.",
+    type_hierarchy:"Display sizes map to hero and section headers, headline/card-title to component titles, body sizes to paragraph copy, and caption/eyebrow to metadata and labels.",
+    type_principles:"Larger sizes carry tighter (negative) letter-spacing for density; body and smaller sizes sit at 0 tracking for readability. Weight (400–600) does the work that a second typeface normally would.",
+    type_substitutes:"If Inter is unavailable, fall back to the system sans-serif stack (-apple-system, \"Segoe UI\", sans-serif). Preserve weight and size exactly; do not substitute a serif or display face.",
+    layout_spacing:"An 8px base rhythm (with a 4px half-step) governs all spacing, from tight component padding up to 96px section breaks.",
+    layout_grid:"Content sits in a single centered column with generous side gutters; no complex multi-column grid is used at this stage.",
+    layout_whitespace:"Airy and unhurried — whitespace is the primary tool for separating sections in the absence of color or heavy borders.",
+    elevation:"The system is deliberately flat. No drop shadows; layering is signaled only by subtle surface-color shifts and hairline borders.",
+    elevation_decorative:"None. No gradients, glows, blurs, or texture are used anywhere in this system.",
+    shapes_radius:"Buttons and badges use fully pilled corners; cards use large (12–16px) radii; inputs use medium (8px) radii. Nothing is sharp-cornered except hairline dividers.",
+    shapes_photography:"Images are cropped to simple rectangular ratios with no rounding beyond the standard card radius; no illustration style is defined yet.",
+    comp_buttons:"Primary (solid black), secondary (outlined), and tertiary (text-only) variants, all pill-shaped except tertiary. Hover darkens fill slightly; focus uses a solid black ring; disabled drops opacity.",
+    comp_cards:"Flat surfaces with hairline borders and generous padding. Feature cards use a slightly larger radius and a faint surface-2 tint to differentiate from standard cards.",
+    comp_inputs:"Fields are white with a hairline-strong border, switching to solid black on focus. Labels use caption typography in ink-muted.",
+    comp_nav:"A simple top nav on a white background with a hairline bottom border; footer uses surface-1 with muted body-sm text.",
+    comp_signature:"None yet defined — this is a bare, unbranded baseline system.",
+    dos:"Rely on weight, size, and spacing to create hierarchy.\nKeep every surface within the black/white/gray ramp.",
+    donts:"Introduce a color accent anywhere in the system.\nAdd shadows, gradients, or decorative texture.",
+    resp_breakpoints:"Three intents: mobile (<640px, single column), tablet (640–1024px, two columns), desktop (>1024px, the full 12-column grid at the 1120px container).",
+    resp_touch:"Interactive targets are at least 44×44px, with a minimum of 8px spacing between adjacent controls.",
+    resp_collapsing:"Multi-column grids stack to one column, nav links collapse to a menu, and side-by-side media and text reflow to stacked. The primary CTA never hides.",
+    resp_image:"Images scale fluidly within their rounded frames, keeping their crop ratio; heroes may switch to a tighter crop on mobile. Logos never stretch.",
+    iteration:"To extend this system, add new tokens within the existing black/white/gray ramp only, and reuse the 8px spacing scale for any new component. Avoid introducing new typefaces or colors without deliberately revisiting the \"Minimal Monochrome\" premise.",
+    gaps:"No dark-mode surface set is defined. No illustration or iconography style is specified. Responsive breakpoints and touch-target rules are not yet defined.",
+  }
+};
+/* Dynamic colour registry: base keys + any custom ones the user adds */
+state.colorOrder  = BASE_COLORS.map(c=>c[0]);
+state.colorLabels = Object.fromEntries(BASE_COLORS);
+state.dark = {
+  "primary":"#f5f5f5","on-primary":"#0a0a0a","primary-hover":"#e1e1e1","primary-focus":"#d1d1d1",
+  "ink":"#f5f5f5","ink-muted":"#cfcfcf","ink-subtle":"#a8a8a8","ink-tertiary":"#828282",
+  "canvas":"#141414","surface-1":"#141414","surface-2":"#141414","surface-3":"#141414",
+  "hairline":"#333333","hairline-strong":"#4d4d4d",
+  "semantic-success":"#d25656","semantic-error":"#d25656","semantic-warning":"#d25656",
+};
+function registerColor(key,val,label){
+  if(state.colors[key]===undefined){ state.colorOrder.push(key); }
+  state.colors[key]=val;
+  if(!state.colorLabels[key]) state.colorLabels[key]=label||key;
+  if(state.dark && state.dark[key]===undefined) state.dark[key]=deriveDarkColor(key,val);
+}
+const isBaseColor = k => state.colorLabels[k]!==undefined && BASE_COLORS.some(c=>c[0]===k);
+
+/* Guidance schema — mirrors the template markdown body exactly */
+const GUIDE_SCHEMA = [
+  {h2:"Overview", note:"2–4 sentences: what surface this is, the visual thesis, the one thing to get right.", fields:[
+    {key:"overview", h3:null, placeholder:"e.g. A product-marketing canvas. The thesis is disciplined restraint: one accent, hairline structure, generous whitespace. Get the accent discipline right — colour must always mean an action."}
+  ]},
+  {h2:"Colors", fields:[
+    {key:"colors_brand", h3:"Brand & Accent", placeholder:"Where the accent is allowed to appear — and where it is NOT."},
+    {key:"colors_surface", h3:"Surface", placeholder:"The canvas → elevated-panel progression; when each surface level is used."},
+    {key:"colors_text", h3:"Text", placeholder:"The ink ramp strongest → faintest and what each tone is for."},
+    {key:"colors_semantic", h3:"Semantic", placeholder:"Success / error / warning usage."},
+  ]},
+  {h2:"Typography", fields:[
+    {key:"type_family", h3:"Font Family", placeholder:"Display face, body face, mono face and their intended roles."},
+    {key:"type_hierarchy", h3:"Hierarchy", placeholder:"How the roles map to real page elements (hero, section title, body, eyebrow…)."},
+    {key:"type_principles", h3:"Principles", placeholder:"Tracking, weight and case conventions that make the type feel right."},
+    {key:"type_substitutes", h3:"Note on Font Substitutes", placeholder:"Fallback stack and how close the substitute should get."},
+  ]},
+  {h2:"Layout", fields:[
+    {key:"layout_spacing", h3:"Spacing System", placeholder:"The spacing scale in practice; base unit and rhythm."},
+    {key:"layout_grid", h3:"Grid & Container", placeholder:"Max content width, column count, gutters."},
+    {key:"layout_whitespace", h3:"Whitespace Philosophy", placeholder:"Dense vs. airy; how much room sections breathe."},
+  ]},
+  {h2:"Elevation & Depth", fields:[
+    {key:"elevation", h3:null, placeholder:"Shadow usage (or deliberate flatness); how layering is signalled."},
+    {key:"elevation_decorative", h3:"Decorative Depth", placeholder:"Gradients, glows, blurs, texture — and how sparingly they're used."},
+  ]},
+  {h2:"Shapes", fields:[
+    {key:"shapes_radius", h3:"Border Radius Scale", placeholder:"Which radii apply to which elements; the overall roundness personality."},
+    {key:"shapes_photography", h3:"Photography & Illustration Geometry", placeholder:"Crop ratios, framing, corner treatment of imagery."},
+  ]},
+  {h2:"Components", fields:[
+    {key:"comp_buttons", h3:"Buttons", placeholder:"Variants, states (default/hover/pressed/focus/disabled), sizing."},
+    {key:"comp_cards", h3:"Cards & Containers", placeholder:"Panel styles, borders, padding, when each card type is used."},
+    {key:"comp_inputs", h3:"Inputs & Forms", placeholder:"Field styling, focus treatment, labels, validation."},
+    {key:"comp_nav", h3:"Navigation", placeholder:"Top nav, mobile nav, footer navigation behaviour."},
+    {key:"comp_signature", h3:"Signature Components", placeholder:"The 1–3 components that most define this brand's identity."},
+  ]},
+  {h2:"Do's and Don'ts", fields:[
+    {key:"dos", h3:"Do", list:true, placeholder:"One rule per line.\nKeep colour spent on actions only.\nLead sections with an eyebrow + display title."},
+    {key:"donts", h3:"Don't", list:true, placeholder:"One anti-pattern per line.\nDon't add drop-shadows to flat cards.\nDon't tint body text with the accent."},
+  ]},
+  {h2:"Responsive Behavior", fields:[
+    {key:"resp_breakpoints", h3:"Breakpoints", placeholder:"Named breakpoints and layout intent at each."},
+    {key:"resp_touch", h3:"Touch Targets", placeholder:"Minimum sizes and spacing for touch."},
+    {key:"resp_collapsing", h3:"Collapsing Strategy", placeholder:"What stacks, hides or reflows as width shrinks."},
+    {key:"resp_image", h3:"Image Behavior", placeholder:"How imagery scales, crops or swaps across sizes."},
+  ]},
+  {h2:"Iteration Guide", fields:[
+    {key:"iteration", h3:null, placeholder:"How to extend this system — adding a token, component or page type — without breaking the language."}
+  ]},
+  {h2:"Known Gaps", fields:[
+    {key:"gaps", h3:null, placeholder:"What this analysis does not yet cover; unresolved questions."}
+  ]},
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════════════════════════════ */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const escAttr=s=>esc(s).replace(/"/g,"&quot;");
+const isHex=v=>/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test((v||"").trim());
+const to6=v=>{v=(v||"").trim();if(/^#[0-9a-fA-F]{3}$/.test(v))return "#"+v.slice(1).split("").map(c=>c+c).join("");return /^#[0-9a-fA-F]{6}$/.test(v)?v:"#000000";};
+function debounce(fn,ms){let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);};}
+function toast(msg){const t=$("#toast");$("#toastMsg").textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),1900);}
+const famPrimary=f=>String(f||"").split(",")[0].replace(/['"]/g,"").trim();
+
+/* ══════════════════════════════════════════════════════════════════
+   BUILD LEFT CONTROLS
+   ══════════════════════════════════════════════════════════════════ */
+function buildColors(){
+  const box=$("#colorControls");
+  const rows = state.colorOrder.map(k=>{
+    const v=state.colors[k];
+    const label=state.colorLabels[k]||k;
+    const rm = isBaseColor(k) ? "" : `<button class="rm-color" data-rmcolor="${escAttr(k)}" title="Remove token">×</button>`;
+    return `<div class="color-row${isBaseColor(k)?"":" custom"}" data-key="${escAttr(k)}">
+      <div class="lab" title="--color-${escAttr(k)}">${esc(label)}${isBaseColor(k)?"":' <em>custom</em>'}</div>
+      <input type="text" class="mono" data-grp="colors" data-key="${escAttr(k)}" value="${escAttr(v)}" spellcheck="false">
+      <div class="swatch"><input type="color" data-grp="colors" data-key="${escAttr(k)}" value="${to6(v)}">${rm}</div>
+    </div>`;
+  }).join("");
+  box.innerHTML = rows + `
+    <div class="add-color">
+      <input type="text" id="newColorName" placeholder="new-token-name" spellcheck="false">
+      <input type="text" id="newColorVal" class="mono" placeholder="#hex / value" spellcheck="false">
+      <button class="add-btn" id="addColorBtn" style="margin:0">+ Add</button>
+    </div>`;
+}
+function buildSeeds(){
+  const box=$("#seedControls"); if(!box) return;
+  const s=state.seeds;
+  const colorRow=(k,label)=>`<div class="color-row" data-key="seed-${k}">
+     <div class="lab">${esc(label)}</div>
+     <input type="text" class="mono" data-grp="seed" data-key="${k}" value="${escAttr(s[k])}" spellcheck="false">
+     <div class="swatch"><input type="color" data-grp="seed" data-key="${k}" value="${to6(s[k])}"></div>
+   </div>`;
+  const fld=(k,label,hint)=>`<div class="fld" style="margin-bottom:0"><label>${esc(label)}${hint?` <span class="hint" style="display:inline">${hint}</span>`:""}</label>
+     <input type="text" class="mono" data-grp="seed" data-key="${k}" value="${escAttr(s[k])}"></div>`;
+  const head=t=>`<div class="guide-note" style="margin:0 0 8px;color:var(--ui-accent-2);text-transform:uppercase;letter-spacing:.6px;font-size:9.5px">${t}</div>`;
+  box.innerHTML =
+    head("Core colours")+colorRow("ink","Ink")+colorRow("canvas","Canvas")+colorRow("accent","Accent")+
+    `<div style="height:16px"></div>`+head("Type")+fld("fontFamily","Font family")+
+    `<div class="subgrid" style="margin-top:11px">${fld("baseSize","Base size","px")}${fld("ratio","Scale ratio","×")}</div>`+
+    `<div style="height:16px"></div>`+head("Geometry")+
+    `<div class="subgrid">${fld("spaceUnit","Space unit","px")}${fld("radius","Base radius","px")}</div>`+
+    `<div class="subgrid" style="margin-top:11px">${fld("container","Container","px")}${fld("gutter","Gutter","px")}</div>`;
+}
+function buildDark(){
+  const box=$("#darkControls"); if(!box) return;
+  const rows=state.colorOrder.map(k=>{
+    const v=(state.dark&&state.dark[k])||state.colors[k];
+    return `<div class="color-row" data-key="${escAttr(k)}">
+      <div class="lab" title="--color-${escAttr(k)} · dark">${esc(state.colorLabels[k]||k)}</div>
+      <input type="text" class="mono" data-grp="dark" data-key="${escAttr(k)}" value="${escAttr(v)}" spellcheck="false">
+      <div class="swatch"><input type="color" data-grp="dark" data-key="${escAttr(k)}" value="${to6(v)}"></div>
+    </div>`;
+  }).join("");
+  box.innerHTML =
+    `<p class="guide-note" style="margin:0 0 10px">Auto-derived from your light tokens. Edit any value to refine, or regenerate.</p>
+     <button class="add-btn" id="regenDarkBtn" style="margin:0 0 12px">↻ Regenerate from light tokens</button>`+rows;
+}
+function refreshColorMini(){
+  $("#colorMiniSw").innerHTML = ["primary","ink","canvas","surface-2","hairline-strong","semantic-error"]
+    .map(k=>`<i style="background:${escAttr(state.colors[k])}"></i>`).join("");
+}
+function buildType(){
+  $("#typeCount").textContent = TYPE_ROLES.length+" roles";
+  $("#typeControls").innerHTML = TYPE_ROLES.map(role=>{
+    const t=state.type[role];
+    return `<div class="type-card">
+      <div class="tc-head"><b>${role}</b><span>--font-${role}-*</span></div>
+      <div class="tc-grid">
+        <div class="mini"><label>Family</label><input type="text" data-grp="type" data-key="${role}" data-prop="family" value="${escAttr(t.family)}"></div>
+        <div class="mini"><label>Weight</label><input type="text" class="mono" data-grp="type" data-key="${role}" data-prop="weight" value="${escAttr(t.weight)}"></div>
+      </div>
+      <div class="tc-row3">
+        <div class="mini"><label>Size</label><input type="text" class="mono" data-grp="type" data-key="${role}" data-prop="size" value="${escAttr(t.size)}"></div>
+        <div class="mini"><label>Line</label><input type="text" class="mono" data-grp="type" data-key="${role}" data-prop="line" value="${escAttr(t.line)}"></div>
+        <div class="mini"><label>Track</label><input type="text" class="mono" data-grp="type" data-key="${role}" data-prop="tracking" value="${escAttr(t.tracking)}"></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+function buildScale(){
+  $("#roundedControls").innerHTML = ROUNDED_KEYS.map(k=>
+    `<div class="kv"><div class="k">${k}</div><input type="text" class="mono" data-grp="rounded" data-key="${k}" value="${escAttr(state.rounded[k])}"></div>`).join("");
+  $("#spacingControls").innerHTML = SPACING_KEYS.map(k=>
+    `<div class="kv"><div class="k">${k}</div><input type="text" class="mono" data-grp="spacing" data-key="${k}" value="${escAttr(state.spacing[k])}"></div>`).join("");
+}
+function buildLayout(){
+  $("#layoutControls").innerHTML = LAYOUT_KEYS.map(([k,label,cssvar])=>
+    `<div class="fld"><label>${esc(label)} <span class="hint" style="display:inline">${cssvar}</span></label>
+     <input type="text" class="mono" data-grp="layout" data-key="${k}" value="${escAttr(state.layout[k])}"></div>`).join("");
+}
+function buildComp(){
+  const rOpts=ROUNDED_KEYS.map(k=>`<option value="${k}">rounded.${k} (${escAttr(state.rounded[k])})</option>`).join("");
+  const sOpts=SPACING_KEYS.map(k=>`<option value="${k}">spacing.${k} (${escAttr(state.spacing[k])})</option>`).join("");
+  $("#compControls").innerHTML = `
+    <div class="fld"><label>Button radius</label><select data-grp="comp" data-key="btnRadius">${rOpts}</select></div>
+    <div class="fld"><label>Card radius</label><select data-grp="comp" data-key="cardRadius">${rOpts}</select></div>
+    <div class="fld"><label>Input radius</label><select data-grp="comp" data-key="inputRadius">${rOpts}</select></div>
+    <div class="fld"><label>Button padding <span class="hint" style="display:inline">y x</span></label><input type="text" class="mono" data-grp="comp" data-key="btnPad" value="${escAttr(state.comp.btnPad)}"></div>
+    <div class="fld"><label>Card padding</label><select data-grp="comp" data-key="cardPad">${sOpts}</select></div>`;
+  $("#compControls [data-key=btnRadius]").value=state.comp.btnRadius;
+  $("#compControls [data-key=cardRadius]").value=state.comp.cardRadius;
+  $("#compControls [data-key=inputRadius]").value=state.comp.inputRadius;
+  $("#compControls [data-key=cardPad]").value=state.comp.cardPad;
+}
+function buildAssets(){
+  const L=state.assets.logos;
+  const logoRow=(k,lbl)=>`<div class="fld"><label>Logo · ${lbl}</label><input type="url" data-grp="logo" data-key="${k}" placeholder="https://…/${k}.svg" value="${escAttr(L[k])}"></div>`;
+  const imgs=state.assets.images.map((im,i)=>`
+    <div class="img-item" data-idx="${i}">
+      <button class="rm" data-rmimg="${i}" title="Remove">×</button>
+      <div class="fld" style="margin-bottom:8px"><label>Name</label><input type="text" data-grp="img" data-idx="${i}" data-prop="name" value="${escAttr(im.name)}"></div>
+      <div class="fld" style="margin-bottom:8px"><label>URL</label><input type="url" data-grp="img" data-idx="${i}" data-prop="url" placeholder="https://…/image.jpg" value="${escAttr(im.url)}"></div>
+      <div class="fld" style="margin-bottom:0"><label>Alt</label><input type="text" data-grp="img" data-idx="${i}" data-prop="alt" value="${escAttr(im.alt)}"></div>
+    </div>`).join("");
+  $("#assetControls").innerHTML =
+    logoRow("primary","primary")+logoRow("mark","mark")+logoRow("wordmark","wordmark")+logoRow("inverse","inverse")+
+    `<div class="guide-note" style="margin:10px 0 6px;color:var(--ui-accent-2)">images</div>`+imgs+
+    `<button class="add-btn" id="addImg">+ Add image</button>`;
+}
+function buildGuidance(){
+  const box=$("#guidanceControls");
+  box.innerHTML = GUIDE_SCHEMA.map((sec,i)=>{
+    const fields=sec.fields.map(f=>{
+      const val=state.guide[f.key]||"";
+      const sub = f.h3 ? `<b>${esc(f.h3)}</b>` : `<b style="color:var(--ui-accent-2)">${esc(sec.h2)}</b>`;
+      const tag = f.list ? '<span>list</span>' : '<span>prose</span>';
+      return `<div class="guide-fld">
+        <div class="gl">${sub}${tag}</div>
+        <textarea data-grp="guide" data-key="${f.key}" placeholder="${escAttr(f.placeholder)}" style="min-height:${f.list?70:56}px">${esc(val)}</textarea>
+      </div>`;
+    }).join("");
+    return `<details class="group" ${i===0?"open":""}>
+      <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg> ${esc(sec.h2)}</summary>
+      <div class="group-body">${fields}</div>
+    </details>`;
+  }).join("");
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TOKENS → CSS
+   ══════════════════════════════════════════════════════════════════ */
+function generateRootCSS(){
+  let L=[":root{"];
+  L.push("  /* colors */");
+  state.colorOrder.forEach(k=>L.push(`  --color-${k}: ${state.colors[k]};`));
+  L.push("");L.push("  /* radius */");
+  ROUNDED_KEYS.forEach(k=>L.push(`  --radius-${k}: ${state.rounded[k]};`));
+  L.push("");L.push("  /* spacing */");
+  SPACING_KEYS.forEach(k=>L.push(`  --space-${k}: ${state.spacing[k]};`));
+  L.push("");L.push("  /* layout / container */");
+  LAYOUT_KEYS.forEach(([k,,cssvar])=>L.push(`  ${cssvar}: ${state.layout[k]};`));
+  L.push("");L.push("  /* typography */");
+  TYPE_ROLES.forEach(r=>{
+    const t=state.type[r];
+    L.push(`  --font-${r}-family: ${t.family};`);
+    L.push(`  --font-${r}-size: ${t.size};`);
+    L.push(`  --font-${r}-weight: ${t.weight};`);
+    L.push(`  --font-${r}-line: ${t.line};`);
+    L.push(`  --font-${r}-tracking: ${t.tracking};`);
+  });
+  L.push("");L.push("  /* component knobs */");
+  L.push(`  --btn-radius: var(--radius-${state.comp.btnRadius});`);
+  L.push(`  --card-radius: var(--radius-${state.comp.cardRadius});`);
+  L.push(`  --input-radius: var(--radius-${state.comp.inputRadius});`);
+  L.push(`  --btn-pad: ${state.comp.btnPad};`);
+  L.push(`  --card-pad: var(--space-${state.comp.cardPad});`);
+  L.push("}");
+  return L.join("\n");
+}
+
+/* Parse an edited :root block back into state (tolerant, known vars only) */
+function parseRootCSS(text){
+  const re=/--([a-z0-9-]+)\s*:\s*([^;]+);/gi; let m,touched=false;
+  while((m=re.exec(text))){
+    const name=m[1], val=m[2].trim();
+    let mm;
+    if((mm=name.match(/^color-(.+)$/))){ registerColor(mm[1],val); touched=true; }
+    else if((mm=name.match(/^radius-(.+)$/)) && (state.rounded[mm[1]]!==undefined)){ state.rounded[mm[1]]=val; touched=true; }
+    else if((mm=name.match(/^space-(.+)$/)) && (state.spacing[mm[1]]!==undefined)){ state.spacing[mm[1]]=val; touched=true; }
+    else if(name==="container"){ state.layout.container=val; touched=true; }
+    else if(name==="container-wide"){ state.layout.wide=val; touched=true; }
+    else if(name==="container-narrow"){ state.layout.narrow=val; touched=true; }
+    else if(name==="gutter"){ state.layout.gutter=val; touched=true; }
+    else if(name==="columns"){ state.layout.columns=val; touched=true; }
+    else if((mm=name.match(/^font-(.+)-(family|size|weight|line|tracking)$/)) && state.type[mm[1]]){
+      const prop=mm[2]==="family"?"family":mm[2]==="size"?"size":mm[2]==="weight"?"weight":mm[2]==="line"?"line":"tracking";
+      state.type[mm[1]][prop]=val; touched=true;
+    }
+  }
+  return touched;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PREVIEW
+   ══════════════════════════════════════════════════════════════════ */
+function fontImportLink(){
+  const fams=new Set(["Inter","JetBrains Mono"]);
+  TYPE_ROLES.forEach(r=>{const f=famPrimary(state.type[r].family); if(f && /^[A-Za-z][A-Za-z0-9 ]+$/.test(f)) fams.add(f);});
+  const q=[...fams].map(f=>"family="+encodeURIComponent(f).replace(/%20/g,"+")+":wght@300;400;500;600;700;800").join("&");
+  return `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?${q}&display=swap" rel="stylesheet">`;
+}
+function renderGuidanceDoc(){
+  const secs = GUIDE_SCHEMA.map(sec=>{
+    const inner = sec.fields.map(f=>{
+      const raw=(state.guide[f.key]||"").trim();
+      const h3 = f.h3 ? `<h3 class="dh">${esc(f.h3)}</h3>` : "";
+      let content;
+      if(!raw){
+        content = `<p class="dp empty">Not documented yet.</p>`;
+      } else if(f.list){
+        const items = raw.split("\n").map(l=>l.replace(/^\s*-\s?/,"").trim()).filter(Boolean);
+        content = items.length ? `<ul class="dl">${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>` : `<p class="dp empty">Not documented yet.</p>`;
+      } else {
+        content = `<p class="dp">${esc(raw)}</p>`;
+      }
+      return `<div class="dblock" data-edit="guide:${f.key}">${h3}${content}</div>`;
+    }).join("");
+    return `<div class="dsec"><h2 class="dh">${esc(sec.h2)}</h2>${inner}</div>`;
+  }).join("");
+  return `<article class="doc">
+    <div class="doc-eyebrow" data-edit="meta:name">Brand &amp; guidance</div>
+    <h1 class="dt" data-edit="meta:name">${esc(state.meta.name||"Brand")}</h1>
+    <p class="dp" data-edit="meta:description">${esc(state.meta.description||"")}</p>
+    ${secs}
+  </article>`;
+}
+/* ---- colour math for the auto dark theme ---- */
+function _parseHex(hex){ hex=to6(hex); const m=/^#([0-9a-f]{6})$/i.exec(hex); if(!m) return null; const n=parseInt(m[1],16); return {r:(n>>16)&255,g:(n>>8)&255,b:n&255}; }
+function _rgbToHsl(r,g,b){ r/=255;g/=255;b/=255; const mx=Math.max(r,g,b),mn=Math.min(r,g,b); let h,s,l=(mx+mn)/2; if(mx===mn){h=s=0;} else { const d=mx-mn; s=l>0.5?d/(2-mx-mn):d/(mx+mn); switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;} h/=6;} return {h:h*360,s:s*100,l:l*100}; }
+function _hslToHex(h,s,l){ h=((h%360)+360)%360/360; s=Math.max(0,Math.min(100,s))/100; l=Math.max(0,Math.min(100,l))/100; let r,g,b; if(s===0){r=g=b=l;} else { const f=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;}; const q=l<0.5?l*(1+s):l+s-l*s; const p=2*l-q; r=f(p,q,h+1/3);g=f(p,q,h);b=f(p,q,h-1/3);} const H=x=>Math.round(x*255).toString(16).padStart(2,'0'); return '#'+H(r)+H(g)+H(b); }
+function hexToHsl(hex){ const c=_parseHex(hex); return c?_rgbToHsl(c.r,c.g,c.b):null; }
+function _relLum(hex){ const c=_parseHex(hex); if(!c) return 1; const f=x=>{x/=255; return x<=0.03928? x/12.92 : Math.pow((x+0.055)/1.055,2.4);}; return 0.2126*f(c.r)+0.7152*f(c.g)+0.0722*f(c.b); }
+const _SURF_IDX={canvas:0,"surface-1":1,"surface-2":2,"surface-3":3};
+const _INK_IDX={ink:0,"ink-muted":1,"ink-subtle":2,"ink-tertiary":3};
+function deriveDarkColor(k, light){
+  const hsl=hexToHsl(light); if(!hsl) return light;
+  let {h,s,l}=hsl;
+  if(k in _SURF_IDX) return _hslToHex(h, Math.min(s,16), 8 + _SURF_IDX[k]*4);
+  if(k in _INK_IDX)  return _hslToHex(h, Math.min(s,14), 96 - _INK_IDX[k]*15);
+  if(k==="hairline") return _hslToHex(h, Math.min(s,14), 20);
+  if(k==="hairline-strong") return _hslToHex(h, Math.min(s,16), 30);
+  const pHsl=hexToHsl(state.colors.primary)||hsl;
+  const monoPrimary = pHsl.s < 12; // near-neutral accent → treat like ink and invert for dark
+  if(k==="primary") return monoPrimary ? _hslToHex(pHsl.h, pHsl.s, Math.min(96, 100 - pHsl.l))
+                                       : (pHsl.l<52 ? _hslToHex(pHsl.h,pHsl.s,Math.min(70,pHsl.l+16)) : state.colors.primary);
+  if(k==="on-primary"){ const dp=deriveDarkColor("primary", state.colors.primary); return _relLum(dp) > 0.4 ? "#0a0a0a" : "#ffffff"; }
+  if(k==="primary-hover"||k==="primary-focus"){
+    const dp=hexToHsl(deriveDarkColor("primary", state.colors.primary));
+    if(monoPrimary){ const d=(k==="primary-focus"?-14:-8); return _hslToHex(dp.h,dp.s,Math.max(4,dp.l+d)); }
+    const base=pHsl.l<52?pHsl.l+16:pHsl.l; return _hslToHex(pHsl.h,pHsl.s,Math.min(84, base + (k==="primary-focus"?14:8)));
+  }
+  if(k.indexOf("semantic")===0) return _hslToHex(h, Math.max(s,58), Math.max(l,58));
+  return light; // custom → keep as-is, refine manually
+}
+function deriveDark(){ const out={}; state.colorOrder.forEach(k=>{ out[k]=deriveDarkColor(k, state.colors[k]); }); return out; }
+
+/* ---- MINIMAL mode: derive the whole token set from ~10 seeds ---- */
+function mix(a,b,t){ const A=_parseHex(a),B=_parseHex(b); if(!A||!B) return a; const m=(x,y)=>Math.round(x+(y-x)*t); const H=v=>v.toString(16).padStart(2,'0'); return '#'+H(m(A.r,B.r))+H(m(A.g,B.g))+H(m(A.b,B.b)); }
+function pxNum(s){ const n=parseFloat(s); return isNaN(n)?0:n; }
+function applySeeds(){
+  const s=state.seeds;
+  const ink=to6(s.ink), canvas=to6(s.canvas), accent=to6(s.accent);
+  const base=pxNum(s.baseSize)||16, ratio=parseFloat(s.ratio)||1.25;
+  const u=pxNum(s.spaceUnit)||8, r=pxNum(s.radius)||8, c=pxNum(s.container)||1120, g=pxNum(s.gutter)||24;
+  const rnd=v=>Math.max(1,Math.round(v));
+  // colours — ink & surface ramps by mixing toward the opposite pole
+  Object.assign(state.colors,{
+    ink, canvas, primary:accent,
+    "on-primary": _relLum(accent)>0.45 ? ink : "#ffffff",
+    "ink-muted":mix(ink,canvas,0.34), "ink-subtle":mix(ink,canvas,0.58), "ink-tertiary":mix(ink,canvas,0.76),
+    "surface-1":mix(canvas,ink,0.03), "surface-2":mix(canvas,ink,0.06), "surface-3":mix(canvas,ink,0.11),
+    "hairline":mix(canvas,ink,0.09), "hairline-strong":mix(canvas,ink,0.16),
+    "primary-hover": _relLum(accent)>0.5 ? mix(accent,ink,0.16) : mix(accent,"#000000",0.30),
+    "primary-focus": mix(accent,canvas,0.18),
+    "semantic-success":mix(ink,canvas,0.40), "semantic-error":mix(ink,canvas,0.12), "semantic-warning":mix(ink,canvas,0.55),
+  });
+  // typography — one family, one base, one ratio, two weights
+  const fam=s.fontFamily||"Inter, sans-serif", REG="400", BOLD="700";
+  const sz=n=>Math.round(base*Math.pow(ratio,n))+"px";
+  const disp={line:"1.12",tracking:"-0.02em"}, txt={line:"1.5",tracking:"0"};
+  const setT=(role,size,weight,d)=>{ state.type[role]={family:fam,size,weight,line:d.line,tracking:d.tracking}; };
+  setT("display-xl",sz(4.5),BOLD,disp); setT("display-lg",sz(3),BOLD,disp); setT("display-md",sz(2),BOLD,disp);
+  setT("headline",sz(1.5),BOLD,{line:"1.2",tracking:"-0.01em"}); setT("card-title",sz(0.5),BOLD,{line:"1.3",tracking:"0"});
+  setT("subhead",sz(0),BOLD,txt);
+  setT("body-lg",sz(0.5),REG,txt); setT("body",sz(0),REG,txt); setT("body-sm",sz(-0.5),REG,txt);
+  setT("caption",sz(-1),REG,{line:"1.4",tracking:"0"});
+  setT("button",sz(-0.5),BOLD,{line:"1.2",tracking:"0"});
+  setT("eyebrow",sz(-1),BOLD,{line:"1.3",tracking:"0.08em"});
+  state.type.mono={family:"'JetBrains Mono', ui-monospace, monospace",size:"13px",weight:"400",line:"1.5",tracking:"0"};
+  // spacing — one unit × multipliers
+  Object.assign(state.spacing,{ xxs:rnd(u*.25)+"px", xs:rnd(u*.5)+"px", sm:rnd(u)+"px", md:rnd(u*2)+"px", lg:rnd(u*3)+"px", xl:rnd(u*5)+"px", xxl:rnd(u*8)+"px", section:rnd(u*12)+"px" });
+  // radius — one base × multipliers
+  Object.assign(state.rounded,{ xs:rnd(r*.25)+"px", sm:rnd(r*.5)+"px", md:rnd(r)+"px", lg:rnd(r*1.5)+"px", xl:rnd(r*2)+"px", xxl:rnd(r*3)+"px", pill:"999px", full:"50%" });
+  // layout — container & gutter, the rest proportional
+  Object.assign(state.layout,{ container:rnd(c)+"px", wide:rnd(c*1.18)+"px", narrow:rnd(c*0.68)+"px", gutter:rnd(g)+"px", columns:state.layout.columns||"12" });
+  // components
+  state.comp.btnRadius="pill"; state.comp.cardRadius="lg"; state.comp.inputRadius="md";
+  state.comp.btnPad=rnd(u*1.25)+"px "+rnd(u*2.25)+"px"; state.comp.cardPad="lg";
+  // dark theme follows the seeds automatically
+  state.dark=deriveDark();
+  // reflect into the (hidden) Advanced forms so they stay in sync
+  buildColors(); buildDark(); buildType(); buildScale(); buildLayout(); buildComp();
+}
+
+const EXPORT_CHROME_CSS = `
+.ex-bar{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:14px;height:56px;padding:0 var(--gutter);background:var(--color-canvas);border-bottom:1px solid var(--color-hairline)}
+.ex-bar .ex-mk{height:26px;width:auto;border-radius:6px}
+.ex-name{font:600 15px/1 var(--font-headline-family);letter-spacing:-.3px;color:var(--color-ink)}
+.ex-tabs{display:flex;gap:4px;margin-left:6px}
+.ex-tabs button{border:none;background:transparent;font:600 13px var(--font-body-family);color:var(--color-ink-muted);padding:8px 13px;border-radius:var(--radius-md);cursor:pointer}
+.ex-tabs button:hover{background:var(--color-surface-2)}
+.ex-tabs button.active{background:var(--color-primary);color:var(--color-on-primary)}
+.ex-theme{margin-left:auto;border:1px solid var(--color-hairline-strong);background:var(--color-canvas);color:var(--color-ink);border-radius:var(--radius-pill);padding:7px 15px;font:600 12px var(--font-body-family);cursor:pointer}
+.ex-theme:hover{background:var(--color-surface-2)}
+.export-mode .nav{position:static}
+#view-guidance[hidden]{display:none}
+`;
+function exportDoc(){
+  const css = buildPreviewCSS() + EXPORT_CHROME_CSS;
+  const strip = s=>s.replace(/\s*data-edit="[^"]*"/g,"");
+  const showcase = strip(renderShowcase());
+  const guidance = strip(renderGuidanceDoc());
+  const mark = state.assets.logos.mark ? `<img src="${escAttr(state.assets.logos.mark)}" alt="" class="ex-mk">` : "";
+  const script = `<scr`+`ipt>(function(){var r=document.documentElement;var tabs=[].slice.call(document.querySelectorAll('.ex-tabs button'));tabs.forEach(function(b){b.addEventListener('click',function(){tabs.forEach(function(x){x.classList.remove('active');});b.classList.add('active');var v=b.getAttribute('data-view');document.getElementById('view-tokens').hidden=(v!=='tokens');document.getElementById('view-guidance').hidden=(v!=='guidance');window.scrollTo(0,0);});});var tt=document.querySelector('[data-theme-toggle]');if(tt)tt.addEventListener('click',function(){r.setAttribute('data-theme', r.getAttribute('data-theme')==='dark'?'light':'dark');});})();</scr`+`ipt>`;
+  return `<!doctype html><html data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">${fontImportLink()}<title>${esc(state.meta.name||"Design system")}</title><style>${css}</style></head><body class="export-mode">
+  <header class="ex-bar">${mark}<span class="ex-name">${esc(state.meta.name||"Brand")}</span>
+    <nav class="ex-tabs"><button data-view="tokens" class="active">Design tokens</button><button data-view="guidance">Brand &amp; guidance</button></nav>
+    <button class="ex-theme" data-theme-toggle>◑ Theme</button>
+  </header>
+  <div id="view-tokens">${showcase}</div>
+  <div id="view-guidance" hidden>${guidance}</div>
+  ${script}
+  </body></html>`;
+}
+
+const PREVIEW_CSS = `
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{background:var(--color-canvas);color:var(--color-ink);font:var(--font-body-weight) var(--font-body-size)/var(--font-body-line) var(--font-body-family);letter-spacing:var(--font-body-tracking);}
+    .wrap{}
+    section{padding-block:var(--space-section);padding-inline:max(var(--gutter), calc((100% - var(--container)) / 2))}
+    section.bleed{padding-inline:max(var(--gutter), calc((100% - var(--container-wide)) / 2))}
+    .eyebrow{font:var(--font-eyebrow-weight) var(--font-eyebrow-size)/var(--font-eyebrow-line) var(--font-eyebrow-family);letter-spacing:var(--font-eyebrow-tracking);text-transform:uppercase;color:var(--color-primary)}
+    .muted{color:var(--color-ink-muted)}.subtle{color:var(--color-ink-subtle)}
+    code{font:500 0.85em var(--font-mono-family);background:var(--color-surface-2);padding:1px 6px;border-radius:var(--radius-sm);color:var(--color-ink-muted)}
+    /* nav */
+    .nav{display:flex;align-items:center;gap:24px;height:64px;padding-block:0;padding-inline:max(var(--gutter), calc((100% - var(--container)) / 2));border-bottom:1px solid var(--color-hairline);background:var(--color-canvas);position:sticky;top:0;z-index:5}
+    .nav .logo{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.4px;font-size:16px}
+    .nav .logo .mk{width:22px;height:22px;border-radius:6px;background:var(--color-primary)}
+    .nav .links{display:flex;gap:20px;margin-left:8px}.nav .links a{color:var(--color-ink-muted);text-decoration:none;font-size:14px;font-weight:500}
+    .nav .sp{flex:1}
+    /* buttons */
+    .btn{border:1px solid transparent;padding:var(--btn-pad);border-radius:var(--btn-radius);font:var(--font-button-weight) var(--font-button-size)/var(--font-button-line) var(--font-button-family);cursor:pointer;letter-spacing:var(--font-button-tracking)}
+    .btn.pri{background:var(--color-primary);color:var(--color-on-primary)}
+    .btn.pri:hover{background:var(--color-primary-hover)}
+    .btn.sec{background:var(--color-canvas);color:var(--color-ink);border-color:var(--color-hairline-strong)}
+    .btn.ter{background:transparent;color:var(--color-ink-muted)}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    /* hero */
+    .hero{display:grid;gap:var(--space-lg);max-width:var(--container-narrow)}
+    .hero h1{margin:0;font:var(--font-display-xl-weight) var(--font-display-xl-size)/var(--font-display-xl-line) var(--font-display-xl-family);letter-spacing:var(--font-display-xl-tracking);color:var(--color-ink)}
+    .hero p{margin:0;font:var(--font-body-lg-weight) var(--font-body-lg-size)/var(--font-body-lg-line) var(--font-body-lg-family);color:var(--color-ink-muted)}
+    .hero .cta{display:flex;gap:var(--space-sm);flex-wrap:wrap}
+    .hero-media{margin-top:var(--space-xl);width:min(var(--container-wide), calc(100vw - 2 * var(--gutter)));position:relative;left:50%;transform:translateX(-50%);border:1px solid var(--color-hairline);border-radius:var(--card-radius);overflow:hidden;aspect-ratio:16/8;background:var(--color-surface-2)}
+    .hero-media img{width:100%;height:100%;object-fit:cover;display:block}
+    /* generic head */
+    .sh{font:var(--font-display-md-weight) var(--font-display-md-size)/var(--font-display-md-line) var(--font-display-md-family);letter-spacing:var(--font-display-md-tracking);margin:0 0 var(--space-xs)}
+    .lead{color:var(--color-ink-muted);margin:0 0 var(--space-xl);font-size:var(--font-body-lg-size);max-width:var(--container-narrow)}
+    .alt{background:var(--color-surface-1);border-top:1px solid var(--color-hairline);border-bottom:1px solid var(--color-hairline)}
+    /* swatches */
+    .sws{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:var(--space-md)}
+    .sw .chip{height:56px;border-radius:var(--radius-md);border:1px solid var(--color-hairline)}
+    .swk{margin-top:8px;font-size:12px;font-weight:600}
+    .swv{font:var(--font-mono-weight) var(--font-mono-size) var(--font-mono-family);color:var(--color-ink-subtle);font-size:11px}
+    /* type specimens */
+    .spec{display:grid;grid-template-columns:150px 1fr;gap:var(--space-lg);align-items:center;padding:var(--space-md) 0;border-top:1px solid var(--color-hairline)}
+    .spec:first-child{border-top:none}
+    .spec-meta{font:var(--font-mono-weight) 11px/1.5 var(--font-mono-family);color:var(--color-ink-subtle)}
+    .spec-meta em{color:var(--color-ink-tertiary);font-style:normal}
+    .spec-txt{color:var(--color-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    /* cards */
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg)}
+    .card{background:var(--color-surface-1);border:1px solid var(--color-hairline);border-radius:var(--card-radius);padding:var(--card-pad)}
+    .card.feat{background:var(--color-surface-2)}
+    .card h3{margin:0 0 var(--space-xs);font:var(--font-card-title-weight) var(--font-card-title-size)/var(--font-card-title-line) var(--font-card-title-family);letter-spacing:var(--font-card-title-tracking)}
+    .card p{margin:0;color:var(--color-ink-muted);font-size:var(--font-body-size)}
+    .badge{display:inline-block;background:var(--color-surface-2);color:var(--color-ink-muted);border:1px solid var(--color-hairline);font:var(--font-caption-weight) var(--font-caption-size) var(--font-caption-family);padding:var(--space-xxs) var(--space-sm);border-radius:var(--radius-pill);margin-bottom:var(--space-sm)}
+    /* form */
+    .form{max-width:420px;display:grid;gap:var(--space-md)}
+    .form label{font-size:var(--font-body-sm-size);color:var(--color-ink-muted);display:block;margin-bottom:6px;font-weight:500}
+    .inp{width:100%;background:var(--color-canvas);border:1px solid var(--color-hairline-strong);border-radius:var(--input-radius);padding:var(--space-sm) var(--space-md);font-size:var(--font-body-size);color:var(--color-ink)}
+    .inp.focus{border-color:var(--color-primary-focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--color-primary) 22%,transparent)}
+    /* radius+spacing */
+    .rads{display:flex;gap:var(--space-lg);flex-wrap:wrap}
+    .rad{text-align:center;font-size:11px;color:var(--color-ink-subtle)}
+    .radbox{width:64px;height:64px;background:var(--color-surface-3);border:1px solid var(--color-hairline-strong);margin-bottom:6px}
+    .spcs{display:grid;gap:8px;margin-top:var(--space-lg)}
+    .spc{display:flex;align-items:center;gap:12px;font:var(--font-mono-weight) 11px var(--font-mono-family);color:var(--color-ink-subtle)}
+    .spcbar{height:12px;background:var(--color-primary);border-radius:3px;min-width:2px}
+    /* layout & grid demo */
+    .cw-scale{display:grid;gap:var(--space-sm);margin-bottom:var(--space-xl)}
+    .cw-item{display:grid;grid-template-columns:1fr 74px;gap:var(--space-md);align-items:center}
+    .cw-track{background:var(--color-surface-2);border:1px solid var(--color-hairline);border-radius:var(--radius-sm);height:42px;overflow:hidden}
+    .cw-fill{height:100%;min-width:0;background:var(--color-surface-3);border-right:2px solid var(--color-hairline-strong);display:flex;align-items:center;padding:0 var(--space-md);font-size:var(--font-body-sm-size);font-weight:600;color:var(--color-ink-muted)}
+    .cw-fill.primary{background:color-mix(in srgb,var(--color-primary) 12%,var(--color-canvas));border-right-color:var(--color-primary);color:var(--color-primary)}
+    .cw-item em{font-family:var(--font-mono-family);font-style:normal;font-size:12px;color:var(--color-ink-subtle);text-align:right}
+    .grid-demo{border:1px solid var(--color-hairline);border-radius:var(--card-radius);padding:var(--card-pad);background:var(--color-surface-1)}
+    .grid-demo-cols{display:grid;grid-template-columns:repeat(var(--columns),minmax(0,1fr));gap:var(--gutter)}
+    .gcol{height:76px;background:color-mix(in srgb,var(--color-primary) 10%,var(--color-canvas));border:1px solid color-mix(in srgb,var(--color-primary) 28%,transparent);border-radius:var(--radius-sm);display:flex;justify-content:center;padding-top:7px}
+    .gcol span{font-family:var(--font-mono-family);font-size:11px;color:var(--color-primary)}
+    .grid-demo-cap{margin-top:var(--space-md);font-family:var(--font-mono-family);font-size:12px;color:var(--color-ink-subtle)}
+    /* footer */
+    footer{background:var(--color-surface-1);border-top:1px solid var(--color-hairline);color:var(--color-ink-muted);padding-block:var(--space-xxl);padding-inline:max(var(--gutter), calc((100% - var(--container)) / 2));font-size:var(--font-body-sm-size)}
+    footer .frow{display:flex;gap:var(--space-xl);flex-wrap:wrap}
+    footer a{color:var(--color-ink-muted);text-decoration:none;display:block;margin:6px 0}
+    /* assets */
+    .nav .logo .mk-img{height:26px;width:auto;border-radius:6px;display:block}
+    .logos{display:flex;gap:var(--space-lg);flex-wrap:wrap;margin-bottom:var(--space-xl)}
+    .logo-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:var(--space-lg);background:var(--color-surface-1);border:1px solid var(--color-hairline);border-radius:var(--card-radius);min-width:150px}
+    .logo-tile.dark{background:var(--color-ink)}
+    .logo-tile img{max-height:44px;max-width:180px;width:auto;object-fit:contain}
+    .logo-tile span{font:var(--font-mono-weight) 10px var(--font-mono-family);color:var(--color-ink-subtle);text-transform:uppercase;letter-spacing:.6px}
+    .logo-tile.dark span{color:var(--color-ink-tertiary)}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-lg)}
+    .gitem{margin:0}
+    .gitem img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--card-radius);border:1px solid var(--color-hairline);display:block;background:var(--color-surface-2)}
+    .gitem figcaption{margin-top:8px;font-size:var(--font-caption-size);color:var(--color-ink-subtle);font-weight:600}
+    .gitem figcaption span{color:var(--color-ink-tertiary);font-weight:400}
+    /* guidance document (plain text) */
+    .doc{max-width:var(--container-narrow);margin:0 auto;padding:var(--space-xxl) var(--gutter) var(--space-section)}
+    .doc .doc-eyebrow{font:var(--font-eyebrow-weight) var(--font-eyebrow-size)/var(--font-eyebrow-line) var(--font-eyebrow-family);letter-spacing:var(--font-eyebrow-tracking);text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-sm)}
+    .doc h1.dt{margin:0 0 var(--space-xl);font:var(--font-display-lg-weight) var(--font-display-lg-size)/var(--font-display-lg-line) var(--font-display-lg-family);letter-spacing:var(--font-display-lg-tracking);color:var(--color-ink)}
+    .doc h2.dh{margin:0 0 var(--space-md);padding-top:var(--space-xl);margin-top:var(--space-xl);border-top:1px solid var(--color-hairline);font:var(--font-display-md-weight) var(--font-display-md-size)/var(--font-display-md-line) var(--font-display-md-family);letter-spacing:var(--font-display-md-tracking);color:var(--color-ink)}
+    .doc h3.dh{margin:var(--space-lg) 0 var(--space-xs);font:var(--font-card-title-weight) var(--font-card-title-size)/var(--font-card-title-line) var(--font-card-title-family);letter-spacing:var(--font-card-title-tracking);color:var(--color-ink)}
+    .doc p.dp{margin:0 0 var(--space-md);font:var(--font-body-lg-weight) var(--font-body-lg-size)/var(--font-body-lg-line) var(--font-body-lg-family);color:var(--color-ink-muted);white-space:pre-wrap}
+    .doc p.dp.empty{color:var(--color-ink-tertiary);font-style:italic;font-size:var(--font-body-size)}
+    .doc ul.dl{margin:0 0 var(--space-md);padding-left:1.15em}
+    .doc ul.dl li{margin:6px 0;font:var(--font-body-weight) var(--font-body-size)/var(--font-body-line) var(--font-body-family);color:var(--color-ink-muted)}
+    .doc ul.dl li::marker{color:var(--color-primary)}
+    @media(max-width:640px){section{padding-block:var(--space-xxl)}.cards{grid-template-columns:1fr}.spec{grid-template-columns:1fr}.nav .links{display:none}}
+`;
+function generateDarkCSS(){
+  const out=[':root[data-theme="dark"]{'];
+  state.colorOrder.forEach(function(k){ out.push('  --color-'+k+': '+((state.dark&&state.dark[k])||state.colors[k])+';'); });
+  out.push('}');
+  return out.join('\n');
+}
+function buildPreviewCSS(){ return generateRootCSS()+'\n'+generateDarkCSS()+'\n'+PREVIEW_CSS; }
+function renderShowcase(){
+  const c=state.colors, name=esc(state.meta.name||"Brand");
+  const swatches = state.colorOrder.map(k=>{
+    const val=state.colors[k];
+    return `<div class="sw" data-edit="color:${k}"><div class="chip" style="background:${escAttr(val)}"></div><div class="swk">${esc(k)}</div><div class="swv">${escAttr(val)}</div></div>`;
+  }).join("");
+  const scale = TYPE_ROLES.filter(r=>r!=="mono").map(r=>{
+    const t=state.type[r];
+    return `<div class="spec" data-edit="type:${r}">
+      <div class="spec-meta">${r}<br><em>${esc(t.size)} · ${esc(t.weight)} · ${esc(t.tracking)}</em></div>
+      <div class="spec-txt" style="font:${t.weight} ${t.size}/${t.line} ${t.family};letter-spacing:${t.tracking};${r==="eyebrow"?"text-transform:uppercase":""}">Aa The quick brown fox</div>
+    </div>`;
+  }).join("");
+  const radii = ROUNDED_KEYS.map(k=>`<div class="rad" data-edit="rounded:${k}"><div class="radbox" style="border-radius:${escAttr(state.rounded[k])}"></div><span>${k}</span></div>`).join("");
+  const spaces = SPACING_KEYS.map(k=>`<div class="spc" data-edit="space:${k}"><div class="spcbar" style="width:${escAttr(state.spacing[k])}"></div><span>${k} · ${escAttr(state.spacing[k])}</span></div>`).join("");
+
+  const pxOf=s=>{const n=parseFloat(s);return isNaN(n)?0:n;};
+  const cwMax=Math.max(pxOf(state.layout.narrow),pxOf(state.layout.container),pxOf(state.layout.wide),1);
+  const cwRows=[["narrow",state.layout.narrow],["container",state.layout.container],["wide",state.layout.wide]].map(([k,v])=>{
+    const pct=Math.max(4,(pxOf(v)/cwMax*100)).toFixed(1);
+    return `<div class="cw-item" data-edit="layout:${k}"><div class="cw-track"><div class="cw-fill${k==="container"?" primary":""}" style="width:${pct}%"><span>${k}</span></div></div><em>${escAttr(v)}</em></div>`;
+  }).join("");
+  const nCols=Math.max(1,Math.min(24,parseInt(state.layout.columns,10)||12));
+  const colBlocks=Array.from({length:nCols},(_,i)=>`<div class="gcol"><span>${i+1}</span></div>`).join("");
+  const heroImg = (state.assets.images[0]&&state.assets.images[0].url)
+    ? `<div class="hero-media"><img src="${escAttr(state.assets.images[0].url)}" alt=""></div>` : "";
+
+  const L=state.assets.logos;
+  const logoTile=(k,dark)=>L[k] ? `<div class="logo-tile${dark?" dark":""}" data-edit="asset:logo:${k}"><img src="${escAttr(L[k])}" alt="${k} logo"><span>${k}</span></div>` : "";
+  const logosHTML=[logoTile("primary"),logoTile("mark"),logoTile("wordmark"),logoTile("inverse",true)].join("");
+  const galleryHTML=state.assets.images.map((im,i)=>im.url
+    ? `<figure class="gitem" data-edit="asset:img:${i}"><img src="${escAttr(im.url)}" alt="${escAttr(im.alt)}"><figcaption>${esc(im.name||"image")}${im.alt?` — <span>${esc(im.alt)}</span>`:""}</figcaption></figure>` : "").join("");
+  const hasAssets = logosHTML.trim() || galleryHTML.trim();
+  const navMark = L.mark
+    ? `<img src="${escAttr(L.mark)}" alt="" class="mk-img" data-edit="asset:logo:mark">`
+    : `<span class="mk" data-edit="asset:logo:mark"></span>`;
+  const showcase = `
+  <nav class="nav"><div class="logo">${navMark}<span data-edit="meta:name">${name}</span></div>
+    <div class="links"><a>Product</a><a>Solutions</a><a>Pricing</a><a>Docs</a></div>
+    <div class="sp"></div><button class="btn ter" data-edit="color:ink-muted">Sign in</button><button class="btn pri" data-edit="color:primary">Get started</button>
+  </nav>
+
+  <section>
+    <div class="hero">
+      <span class="eyebrow" data-edit="type:eyebrow">Design system · live preview</span>
+      <h1 data-edit="type:display-xl">${name} makes every decision feel intentional.</h1>
+      <p data-edit="type:body-lg">This page is rendered entirely from your tokens. Edit a colour, a type role, a radius — and watch the whole system respond in real time.</p>
+      <div class="cta"><button class="btn pri" data-edit="color:primary">Primary action</button><button class="btn sec" data-edit="color:hairline-strong">Secondary</button><button class="btn ter" data-edit="color:ink-muted">Tertiary →</button></div>
+    </div>
+    ${heroImg}
+  </section>
+
+  <section class="alt">
+    <h2 class="sh" data-edit="type:display-md">Colour</h2><p class="lead" data-edit="type:body-lg">The full palette, straight from your tokens.</p>
+    <div class="sws">${swatches}</div>
+  </section>
+
+  <section>
+    <h2 class="sh" data-edit="type:display-md">Type scale</h2><p class="lead" data-edit="type:body-lg">Every role with its live spec.</p>
+    ${scale}
+  </section>
+
+  <section class="alt">
+    <h2 class="sh" data-edit="type:display-md">Components</h2><p class="lead" data-edit="type:body-lg">Buttons, cards and fields consuming the same variables.</p>
+    <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;margin-bottom:var(--space-xl)">
+      <button class="btn pri" data-edit="color:primary">Primary</button><button class="btn sec" data-edit="color:hairline-strong">Secondary</button><button class="btn ter" data-edit="color:ink-muted">Tertiary</button><button class="btn pri" disabled data-edit="color:primary">Disabled</button>
+    </div>
+    <div class="cards" style="margin-bottom:var(--space-xl)">
+      <div class="card" data-edit="color:surface-1"><span class="badge">Standard</span><h3>Card container</h3><p>A surface-1 panel with a hairline border and no shadow — depth is signalled by tone, not elevation.</p></div>
+      <div class="card feat" data-edit="color:surface-2"><span class="badge">Featured</span><h3>Feature card</h3><p>Stepped up to surface-2 with more padding. Used to draw the eye without introducing a new colour.</p></div>
+    </div>
+    <div class="form">
+      <div><label data-edit="type:body-sm">Email address</label><input class="inp" placeholder="you@company.com" data-edit="comp:inputRadius"></div>
+      <div><label data-edit="type:body-sm">Workspace (focused)</label><input class="inp focus" value="workspace" data-edit="color:primary-focus"></div>
+      <button class="btn pri" style="justify-self:start" data-edit="color:primary">Create account</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sh" data-edit="type:display-md">Radius &amp; spacing</h2><p class="lead" data-edit="type:body-lg">The geometric rhythm of the system.</p>
+    <div class="rads">${radii}</div>
+    <div class="spcs">${spaces}</div>
+  </section>
+
+  <section class="alt">
+    <h2 class="sh" data-edit="type:display-md">Layout &amp; grid</h2><p class="lead" data-edit="type:body-lg">Container widths shown to scale, and the live column grid.</p>
+    <div class="cw-scale">${cwRows}</div>
+    <div class="grid-demo" data-edit="layout:columns">
+      <div class="grid-demo-cols">${colBlocks}</div>
+      <div class="grid-demo-cap">${nCols}-column grid · ${escAttr(state.layout.gutter)} gap · max ${escAttr(state.layout.container)}</div>
+    </div>
+  </section>
+
+  ${hasAssets ? `<section class="alt">
+    <h2 class="sh" data-edit="type:display-md">Assets</h2><p class="lead" data-edit="type:body-lg">Logos and imagery from your asset registry.</p>
+    ${logosHTML.trim()?`<div class="logos">${logosHTML}</div>`:""}
+    ${galleryHTML.trim()?`<div class="gallery">${galleryHTML}</div>`:""}
+  </section>`:""}
+
+  <footer data-edit="color:surface-1">
+    <div class="frow">
+      <div style="min-width:160px"><div class="logo" style="font-weight:700;display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="mk" style="width:20px;height:20px;border-radius:5px;background:var(--color-primary);display:inline-block"></span>${name}</div><div class="subtle">© 2026 · Built from tokens.</div></div>
+      <div><a>Product</a><a>Changelog</a><a>Pricing</a></div>
+      <div><a>Docs</a><a>API</a><a>Status</a></div>
+      <div><a>About</a><a>Careers</a><a>Contact</a></div>
+    </div>
+  </footer>`;
+  return showcase;
+}
+function previewDoc(mode,forExport){
+  mode = mode||"tokens";
+  const css=buildPreviewCSS();
+  let body = mode==="guidance" ? renderGuidanceDoc() : renderShowcase();
+  const inspectorCSS = forExport ? "" :
+    `[data-edit]{cursor:pointer}[data-edit]:hover{outline:2px solid color-mix(in srgb,var(--color-primary) 60%,transparent);outline-offset:3px;border-radius:3px}`;
+  const clickScript = forExport ? "" :
+    `<scr`+`ipt>(function(){document.addEventListener('click',function(e){var t=e.target.closest('[data-edit]');if(!t)return;e.preventDefault();e.stopPropagation();try{parent.postMessage({__edit:t.getAttribute('data-edit')},'*');}catch(err){}},true);})();</scr`+`ipt>`;
+  if(forExport) body = body.replace(/\s*data-edit="[^"]*"/g,"");
+  const themeAttr = (typeof previewTheme!=="undefined" && previewTheme==="dark") ? ' data-theme="dark"' : '';
+  return `<!doctype html><html${themeAttr}><head><meta charset="utf-8">${fontImportLink()}<style>${css}${inspectorCSS}</style></head><body>${body}${clickScript}</body></html>`;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RENDER (mirror + preview), debounced
+   ══════════════════════════════════════════════════════════════════ */
+let previewMode="tokens";
+const rebuildPreview = debounce(()=>{ $("#pv").srcdoc = previewDoc(previewMode); }, 140);
+function syncCssMirror(){ const ta=$("#cssMirror"); if(document.activeElement!==ta) ta.value=generateRootCSS(); }
+function render(){ refreshColorMini(); syncCssMirror(); rebuildPreview(); }
+
+/* ══════════════════════════════════════════════════════════════════
+   EVENTS — delegated input on the config panel
+   ══════════════════════════════════════════════════════════════════ */
+$("#config").addEventListener("input",e=>{
+  const el=e.target; const grp=el.dataset.grp; if(!grp) return;
+  const key=el.dataset.key, prop=el.dataset.prop, val=el.value;
+  if(grp==="meta"){ state.meta[key]=val; }
+  else if(grp==="colors"){
+    state.colors[key]=val;
+    const row=$(`#colorControls .color-row[data-key="${key}"]`);
+    if(row){
+      const txt=row.querySelector('input[type=text]'), col=row.querySelector('input[type=color]');
+      if(el===col && txt) txt.value=val;
+      if(el===txt && col && isHex(val)) col.value=to6(val);
+    }
+  }
+  else if(grp==="seed"){
+    state.seeds[key]=val;
+    const row=$(`#seedControls .color-row[data-key="seed-${key}"]`);
+    if(row){
+      const txt=row.querySelector('input[type=text]'), col=row.querySelector('input[type=color]');
+      if(el===col && txt) txt.value=val;
+      if(el===txt && col && isHex(val)) col.value=to6(val);
+    }
+    applySeeds();
+  }
+  else if(grp==="dark"){
+    state.dark[key]=val;
+    const row=$(`#darkControls .color-row[data-key="${key}"]`);
+    if(row){
+      const txt=row.querySelector('input[type=text]'), col=row.querySelector('input[type=color]');
+      if(el===col && txt) txt.value=val;
+      if(el===txt && col && isHex(val)) col.value=to6(val);
+    }
+  }
+  else if(grp==="type"){ state.type[key][prop]=val; }
+  else if(grp==="rounded"){ state.rounded[key]=val; }
+  else if(grp==="spacing"){ state.spacing[key]=val; }
+  else if(grp==="layout"){ state.layout[key]=val; }
+  else if(grp==="comp"){ state.comp[key]=val; }
+  else if(grp==="logo"){ state.assets.logos[key]=val; }
+  else if(grp==="img"){ state.assets.images[+el.dataset.idx][prop]=val; }
+  else if(grp==="guide"){ state.guide[key]=val; }
+  render();
+});
+$("#config").addEventListener("change",e=>{ if(e.target.dataset.grp==="comp") render(); });
+
+// add / remove images + colors
+$("#config").addEventListener("click",e=>{
+  if(e.target.id==="addImg"){ state.assets.images.push({name:"",url:"",alt:""}); buildAssets(); }
+  const rm=e.target.dataset.rmimg;
+  if(rm!==undefined){ state.assets.images.splice(+rm,1); buildAssets(); render(); }
+
+  if(e.target.id==="regenDarkBtn"){ state.dark=deriveDark(); buildDark(); render(); toast("Dark theme regenerated"); }
+
+  if(e.target.id==="addColorBtn"){
+    const nameEl=$("#newColorName"), valEl=$("#newColorVal");
+    let key=(nameEl.value||"").trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    let val=(valEl.value||"").trim()||"#888888";
+    if(!key){ toast("Give the token a name"); return; }
+    if(state.colors[key]!==undefined){ toast("Token “"+key+"” already exists"); return; }
+    registerColor(key,val,key);
+    buildColors(); buildDark(); render();
+    setTimeout(()=>{ const el=$(`.color-row[data-key="${key}"] input[type=text]`); if(el) el.focus(); },0);
+  }
+  const rmc=e.target.dataset.rmcolor;
+  if(rmc!==undefined){
+    state.colorOrder=state.colorOrder.filter(k=>k!==rmc);
+    delete state.colors[rmc]; delete state.colorLabels[rmc]; if(state.dark) delete state.dark[rmc];
+    buildColors(); buildDark(); render();
+  }
+});
+
+// live CSS editing → parse back
+$("#cssMirror").addEventListener("input",e=>{
+  if(parseRootCSS(e.target.value)){
+    buildColors(); buildDark(); buildType(); buildScale(); buildLayout(); buildComp();
+    refreshColorMini(); rebuildPreview();
+  }
+});
+
+// click-to-edit: preview posts a token descriptor → focus the matching control
+window.addEventListener("message",e=>{
+  if(e.data && typeof e.data.__edit==="string") handleEdit(e.data.__edit);
+});
+function handleEdit(desc){
+  const [kind,a,b]=desc.split(":");
+  let container=null, focusEl=null;
+  if(kind==="color"){ container=$(`#grp-colors .color-row[data-key="${a}"]`); focusEl=container&&container.querySelector('input[type=text]'); }
+  else if(kind==="type"){ focusEl=$(`#grp-type [data-key="${a}"][data-prop="family"]`); container=focusEl&&focusEl.closest(".type-card"); }
+  else if(kind==="rounded"){ focusEl=$(`#grp-scale [data-grp="rounded"][data-key="${a}"]`); container=focusEl; }
+  else if(kind==="space"){ focusEl=$(`#grp-scale [data-grp="spacing"][data-key="${a}"]`); container=focusEl; }
+  else if(kind==="layout"){ focusEl=$(`#grp-layout [data-grp="layout"][data-key="${a}"]`); container=focusEl; }
+  else if(kind==="comp"){ focusEl=$(`#grp-comp [data-grp="comp"][data-key="${a}"]`); container=focusEl; }
+  else if(kind==="meta"){ focusEl=$(a==="description"?"#metaDesc":"#metaName"); container=focusEl; }
+  else if(kind==="asset"){
+    if(a==="logo"){ focusEl=$(`#grp-assets [data-grp="logo"][data-key="${b}"]`); container=focusEl; }
+    else if(a==="img"){ container=$(`#grp-assets .img-item[data-idx="${b}"]`); focusEl=container&&container.querySelector('[data-prop="url"]'); }
+  }
+  else if(kind==="guide"){ focusEl=$(`[data-grp="guide"][data-key="${a}"]`); container=focusEl; }
+  const target=container||focusEl;
+  if(!target) return;
+  revealControl(target, focusEl);
+}
+function revealControl(target, focusEl){
+  let d=target.closest("details");
+  while(d){ d.open=true; const p=d.parentElement; d=p?p.closest("details"):null; }
+  requestAnimationFrame(()=>{
+    target.scrollIntoView({behavior:"smooth",block:"center"});
+    flashEl(target);
+    if(focusEl && /^(INPUT|TEXTAREA|SELECT)$/.test(focusEl.tagName)){
+      setTimeout(()=>{ try{ focusEl.focus({preventScroll:true}); }catch(e){} }, 180);
+    }
+  });
+}
+function flashEl(el){ el.classList.remove("edit-flash"); void el.offsetWidth; el.classList.add("edit-flash"); setTimeout(()=>el.classList.remove("edit-flash"),1300); }
+
+// token mode: minimal (seeds) / advanced (full tokens)
+$("#tokenModeSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  $$("#tokenModeSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  $("#config").classList.toggle("mode-minimal", b.dataset.mode==="minimal");
+});
+
+// preview theme: light / dark
+let previewTheme="light";
+$("#themeSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  $$("#themeSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  previewTheme=b.dataset.t; rebuildPreview();
+});
+
+// preview zoom — render iframe larger and scale down for a wide-viewport feel
+let zoom=0.5;
+function applyZoom(){
+  const f=$("#pv"), pct=(100/zoom);
+  f.style.width=pct+"%"; f.style.height=pct+"%"; f.style.transform="scale("+zoom+")";
+}
+$("#zoomSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  $$("#zoomSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  zoom=parseFloat(b.dataset.z); applyZoom();
+});
+
+// preview mode: tokens / guidance
+$("#modeSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  $$("#modeSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  previewMode=b.dataset.m; rebuildPreview();
+});
+
+// preview desktop/mobile
+$("#viewSeg").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  $$("#viewSeg button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  $("#device").classList.toggle("mobile", b.dataset.w==="mobile");
+});
+
+// subnav active state on scroll
+const cfg=$("#config");
+cfg.addEventListener("scroll",()=>{
+  const g=$("#sec-guidance").offsetTop-120;
+  const active = cfg.scrollTop>=g ? "guidance":"tokens";
+  $$(".subnav a").forEach(a=>a.classList.toggle("active",a.dataset.nav===active));
+});
+$$(".subnav a").forEach(a=>a.addEventListener("click",ev=>{
+  ev.preventDefault();
+  const t=$(a.getAttribute("href"));
+  cfg.scrollTo({top:t.offsetTop-56,behavior:"smooth"});
+}));
+
+/* ══════════════════════════════════════════════════════════════════
+   EXPORT design.md
+   ══════════════════════════════════════════════════════════════════ */
+function yamlStr(s){ s=String(s==null?"":s); return '"'+s.replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"'; }
+function buildFrontMatter(){
+  let o=[];
+  o.push("---");
+  o.push("version: alpha");
+  o.push("name: "+yamlStr(state.meta.name));
+  o.push("description: "+yamlStr(state.meta.description));
+  o.push("");
+  o.push("colors:");
+  state.colorOrder.forEach(k=>o.push(`  ${k}: ${yamlStr(state.colors[k])}`));
+  o.push("");
+  o.push("colors-dark:");
+  state.colorOrder.forEach(k=>o.push(`  ${k}: ${yamlStr((state.dark&&state.dark[k])||state.colors[k])}`));
+  o.push("");
+  o.push("typography:");
+  TYPE_ROLES.forEach(r=>{
+    const t=state.type[r];
+    o.push(`  ${r}:`);
+    o.push(`    fontFamily: ${t.family}`);
+    o.push(`    fontSize: ${t.size}`);
+    o.push(`    fontWeight: ${t.weight}`);
+    o.push(`    lineHeight: ${t.line}`);
+    o.push(`    letterSpacing: ${t.tracking}`);
+  });
+  o.push("");
+  o.push("rounded:");
+  ROUNDED_KEYS.forEach(k=>o.push(`  ${k}: ${state.rounded[k]}`));
+  o.push("");
+  o.push("spacing:");
+  SPACING_KEYS.forEach(k=>o.push(`  ${k}: ${state.spacing[k]}`));
+  o.push("");
+  o.push("layout:");
+  LAYOUT_KEYS.forEach(([k])=>o.push(`  ${k}: ${state.layout[k]}`));
+  o.push("");
+  o.push("components:");
+  const comp={
+    "button-primary":{backgroundColor:"{colors.primary}",textColor:"{colors.on-primary}",typography:"{typography.button}",rounded:`{rounded.${state.comp.btnRadius}}`,padding:state.comp.btnPad},
+    "button-secondary":{backgroundColor:"{colors.canvas}",textColor:"{colors.ink}",borderColor:"{colors.hairline-strong}",typography:"{typography.button}",rounded:`{rounded.${state.comp.btnRadius}}`,padding:state.comp.btnPad},
+    "button-tertiary":{backgroundColor:"transparent",textColor:"{colors.ink-muted}",typography:"{typography.button}",rounded:`{rounded.${state.comp.btnRadius}}`,padding:state.comp.btnPad},
+    "card":{backgroundColor:"{colors.surface-1}",borderColor:"{colors.hairline}",rounded:`{rounded.${state.comp.cardRadius}}`,padding:`{spacing.${state.comp.cardPad}}`},
+    "feature-card":{backgroundColor:"{colors.surface-2}",borderColor:"{colors.hairline}",rounded:`{rounded.${state.comp.cardRadius}}`,padding:`{spacing.${state.comp.cardPad}}`},
+    "text-input":{backgroundColor:"{colors.canvas}",textColor:"{colors.ink}",borderColor:"{colors.hairline-strong}",typography:"{typography.body}",rounded:`{rounded.${state.comp.inputRadius}}`,padding:"{spacing.sm} {spacing.md}"},
+    "text-input-focused":{backgroundColor:"{colors.canvas}",borderColor:"{colors.primary-focus}",typography:"{typography.body}",rounded:`{rounded.${state.comp.inputRadius}}`,padding:"{spacing.sm} {spacing.md}"},
+    "badge":{backgroundColor:"{colors.surface-2}",textColor:"{colors.ink-muted}",typography:"{typography.caption}",rounded:"{rounded.pill}",padding:"{spacing.xxs} {spacing.sm}"},
+    "top-nav":{backgroundColor:"{colors.canvas}",borderColor:"{colors.hairline}",height:"64px",padding:"{spacing.sm} {spacing.lg}"},
+    "footer":{backgroundColor:"{colors.surface-1}",textColor:"{colors.ink-muted}",typography:"{typography.body-sm}",padding:"{spacing.xxl} {spacing.lg}"},
+  };
+  Object.entries(comp).forEach(([name,props])=>{
+    o.push(`  ${name}:`);
+    Object.entries(props).forEach(([p,v])=>o.push(`    ${p}: ${yamlStr(v)}`));
+  });
+  o.push("");
+  o.push("assets:");
+  o.push("  logos:");
+  Object.entries(state.assets.logos).forEach(([k,v])=>{ if(v) o.push(`    ${k}: ${yamlStr(v)}`); });
+  const imgs=state.assets.images.filter(i=>i.url||i.name);
+  if(imgs.length){
+    o.push("  images:");
+    imgs.forEach(im=>{
+      o.push(`    - name: ${im.name||"image"}`);
+      o.push(`      url: ${yamlStr(im.url)}`);
+      o.push(`      alt: ${yamlStr(im.alt)}`);
+    });
+  }
+  o.push("---");
+  return o.join("\n");
+}
+function buildBody(){
+  let o=["",""];
+  GUIDE_SCHEMA.forEach(sec=>{
+    o.push(`## ${sec.h2}`); o.push("");
+    sec.fields.forEach(f=>{
+      if(f.h3){ o.push(`### ${f.h3}`); o.push(""); }
+      const raw=(state.guide[f.key]||"").trim();
+      if(f.list){
+        const lines=raw.split("\n").map(l=>l.trim()).filter(Boolean);
+        if(lines.length) lines.forEach(l=>o.push(l.startsWith("-")?l:"- "+l));
+        else o.push("- ");
+        o.push("");
+      } else {
+        o.push(raw||"<>"); o.push("");
+      }
+    });
+  });
+  return o.join("\n");
+}
+function buildMarkdown(){ return buildFrontMatter()+"\n"+buildBody(); }
+
+const slugName=()=>(state.meta.name||"design").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"design";
+function saveBlob(text,filename,mime){
+  const blob=new Blob([text],{type:mime});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast("Downloaded "+filename);
+}
+function download(){ saveBlob(buildMarkdown(),`DESIGN-${slugName()}.md`,"text/markdown"); }
+function downloadHTML(){ saveBlob(exportDoc(),`${slugName()}.html`,"text/html"); }
+$("#downloadBtn").addEventListener("click",download);
+$("#downloadHtmlBtn").addEventListener("click",downloadHTML);
+$("#copyCssBtn").addEventListener("click",async()=>{
+  try{ await navigator.clipboard.writeText(generateRootCSS()); toast("Copied :root tokens"); }
+  catch{ toast("Copy failed — select the CSS block manually"); }
+});
+
+/* ══════════════════════════════════════════════════════════════════
+   IMPORT existing DESIGN.md  (best-effort)
+   ══════════════════════════════════════════════════════════════════ */
+$("#loadBtn").addEventListener("click",()=>$("#importFile").click());
+$("#importFile").addEventListener("change",e=>{
+  const file=e.target.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload=()=>{ try{ importMarkdown(r.result); toast("Loaded "+file.name); }catch(err){ toast("Could not parse that file"); } e.target.value=""; };
+  r.readAsText(file);
+});
+function importMarkdown(text){
+  const parts=text.split(/^---\s*$/m); // ["", frontmatter, body...]
+  const fm = parts.length>=3 ? parts[1] : "";
+  const body = parts.length>=3 ? parts.slice(2).join("---") : text;
+  if(fm) parseFrontMatter(fm);
+  if(body) parseBody(body);
+  if(!state.dark) state.dark={};
+  state.colorOrder.forEach(k=>{ if(!state.dark[k]) state.dark[k]=deriveDarkColor(k,state.colors[k]); });
+  // rebuild everything
+  $("#metaName").value=state.meta.name; $("#metaDesc").value=state.meta.description;
+  buildColors(); buildDark(); buildType(); buildScale(); buildLayout(); buildComp(); buildAssets(); buildGuidance();
+  buildSeeds();
+  $("#config").classList.remove("mode-minimal");
+  $$("#tokenModeSeg button").forEach(x=>x.classList.toggle("on", x.dataset.mode==="advanced"));
+  render();
+}
+function stripQuotes(v){ v=v.trim(); const m=v.match(/^"((?:[^"\\]|\\.)*)"$/); return m?m[1].replace(/\\"/g,'"').replace(/\\\\/g,"\\"):v; }
+function parseFrontMatter(fm){
+  const lines=fm.split("\n");
+  let top=null, role=null;
+  const topKey=l=>{const m=l.match(/^([a-zA-Z0-9_-]+):\s*(.*)$/); return m?[m[1],m[2]]:null;};
+  for(let raw of lines){
+    if(!raw.trim()||/^\s*#/.test(raw)) continue;
+    const indent=raw.match(/^(\s*)/)[1].length;
+    const line=raw.trim();
+    if(indent===0){
+      const kv=topKey(line);
+      if(!kv) continue;
+      const [k,v]=kv;
+      if(k==="name"){ state.meta.name=stripQuotes(v); top=null; }
+      else if(k==="description"){ state.meta.description=stripQuotes(v); top=null; }
+      else if(["colors","colors-dark","typography","rounded","spacing","layout","components","assets"].includes(k)){ top=k; role=null; }
+      else top=null;
+    } else if(top==="colors"&&indent===2){
+      const m=line.match(/^([a-z0-9-]+):\s*(.+)$/i); if(m) registerColor(m[1],stripQuotes(m[2]));
+    } else if(top==="colors-dark"&&indent===2){
+      const m=line.match(/^([a-z0-9-]+):\s*(.+)$/i); if(m){ if(!state.dark) state.dark={}; state.dark[m[1]]=stripQuotes(m[2]); }
+    } else if(top==="rounded"&&indent===2){
+      const m=line.match(/^([a-z0-9-]+):\s*(.+)$/i); if(m&&state.rounded[m[1]]!==undefined) state.rounded[m[1]]=stripQuotes(m[2]);
+    } else if(top==="spacing"&&indent===2){
+      const m=line.match(/^([a-z0-9-]+):\s*(.+)$/i); if(m&&state.spacing[m[1]]!==undefined) state.spacing[m[1]]=stripQuotes(m[2]);
+    } else if(top==="layout"&&indent===2){
+      const m=line.match(/^([a-z0-9-]+):\s*(.+)$/i); if(m&&state.layout[m[1]]!==undefined) state.layout[m[1]]=stripQuotes(m[2]);
+    } else if(top==="typography"){
+      if(indent===2){ const m=line.match(/^([a-z0-9-]+):\s*$/i); if(m&&state.type[m[1]]) role=m[1]; }
+      else if(indent>=4&&role){
+        const m=line.match(/^(fontFamily|fontSize|fontWeight|lineHeight|letterSpacing):\s*(.+)$/);
+        if(m){ const map={fontFamily:"family",fontSize:"size",fontWeight:"weight",lineHeight:"line",letterSpacing:"tracking"}; state.type[role][map[m[1]]]=stripQuotes(m[2]); }
+      }
+    } else if(top==="assets"){
+      const m=line.match(/^(primary|mark|wordmark|inverse):\s*(.+)$/);
+      if(m&&indent>=4) state.assets.logos[m[1]]=stripQuotes(m[2]);
+    }
+  }
+}
+function parseBody(body){
+  // map ### / ## headings to guide keys
+  const byH3={}, byH2single={};
+  GUIDE_SCHEMA.forEach(sec=>sec.fields.forEach(f=>{ if(f.h3) byH3[f.h3.toLowerCase()]=f.key; else byH2single[sec.h2.toLowerCase()]=f.key; }));
+  const lines=body.split("\n");
+  let curKey=null, buf=[], curH2=null;
+  const flush=()=>{ if(curKey){ let t=buf.join("\n").trim(); t=t.replace(/^<>$/,"").trim(); if(t) state.guide[curKey]=deBullet(t,curKey); } buf=[]; };
+  for(const line of lines){
+    let m;
+    if((m=line.match(/^##\s+(.+?)\s*$/)) && !line.startsWith("###")){
+      flush(); curH2=m[1].toLowerCase();
+      curKey = byH2single[curH2] || null; // section whose content sits directly under ## (no ###)
+    } else if((m=line.match(/^###\s+(.+?)\s*$/))){
+      flush(); curKey = byH3[m[1].toLowerCase()] || null;
+    } else if(curKey!==null){ buf.push(line); }
+  }
+  flush();
+}
+function deBullet(t,key){
+  const listKeys=["dos","donts"];
+  if(listKeys.includes(key)) return t.split("\n").map(l=>l.replace(/^\s*-\s?/,"").trim()).filter(Boolean).join("\n");
+  return t;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════════════════════ */
+$("#metaName").value=state.meta.name;
+$("#metaDesc").value=state.meta.description;
+buildSeeds();
+buildColors(); buildDark(); buildType(); buildScale(); buildLayout(); buildComp(); buildAssets(); buildGuidance();
+$$("#tokenModeSeg button").forEach(x=>x.classList.toggle("on", x.dataset.mode==="advanced"));
+render();
+applyZoom();
+</script>
+</body>
+</html>
