@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: "Minimal Monochrome"
-description: "A stark, monochrome design language built entirely in black, white, and gray. There is no accent color — hierarchy is carried by contrast, weight, and spacing alone. Inter is used for every text role, from display headlines to captions, kept at default tracking with only slight negative letter-spacing on larger sizes. Buttons are pill-shaped, cards are flat with hairline borders, and the overall mood is quiet, technical, and restrained."
+description: "A high-contrast design language with a split personality: the chrome — navigation, buttons, text, and canvas — stays strictly black, white, and gray, while every card, image, and section carries one big, flat, full-strength color pulled from its own content (the photo, the brand, the event). Color is bold and everywhere, but always as solid blocks — never gradients, tints, or UI decoration. Inter is used for every text role, buttons are pill-shaped, cards are flat with hairline borders, and the mood is quiet and technical in the frame, loud and saturated in the content."
 
 colors:
   primary: "#000000"
@@ -226,25 +226,25 @@ assets:
 
 ## Overview
 
-A minimal marketing/product surface rendered entirely in black, white, and gray. The core visual thesis is contrast-as-hierarchy: no color is used to signal importance, only weight, size, and spacing. The one thing to get right is restraint — resist adding an accent color or decorative flourish.
+A marketing/product surface with a split personality: monochrome chrome, full-color content. The core visual thesis is that color comes entirely from content — each card, image, and section takes one big flat block of full-strength color drawn from what it contains — while the surrounding UI stays black, white, and gray. The one thing to get right is the boundary: never let color leak into the chrome, and never dilute it into gradients or tints.
 
 ## Colors
 
 ### Brand & Accent
 
-There is no accent color in this system. "Primary" is pure black, used only for the default button fill and focus states — never as a decorative highlight.
+Every card, image, and section takes one big, flat, full-strength color pulled from its own content (the photo, the brand, the event). Color is bold and everywhere — but always as solid blocks, never as gradients, tints, or UI decoration. The chrome around the blocks — nav, buttons, text, canvas — stays strictly black, white, and gray. There is no fixed brand accent: the block color is chosen per instance from the content it frames. To pick it, extract the most dominant saturated hue from the block's own image — ignoring near-blacks, whites, and grays — then snap that hue to the nearest of eight preset, brand-safe tones (blue, magenta, orange, green, violet, red, teal, yellow) held at a fixed saturation and lightness. Every block therefore matches its content while the palette stays controlled.
 
 ### Surface
 
-Canvas is pure white. Surface-2 and surface-3 are barely-there grays used to differentiate cards and elevated panels from the base canvas without introducing shadow.
+Canvas and chrome surfaces stay strictly neutral — pure white and barely-there grays — so they read as a quiet frame around the full-color content blocks. Surface tone differentiates cards and panels without shadow; saturated color never appears on the base canvas or chrome.
 
 ### Text
 
-Ink ramps from pure black (headlines, primary body copy) down through muted and subtle grays (secondary text, placeholders) to a near-invisible tertiary gray for disabled or decorative text.
+Ink ramps from pure black through muted and subtle grays to a near-invisible tertiary gray. Text is always neutral — never tinted to match a color block. On a dark block it may flip to white for legibility, but never to a hue.
 
 ### Semantic
 
-Success, error, and warning states are all rendered in black — differentiated by icon and copy, not color, to preserve the monochrome system.
+Success, error, and warning states are all rendered in black — differentiated by copy and placement, not color (and not icons, which the system does not use), to preserve the monochrome chrome.
 
 ## Typography
 
@@ -284,7 +284,7 @@ The system is deliberately flat. No drop shadows; layering is signaled only by s
 
 ### Decorative Depth
 
-None. No gradients, glows, blurs, or texture are used anywhere in this system.
+None. No gradients, glows, blurs, or texture anywhere — this is the hard rule that keeps color reading as solid blocks. A content color is only ever a flat fill, never a gradient or a semi-transparent tint.
 
 ## Shapes
 
@@ -300,35 +300,38 @@ Images are cropped to simple rectangular ratios with no rounding beyond the stan
 
 ### Buttons
 
-Primary (solid black), secondary (outlined), and tertiary (text-only) variants, all pill-shaped except tertiary. Hover darkens fill slightly; focus uses a solid black ring; disabled drops opacity.
+Primary (solid black), secondary (outlined), and tertiary (text-only) variants, all pill-shaped except tertiary — always rendered in the monochrome chrome palette, never in a content color. Hover darkens fill slightly; focus uses a solid black ring; disabled drops opacity.
 
 ### Cards & Containers
 
-Flat surfaces with hairline borders and generous padding. Feature cards use a slightly larger radius and a faint surface-2 tint to differentiate from standard cards.
+Flat surfaces with hairline borders and generous padding. A card may be filled edge-to-edge with one flat, full-strength color pulled from its content; when it is, its border and any chrome inside stay neutral. Feature cards use a slightly larger radius and a faint surface-2 tint to differentiate standard cards.
 
 ### Inputs & Forms
 
-Fields are white with a hairline-strong border, switching to solid black on focus. Labels use caption typography in ink-muted.
+Fields are white with a hairline-strong border, switching to solid black on focus. Labels use caption typography in ink-muted. Inputs are chrome and never take a content color.
 
 ### Navigation
 
-A simple top nav on a white background with a hairline bottom border; footer uses surface-1 with muted body-sm text.
+A simple top nav on a white background with a hairline bottom border; footer uses surface-1 with muted body-sm text. Navigation is chrome, so it stays strictly black/white/gray — content color blocks never bleed into the nav or footer.
 
 ### Signature Components
 
-None yet defined — this is a bare, unbranded baseline system.
+The signature pattern is the full-bleed color block: a card, image, or section filled edge-to-edge with a single flat, content-derived color, framed entirely by monochrome chrome.
 
 ## Do's and Don'ts
 
 ### Do
 
-- Rely on weight, size, and spacing to create hierarchy.
-- Keep every surface within the black/white/gray ramp.
+- Give each card, image, and section one flat, full-strength color pulled from its own content.
+- Keep all chrome — nav, buttons, text, canvas — strictly black, white, and gray.
+- Use weight, size, and spacing (not color) to structure the chrome.
 
 ### Don't
 
-- Introduce a color accent anywhere in the system.
-- Add shadows, gradients, or decorative texture.
+- Don't use icons anywhere — no icon sets, inline glyphs, or pictograms; label everything with text instead.
+- Don't use gradients, tints, or semi-transparent color — content blocks are solid fills only.
+- Don't let a content color leak into the nav, buttons, or text.
+- Don't add shadows or decorative texture.
 
 ## Responsive Behavior
 
@@ -350,8 +353,8 @@ Images scale fluidly within their rounded frames, keeping their crop ratio; hero
 
 ## Iteration Guide
 
-To extend this system, add new tokens within the existing black/white/gray ramp only, and reuse the 8px spacing scale for any new component. Avoid introducing new typefaces or colors without deliberately revisiting the "Minimal Monochrome" premise.
+To extend this system, keep all chrome tokens within the black/white/gray ramp — content-block color is chosen per instance from the content, not tokenized — and reuse the 8px spacing scale for any new component. Revisit the split (monochrome chrome vs. full-color content blocks) before introducing any new colored surface.
 
 ## Known Gaps
 
-No dark-mode surface set is defined. No illustration or iconography style is specified. Responsive breakpoints and touch-target rules are not yet defined.
+No dark-mode surface set is defined. No illustration style is specified; iconography is intentionally omitted — the system uses no icons at all. Responsive breakpoints and touch-target rules are not yet defined.
