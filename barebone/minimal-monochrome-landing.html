@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumina.ai — Sell more on every live stream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   TOKENS — Minimal Monochrome (design.md)
+   Chrome: strictly black / white / gray.
+   Content blocks: one flat, full-strength color per block,
+   chosen per instance (not tokenized as brand accents).
+   ============================================================ */
+:root{
+  /* colors — chrome */
+  --primary:#000000;
+  --on-primary:#ffffff;
+  --primary-hover:#1a1a1a;
+  --primary-focus:#000000;
+  --ink:#000000;
+  --ink-muted:#4d4d4d;
+  --ink-subtle:#808080;
+  --ink-tertiary:#b3b3b3;
+  --canvas:#ffffff;
+  --surface-1:#ffffff;
+  --surface-2:#f7f7f7;
+  --surface-3:#f0f0f0;
+  --hairline:#ebebeb;
+  --hairline-strong:#d4d4d4;
+
+  /* radius */
+  --r-xs:2px; --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-xxl:24px;
+  --r-pill:999px; --r-full:50%;
+
+  /* spacing (8px rhythm, 4px half-step) */
+  --sp-xxs:2px; --sp-xs:4px; --sp-sm:8px; --sp-md:16px;
+  --sp-lg:24px; --sp-xl:40px; --sp-xxl:64px; --sp-section:96px;
+
+  /* layout */
+  --container:1320px;
+  --narrow:898px;
+  --gutter:24px;
+
+  --font:'Inter',-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none !important;}
+}
+body{
+  font-family:var(--font);
+  font-size:16px;line-height:24px;font-weight:400;
+  color:var(--ink);
+  background:var(--canvas);
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+
+/* type roles */
+.display-xl{font-size:48px;font-weight:600;line-height:48px;letter-spacing:-2.4px;}
+.display-lg{font-size:32px;font-weight:600;line-height:40px;letter-spacing:-1.28px;}
+.display-md{font-size:24px;font-weight:600;line-height:32px;letter-spacing:-0.6px;}
+.headline{font-size:20px;font-weight:600;line-height:28px;letter-spacing:-0.4px;}
+.card-title{font-size:18px;font-weight:600;line-height:24px;letter-spacing:-0.2px;}
+.subhead{font-size:16px;font-weight:500;line-height:24px;}
+.body-lg{font-size:18px;line-height:28px;}
+.body-sm{font-size:14px;line-height:20px;}
+.caption{font-size:12px;line-height:16px;}
+.eyebrow{font-size:12px;font-weight:500;line-height:16px;letter-spacing:1px;text-transform:uppercase;}
+.mono{font-family:'Inter',ui-monospace,monospace;font-size:13px;line-height:20px;}
+
+.muted{color:var(--ink-muted);}
+.subtle{color:var(--ink-subtle);}
+
+/* layout helpers */
+.container{max-width:var(--container);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter);}
+.narrow{max-width:var(--narrow);margin-left:auto;margin-right:auto;}
+.section{padding-top:var(--sp-section);padding-bottom:var(--sp-section);}
+.center{text-align:center;}
+
+/* ============================================================
+   BUTTONS — always chrome, always pill
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-size:14px;font-weight:500;line-height:20px;
+  border-radius:var(--r-pill);
+  padding:10px 18px;
+  min-height:44px;min-width:44px;
+  cursor:pointer;text-decoration:none;
+  border:1px solid transparent;
+  transition:background-color .15s ease,border-color .15s ease,opacity .15s ease;
+}
+.btn:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.4;cursor:not-allowed;pointer-events:none;}
+
+.btn-primary{background:var(--primary);color:var(--on-primary);}
+.btn-primary:hover{background:var(--primary-hover);}
+
+.btn-secondary{background:var(--canvas);color:var(--ink);border-color:var(--hairline-strong);}
+.btn-secondary:hover{border-color:var(--ink);}
+
+.btn-tertiary{background:transparent;color:var(--ink-muted);}
+.btn-tertiary:hover{color:var(--ink);}
+
+/* text link (chrome) — replaces the screenshot's arrow links (no icons) */
+.text-link{
+  font-size:14px;font-weight:500;line-height:20px;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--hairline-strong);
+  padding-bottom:2px;
+  transition:border-color .15s ease;
+}
+.text-link:hover{border-color:var(--ink);}
+.text-link:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+
+/* badge (chrome pill) */
+.badge{
+  display:inline-flex;align-items:center;gap:var(--sp-sm);
+  background:var(--surface-2);color:var(--ink-muted);
+  font-size:12px;line-height:16px;font-weight:400;
+  border-radius:var(--r-pill);
+  padding:var(--sp-xxs) var(--sp-sm);
+}
+.badge .eyebrow{color:var(--ink-muted);}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.top-nav{
+  position:sticky;top:0;z-index:20;
+  background:var(--canvas);
+  border-bottom:1px solid var(--hairline);
+  height:64px;
+}
+.top-nav .container{
+  height:64px;display:flex;align-items:center;justify-content:space-between;gap:var(--sp-md);
+}
+.nav-logo{font-size:16px;font-weight:600;letter-spacing:-0.2px;text-decoration:none;color:var(--ink);}
+.nav-links{display:flex;gap:var(--sp-sm);list-style:none;}
+.nav-links a{
+  display:inline-flex;align-items:center;
+  font-size:14px;font-weight:500;line-height:20px;
+  color:var(--ink-muted);text-decoration:none;
+  padding:10px 12px;min-height:44px;border-radius:var(--r-pill);
+  transition:color .15s ease;
+}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+.nav-actions{display:flex;align-items:center;gap:var(--sp-sm);}
+.nav-toggle{
+  display:none;
+  background:var(--canvas);border:1px solid var(--hairline-strong);
+  border-radius:var(--r-pill);
+  font-family:var(--font);font-size:14px;font-weight:500;
+  padding:10px 18px;min-height:44px;cursor:pointer;
+}
+.nav-toggle:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{padding-top:var(--sp-xxl);padding-bottom:var(--sp-xl);text-align:center;}
+.hero .badge{margin-bottom:var(--sp-lg);}
+.hero h1{margin-bottom:var(--sp-md);}
+.hero p{max-width:520px;margin:0 auto var(--sp-lg);}
+.hero-ctas{display:flex;justify-content:center;gap:var(--sp-sm);flex-wrap:wrap;}
+
+/* Signature pattern: full-bleed flat color block.
+   Hero "video" → one flat, full-strength color pulled from the stream content. */
+.color-block{
+  position:relative;
+  border-radius:var(--r-xl);
+  border:1px solid var(--hairline);
+  overflow:hidden;
+}
+.hero-media{
+  margin-top:var(--sp-xl);
+  background:#0f6b5c; /* content color: the live-stream footage */
+  min-height:420px;
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--sp-xl) var(--sp-lg);
+}
+.hero-media-label{
+  position:absolute;top:var(--sp-md);left:var(--sp-md);
+  background:var(--canvas);color:var(--ink);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-pill);
+  padding:var(--sp-xs) var(--sp-md);
+  font-size:12px;line-height:16px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+}
+.hero-media-caption{
+  position:absolute;bottom:var(--sp-md);left:50%;transform:translateX(-50%);
+  color:var(--on-primary);
+  font-size:12px;line-height:16px;
+  white-space:nowrap;
+}
+/* floating chrome mockup inside the block */
+.chat-mock{
+  background:var(--surface-1);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  padding:var(--sp-md);
+  width:min(420px,100%);
+  text-align:left;
+}
+.chat-mock .chat-q{font-size:16px;line-height:24px;font-weight:500;margin-bottom:var(--sp-md);}
+.chat-mock .chat-row{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-sm);
+  border-top:1px solid var(--hairline);
+  padding-top:var(--sp-md);
+}
+.chat-mock .chat-hint{font-size:12px;line-height:16px;color:var(--ink-subtle);}
+.chip{
+  display:inline-flex;align-items:center;
+  border:1px solid var(--hairline-strong);
+  border-radius:var(--r-pill);
+  padding:var(--sp-xs) var(--sp-md);
+  font-size:12px;line-height:16px;font-weight:500;color:var(--ink);
+  background:var(--canvas);
+}
+
+/* ============================================================
+   LOGO STRIP — text wordmarks only (no icons in this system)
+   ============================================================ */
+.logo-strip{
+  padding-top:var(--sp-xl);padding-bottom:var(--sp-xxl);
+}
+.logo-strip ul{
+  list-style:none;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:var(--sp-md) var(--sp-xxl);
+}
+.logo-strip li{
+  font-size:18px;font-weight:600;letter-spacing:-0.2px;
+  color:var(--ink-subtle);
+}
+
+/* ============================================================
+   SECTION INTRO
+   ============================================================ */
+.section-intro{text-align:center;padding-top:var(--sp-section);}
+.section-intro .badge{margin-bottom:var(--sp-lg);}
+.section-intro h2{max-width:640px;margin:0 auto;}
+
+/* ============================================================
+   FEATURE ROWS
+   ============================================================ */
+.features{display:flex;flex-direction:column;gap:var(--sp-lg);padding-top:var(--sp-xxl);}
+.feature-row{
+  background:var(--surface-2);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  padding:var(--sp-xxl) var(--sp-xl);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--sp-xxl);
+  align-items:center;
+}
+.feature-row.reverse .feature-media{order:2;}
+.feature-row.reverse .feature-copy{order:1;}
+.feature-copy .badge{margin-bottom:var(--sp-md);}
+.feature-copy h3{margin-bottom:var(--sp-md);}
+.feature-copy p{color:var(--ink-muted);max-width:420px;}
+
+.feature-media{
+  min-height:320px;
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--sp-lg);
+}
+.feature-media.mint{background:#2fd6a3;}   /* content color: product demo */
+.feature-media.yellow{background:#ffd43b;} /* content color: chat session */
+.feature-media.orange{background:#ff5a2d;} /* content color: creator stream */
+
+/* chrome mockups floating inside feature blocks */
+.mini-card{
+  background:var(--surface-1);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  padding:var(--sp-md);
+  width:min(340px,100%);
+}
+.mini-card .mini-head{font-size:12px;line-height:16px;color:var(--ink-subtle);margin-bottom:var(--sp-sm);}
+.mini-card .mini-title{font-size:18px;font-weight:600;line-height:24px;letter-spacing:-0.2px;margin-bottom:var(--sp-xs);}
+.mini-card .mini-sub{font-size:14px;line-height:20px;color:var(--ink-muted);margin-bottom:var(--sp-md);}
+.mini-card .mini-stats{
+  display:flex;gap:var(--sp-lg);
+  border-top:1px solid var(--hairline);
+  padding-top:var(--sp-md);
+}
+.mini-card .mini-stat b{display:block;font-size:16px;font-weight:600;letter-spacing:-0.2px;}
+.mini-card .mini-stat span{font-size:12px;line-height:16px;color:var(--ink-subtle);}
+.mini-card .mini-actions{margin-top:var(--sp-md);display:flex;gap:var(--sp-sm);flex-wrap:wrap;}
+
+/* ============================================================
+   BENCHMARKS
+   ============================================================ */
+.benchmarks{padding-top:var(--sp-section);}
+.benchmarks-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-xxl);align-items:start;
+}
+.benchmarks h2{margin-bottom:var(--sp-lg);max-width:420px;}
+.callout{
+  display:inline-block;
+  background:var(--primary);color:var(--on-primary);
+  border-radius:var(--r-pill);
+  padding:var(--sp-sm) var(--sp-md);
+  font-size:14px;line-height:20px;font-weight:500;
+  margin-bottom:var(--sp-xl);
+}
+.stat-list{list-style:none;display:flex;flex-direction:column;}
+.stat-list li{
+  border-top:1px solid var(--hairline);
+  padding:var(--sp-lg) 0;
+}
+.stat-list li:last-child{border-bottom:1px solid var(--hairline);}
+.stat-list .stat-number{font-size:24px;font-weight:600;line-height:32px;letter-spacing:-0.6px;margin-bottom:var(--sp-xs);}
+.stat-list .stat-label{font-size:14px;line-height:20px;color:var(--ink-muted);max-width:360px;}
+
+.benchmarks-media{
+  background:#f2994a; /* content color: the portrait photo */
+  min-height:480px;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:var(--sp-lg);
+}
+.float-stat{
+  background:var(--surface-1);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  padding:var(--sp-md);
+  max-width:220px;
+}
+.float-stat b{display:block;font-size:24px;font-weight:600;line-height:32px;letter-spacing:-0.6px;}
+.float-stat span{font-size:12px;line-height:16px;color:var(--ink-muted);}
+
+/* ============================================================
+   BLOG
+   ============================================================ */
+.blog{padding-top:var(--sp-section);}
+.blog-head{text-align:center;margin-bottom:var(--sp-xl);}
+.blog-head .badge{margin-bottom:var(--sp-lg);}
+.blog-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-lg);
+}
+.post-card{
+  background:var(--surface-1);
+  border:1px solid var(--hairline);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color .15s ease;
+}
+.post-card:hover{border-color:var(--hairline-strong);}
+.post-card:focus-within{border-color:var(--ink);}
+.post-media{height:200px;}
+.post-media.teal{background:#1fb6c1;}   /* content color: cover photo */
+.post-media.gold{background:#ffc61a;}
+.post-media.coral{background:#ff7a59;}
+.post-body{padding:var(--sp-lg);display:flex;flex-direction:column;gap:var(--sp-sm);flex:1;}
+.post-meta{font-size:12px;line-height:16px;color:var(--ink-subtle);display:flex;gap:var(--sp-sm);}
+.post-title{font-size:18px;font-weight:600;line-height:24px;letter-spacing:-0.2px;}
+.post-title a{text-decoration:none;}
+.post-title a:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+.post-link{margin-top:auto;padding-top:var(--sp-sm);}
+.blog-cta{display:flex;justify-content:center;margin-top:var(--sp-xl);}
+
+/* ============================================================
+   FOOTER CTA — full-bleed flat black block (chrome-legal),
+   texture from the screenshot dropped (no texture rule)
+   ============================================================ */
+.footer-cta{padding-top:var(--sp-section);padding-bottom:var(--sp-lg);}
+.cta-block{
+  background:var(--primary);
+  color:var(--on-primary);
+  border-radius:var(--r-xl);
+  padding:var(--sp-xxl) var(--sp-xl);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--sp-xl);flex-wrap:wrap;
+}
+.cta-block h2{max-width:480px;color:var(--on-primary);}
+.cta-actions{display:flex;gap:var(--sp-sm);flex-wrap:wrap;}
+/* chrome buttons on a dark block: text flips to white/black for legibility, never to a hue */
+.btn-on-dark{background:var(--canvas);color:var(--ink);border-color:var(--canvas);}
+.btn-on-dark:hover{background:var(--surface-3);}
+.btn-ghost-on-dark{background:transparent;color:var(--on-primary);border-color:#4d4d4d;}
+.btn-ghost-on-dark:hover{border-color:var(--on-primary);}
+.btn-on-dark:focus-visible,.btn-ghost-on-dark:focus-visible{outline:2px solid var(--on-primary);outline-offset:2px;}
+
+/* footer */
+.site-footer{
+  background:var(--surface-1);
+  color:var(--ink-muted);
+  font-size:14px;line-height:20px;
+  padding:var(--sp-xxl) var(--sp-lg);
+  border-top:1px solid var(--hairline);
+  margin-top:var(--sp-xxl);
+}
+.site-footer .container{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-md);flex-wrap:wrap;
+  padding-left:0;padding-right:0;
+}
+.footer-links{list-style:none;display:flex;gap:var(--sp-lg);flex-wrap:wrap;}
+.footer-links a{text-decoration:none;color:var(--ink-muted);transition:color .15s ease;}
+.footer-links a:hover{color:var(--ink);}
+.footer-links a:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;}
+
+/* ============================================================
+   RESPONSIVE — mobile <640 / tablet 640–1024 / desktop >1024
+   ============================================================ */
+@media (max-width:1024px){
+  .display-xl{font-size:40px;line-height:44px;letter-spacing:-1.8px;}
+  .feature-row{grid-template-columns:1fr;padding:var(--sp-xl) var(--sp-lg);}
+  .feature-row.reverse .feature-media{order:1;}
+  .feature-row.reverse .feature-copy{order:2;}
+  .benchmarks-grid{grid-template-columns:1fr;}
+  .blog-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:640px){
+  .display-xl{font-size:32px;line-height:36px;letter-spacing:-1.28px;}
+  .display-lg{font-size:28px;line-height:34px;letter-spacing:-1px;}
+  .section{padding-top:var(--sp-xxl);padding-bottom:var(--sp-xxl);}
+  .section-intro{padding-top:var(--sp-xxl);}
+  .benchmarks,.blog,.footer-cta{padding-top:var(--sp-xxl);}
+  .nav-links{display:none;}
+  .nav-toggle{display:inline-flex;}
+  .nav-actions .btn-tertiary{display:none;} /* primary CTA never hides */
+  .blog-grid{grid-template-columns:1fr;}
+  .hero-media{min-height:320px;}
+  .hero-media-caption{display:none;}
+  .cta-block{padding:var(--sp-xl) var(--sp-lg);}
+  .logo-strip ul{gap:var(--sp-md) var(--sp-xl);}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="top-nav">
+  <div class="container">
+    <a class="nav-logo" href="#">Lumina.ai</a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#customers">Customers</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resources">Resources</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-tertiary" href="#">Sign in</a>
+      <a class="btn btn-primary" href="#">Get a demo</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Open menu">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero container">
+  <span class="badge">4.8 rating across 12,400 reviews</span>
+  <h1 class="display-xl">Grow revenue<br />without the guesswork</h1>
+  <p class="body-lg muted">Streams convert. Agents assist. Playbooks run themselves.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="#">Start free today</a>
+    <a class="btn btn-secondary" href="#">Explore the API</a>
+  </div>
+
+  <!-- Signature full-bleed color block: the live stream -->
+  <div class="color-block hero-media" role="img" aria-label="Live shopping stream with an AI assistant answering a shopper's question">
+    <span class="hero-media-label">AI agents</span>
+    <div class="chat-mock">
+      <p class="chat-q">Help me find a lightweight running shoe</p>
+      <div class="chat-row">
+        <span class="chat-hint">Assistant is typing a reply</span>
+        <span class="chip">Talk</span>
+      </div>
+    </div>
+    <span class="hero-media-caption">Live from the Fall Collection stream, hosted by Lumina agents</span>
+  </div>
+</section>
+
+<!-- ================= LOGO STRIP ================= -->
+<section class="logo-strip container" aria-label="Trusted by">
+  <ul>
+    <li>Northwind</li>
+    <li>Ferrostack</li>
+    <li>tuesday.app</li>
+    <li>Vantage</li>
+    <li>Cloudpile</li>
+  </ul>
+</section>
+
+<!-- ================= SECTION INTRO ================= -->
+<div class="section-intro container" id="platform">
+  <span class="badge"><span class="eyebrow">Sell live, pro</span></span>
+  <h2 class="display-lg">Take your live shopping events to the next level</h2>
+</div>
+
+<!-- ================= FEATURE ROWS ================= -->
+<section class="features container">
+
+  <!-- Feature 1: media left, copy right -->
+  <article class="feature-row">
+    <div class="color-block feature-media mint" role="img" aria-label="Product listing card from a live demo">
+      <div class="mini-card">
+        <p class="mini-head">Featured product</p>
+        <p class="mini-title">Aero Trail Runner</p>
+        <p class="mini-sub">$128.00 · In stock</p>
+        <div class="mini-stats">
+          <div class="mini-stat"><b>1.6M</b><span>Views this week</span></div>
+          <div class="mini-stat"><b>142K</b><span>Items added to cart</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-copy">
+      <span class="badge"><span class="eyebrow">Step 1</span></span>
+      <h3 class="display-md">Collaborate with multiple hosts</h3>
+      <p>Go live with co-hosts from anywhere in the world. Everyone shares one stage, one product feed, and one running total.</p>
+    </div>
+  </article>
+
+  <!-- Feature 2: copy left, media right -->
+  <article class="feature-row reverse">
+    <div class="feature-copy">
+      <span class="badge"><span class="eyebrow">Step 2</span></span>
+      <h3 class="display-md">Smart tracking, real-time AI chat</h3>
+      <p>Answer every shopper with agents trained on your catalog. Interactive replies, product suggestions, size guidance, and order status — all inside the stream.</p>
+    </div>
+    <div class="color-block feature-media yellow" role="img" aria-label="Shopper chat with an AI reply in progress">
+      <div class="mini-card">
+        <p class="mini-head">Shopper chat</p>
+        <p class="mini-title">"I want to buy a smartwatch — help me find the right one."</p>
+        <div class="mini-actions">
+          <span class="chip">Analyzing your catalog</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Feature 3: media left, copy right -->
+  <article class="feature-row">
+    <div class="color-block feature-media orange" role="img" aria-label="Creator starting a multicast stream">
+      <div class="mini-card">
+        <p class="mini-head">Multicast</p>
+        <p class="mini-title">Fall Collection launch</p>
+        <p class="mini-sub">Timer 03:20 · 4 destinations ready</p>
+        <div class="mini-actions">
+          <button class="btn btn-primary" type="button">Start streaming</button>
+          <button class="btn btn-secondary" type="button">Preview</button>
+        </div>
+      </div>
+    </div>
+    <div class="feature-copy">
+      <span class="badge"><span class="eyebrow">Step 3</span></span>
+      <h3 class="display-md">Go live everywhere at once</h3>
+      <p>Broadcast one event to your store, your app, and every social channel simultaneously — with overlays, product pins, and offers kept in sync.</p>
+    </div>
+  </article>
+
+</section>
+
+<!-- ================= BENCHMARKS ================= -->
+<section class="benchmarks container" id="customers">
+  <div class="benchmarks-grid">
+    <div>
+      <h2 class="display-lg">Achieving superior industry benchmarks</h2>
+      <p class="callout">Lumina ranks no. 1 in the Streamly app category</p>
+      <ul class="stat-list">
+        <li>
+          <p class="stat-number">6 million</p>
+          <p class="stat-label">Products sold through live events in the last year</p>
+        </li>
+        <li>
+          <p class="stat-number">31%</p>
+          <p class="stat-label">Average lift in conversion after a store's first ten streams</p>
+        </li>
+        <li>
+          <p class="stat-number">29 million</p>
+          <p class="stat-label">Shopper questions answered by agents in real time</p>
+        </li>
+      </ul>
+    </div>
+    <div class="color-block benchmarks-media" role="img" aria-label="Portrait of a smiling merchant">
+      <div class="float-stat">
+        <b>60%</b>
+        <span>Faster time to first sale for new sellers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="blog container" id="resources">
+  <div class="blog-head">
+    <span class="badge"><span class="eyebrow">Our blogs</span></span>
+    <h2 class="display-lg">The latest from our blog</h2>
+  </div>
+  <div class="blog-grid">
+    <article class="post-card">
+      <div class="color-block post-media teal" role="img" aria-label="Blog cover, summer stream setup"></div>
+      <div class="post-body">
+        <p class="post-meta"><span>Jun 24, 2026</span><span>5 min read</span></p>
+        <h3 class="post-title"><a href="#">Why we rebuilt our streaming stack (and you should too)</a></h3>
+        <p class="post-link"><a class="text-link" href="#">Read story</a></p>
+      </div>
+    </article>
+    <article class="post-card">
+      <div class="color-block post-media gold" role="img" aria-label="Blog cover, product spotlight"></div>
+      <div class="post-body">
+        <p class="post-meta"><span>Jun 18, 2026</span><span>7 min read</span></p>
+        <h3 class="post-title"><a href="#">The worst advice we've ever heard about live commerce</a></h3>
+        <p class="post-link"><a class="text-link" href="#">Read story</a></p>
+      </div>
+    </article>
+    <article class="post-card">
+      <div class="color-block post-media coral" role="img" aria-label="Blog cover, creators laughing"></div>
+      <div class="post-body">
+        <p class="post-meta"><span>Jun 09, 2026</span><span>4 min read</span></p>
+        <h3 class="post-title"><a href="#">Five principles of an effective event landing page</a></h3>
+        <p class="post-link"><a class="text-link" href="#">Read story</a></p>
+      </div>
+    </article>
+  </div>
+  <div class="blog-cta">
+    <a class="btn btn-primary" href="#">See all blogs</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER CTA ================= -->
+<section class="footer-cta container" id="about">
+  <div class="cta-block">
+    <h2 class="display-lg">Ready to improve your sales and conversions?</h2>
+    <div class="cta-actions">
+      <a class="btn btn-on-dark" href="#">Book a demo</a>
+      <a class="btn btn-ghost-on-dark" href="#">Try Lumina for free</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container">
+    <span>© 2026 Lumina.ai — All rights reserved</span>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Status</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// Minimal, chrome-only interaction: mobile menu toggle (text label, no icon)
+const toggle = document.querySelector('.nav-toggle');
+const links = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => {
+  const open = toggle.getAttribute('aria-expanded') === 'true';
+  toggle.setAttribute('aria-expanded', String(!open));
+  toggle.textContent = open ? 'Menu' : 'Close';
+  if (!open) {
+    links.style.display = 'flex';
+    links.style.position = 'absolute';
+    links.style.top = '64px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.flexDirection = 'column';
+    links.style.background = 'var(--canvas)';
+    links.style.borderBottom = '1px solid var(--hairline)';
+    links.style.padding = 'var(--sp-md) var(--sp-lg)';
+  } else {
+    links.removeAttribute('style');
+  }
+});
+</script>
+
+</body>
+</html>
