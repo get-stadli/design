@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>Stadli — Release α-25</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!-- Inter for clients that honour web fonts (Apple Mail, iOS); everyone else falls back to the system sans stack, weight + size preserved. -->
+  <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!--<![endif]-->
+
+  <style>
+    :root { color-scheme: light dark; supported-color-schemes: light dark; }
+
+    /* ---- Reset ---- */
+    html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+    * { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    a { text-decoration: none; }
+    p { margin: 0; }
+    .es-btn a { line-height: 20px; }
+
+    /* ---- Base tokens: LIGHT canvas ---- */
+    body, .es-body { background-color: #ffffff; }
+    .es-canvas       { background-color: #ffffff; }
+    .es-surface-1    { background-color: #ffffff; }
+    .es-surface-2    { background-color: #f7f7f7; }
+    .es-hairline     { border-color: #ebebeb; }
+    .es-hairline-td  { border-color: #ebebeb; }
+    .es-hairline-strong { border-color: #d4d4d4; }
+    .es-ink          { color: #000000; }
+    .es-ink-muted    { color: #4d4d4d; }
+    .es-ink-subtle   { color: #808080; }
+    .es-ink-tertiary { color: #b3b3b3; }
+    .es-rule         { background-color: #ebebeb; }
+    .es-btn-primary  { background-color: #000000; }
+    .es-btn-primary a{ color: #ffffff !important; }
+    .es-btn-secondary { background-color: #ffffff; border: 1px solid #d4d4d4; }
+    .es-btn-secondary a { color: #000000 !important; }
+    .es-badge        { background-color: #f7f7f7; color: #4d4d4d; }
+    .es-dot-new      { color: #15803d; }
+    .es-dot-caution  { color: #b45309; }
+    .es-dot-neutral  { color: #808080; }
+    .es-logo         { color: #111111; }
+    .es-link         { color: #000000 !important; }
+    .es-link-muted   { color: #4d4d4d !important; }
+
+    /* ---- Responsive ---- */
+    @media only screen and (max-width: 640px) {
+      .es-wrap       { width: 100% !important; }
+      .es-outer      { padding: 16px 12px !important; }
+      .es-px         { padding-left: 24px !important; padding-right: 24px !important; }
+      .es-card-p     { padding: 24px !important; }
+      .es-hero-h1    { font-size: 34px !important; line-height: 38px !important; letter-spacing: -1px !important; }
+      .es-stack      { display: block !important; width: 100% !important; }
+      .es-stack-mb   { padding-bottom: 12px !important; }
+      .es-section-sp { height: 40px !important; }
+      .es-metric-cell{ display: block !important; width: 100% !important; border-right: 0 !important; }
+      .es-metric-div { display: block !important; height: 1px !important; width: 100% !important; }
+      .es-btn-block a{ display: block !important; }
+    }
+
+    /* ---- DARK canvas (one deliverable, not a recolour) ---- */
+    @media (prefers-color-scheme: dark) {
+      body, .es-body, .es-canvas { background-color: #0a0a0a !important; }
+      .es-surface-1    { background-color: #111111 !important; }
+      .es-surface-2    { background-color: #171717 !important; }
+      .es-hairline, .es-hairline-td { border-color: #262626 !important; }
+      .es-hairline-strong { border-color: #404040 !important; }
+      .es-ink          { color: #f5f5f5 !important; }
+      .es-ink-muted    { color: #cfcfcf !important; }
+      .es-ink-subtle   { color: #a8a8a8 !important; }
+      .es-ink-tertiary { color: #828282 !important; }
+      .es-rule         { background-color: #262626 !important; }
+      .es-btn-primary  { background-color: #f5f5f5 !important; }
+      .es-btn-primary a{ color: #0a0a0a !important; }
+      .es-btn-secondary { background-color: #0a0a0a !important; border-color: #404040 !important; }
+      .es-btn-secondary a { color: #f5f5f5 !important; }
+      .es-badge        { background-color: #171717 !important; color: #cfcfcf !important; }
+      .es-dot-new      { color: #4ade80 !important; }
+      .es-dot-caution  { color: #fbbf24 !important; }
+      .es-dot-neutral  { color: #a8a8a8 !important; }
+      .es-logo         { color: #ffffff !important; }
+      .es-link         { color: #f5f5f5 !important; }
+      .es-link-muted   { color: #cfcfcf !important; }
+    }
+
+    /* Outlook.com dark-mode data attributes */
+    [data-ogsc] body, [data-ogsc] .es-body, [data-ogsc] .es-canvas { background-color: #0a0a0a !important; }
+    [data-ogsc] .es-surface-1 { background-color: #111111 !important; }
+    [data-ogsc] .es-surface-2 { background-color: #171717 !important; }
+    [data-ogsc] .es-ink { color: #f5f5f5 !important; }
+    [data-ogsc] .es-ink-muted { color: #cfcfcf !important; }
+    [data-ogsc] .es-ink-subtle { color: #a8a8a8 !important; }
+    [data-ogsc] .es-rule { background-color: #262626 !important; }
+    [data-ogsc] .es-btn-primary { background-color: #f5f5f5 !important; }
+    [data-ogsc] .es-btn-primary a { color: #0a0a0a !important; }
+    [data-ogsc] .es-logo { color: #ffffff !important; }
+    [data-ogsc] .es-dot-new { color: #4ade80 !important; }
+    [data-ogsc] .es-dot-caution { color: #fbbf24 !important; }
+  </style>
+</head>
+
+<body class="es-body" style="margin:0; padding:0; width:100%; background-color:#ffffff; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;">
+
+  <!-- Preheader (hidden preview text) -->
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#ffffff; opacity:0;">
+    α-25 — the intelligence release: unified fan timelines, predictive sell-out, and a faster checkout.
+    &#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;&#8199;&#8203;
+  </div>
+
+  <!-- Full-width canvas -->
+  <table role="presentation" class="es-canvas" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;">
+    <tr>
+      <td align="center" class="es-outer" style="padding:32px 24px;">
+
+        <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+        <table role="presentation" class="es-wrap es-surface-1 es-hairline-td" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; margin:0 auto; background-color:#ffffff; border:1px solid #ebebeb; border-radius:16px;">
+
+          <!-- ============ HEADER ============ -->
+          <tr>
+            <td class="es-px" style="padding:28px 40px 0 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="left" valign="middle" style="padding:0;">
+                    <!-- Logo: inline SVG, chrome, inherits ink via currentColor -->
+                    <span class="es-logo" style="color:#111111;">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1375 405" role="img" aria-label="Stadli" width="92" height="27" fill="currentColor" style="display:inline-block; vertical-align:middle;"><g><path d="M1051.69,394.57h-54.65l-2.02-2.02v-33.06c-42.56,49.75-117.24,53.96-170.74,18.93-78.29-51.26-81.53-180.87-9.37-238.84,49.67-39.91,129.04-42.78,173.35,6.71l1.36-141.69h61.4l.67,389.98ZM893.51,170.95c-87.55,10.51-90.94,159.71,6.53,169.48,117.59,11.79,121.12-184.81-6.53-169.48Z"/><path d="M679.26,356.79c-42.34,48.71-111.23,58.07-166.88,25.87-89.21-51.62-91.14-196.86-4.39-251.79,46.28-29.3,111.66-29.62,155.09,5.28l16.18,16.88v-37.78h56.68v279.33h-56.68v-37.78ZM585.92,169.55c-101.03,2.6-103.13,162.67-4.47,171.03,117.35,9.94,120.05-174,4.47-171.03Z"/><path d="M204.27,194.86c-10.91-35.78-68.12-38.63-96.73-27.23-25.2,10.04-27.56,30.88-.79,41.76,49.3,20.02,153.48,18.37,160.77,87.52,5.15,48.85-27.44,82.07-72.42,93.22-72.52,17.97-169.96-6.31-181.1-91.36h60.72c5.34,28.33,32.46,39.88,58.72,41.81,19.34,1.43,66.25,1.8,71.57-22.84,4.2-19.43-14.07-24.71-28.79-29.38-60.82-19.3-170.98-21.31-146.2-115.93,22.64-86.43,198.37-88.08,229.59,2.85.89,2.58,6.66,19.59,2.01,19.59h-57.35Z"/><path d="M351.35,24.84v90.41h86.36v59.37h-86.36l1.3,128.92c.82,14.68,10.18,28.78,25.33,31.34,7.14,1.21,21.35,1.42,29.31,1.73,11,.42,22.12-.42,33.12-.06v58.02h-65.45c-42.34,0-83.34-40.72-84.32-83.01l-1.33-244.19c.29-2.95,2.91-4.23,4.93-5.87,11.48-9.31,39.68-28.28,52.67-35.05,1.51-.79,2.36-2.11,4.44-1.63Z"/><rect x="1094.87" y="4.6" width="63.42" height="391.33"/><rect x="1200.13" y="115.25" width="60.72" height="280.68"/><path d="M1225.47,3.63c46.2-4.43,58.77,59.87,17.22,73.89-55.1,18.6-70.9-68.74-17.22-73.89Z"/></g><path d="M1328.45,398.23c-4.33,0-8.38-.78-12.15-2.35s-7.06-3.76-9.88-6.59c-2.82-2.82-5.02-6.1-6.59-9.84-1.57-3.73-2.35-7.77-2.35-12.1s.78-8.38,2.35-12.15c1.57-3.76,3.76-7.06,6.59-9.88,2.82-2.82,6.12-5.02,9.88-6.59,3.76-1.57,7.81-2.35,12.15-2.35s8.37.78,12.1,2.35c3.73,1.57,7.01,3.76,9.84,6.59,2.82,2.82,5.02,6.12,6.59,9.88s2.35,7.81,2.35,12.15-.78,8.37-2.35,12.1c-1.57,3.74-3.76,7.01-6.59,9.84-2.82,2.82-6.1,5.02-9.84,6.59-3.74,1.57-7.77,2.35-12.1,2.35ZM1328.45,392.16c4.73,0,8.92-1.05,12.57-3.17,3.65-2.11,6.51-5.05,8.6-8.81,2.08-3.76,3.12-8.04,3.12-12.83s-1.06-9.15-3.17-12.92c-2.11-3.76-4.99-6.7-8.64-8.81-3.65-2.11-7.81-3.17-12.49-3.17s-8.85,1.06-12.53,3.17c-3.68,2.11-6.57,5.05-8.68,8.81-2.11,3.76-3.17,8.07-3.17,12.92s1.05,9.07,3.17,12.83c2.11,3.76,5,6.7,8.68,8.81,3.68,2.11,7.85,3.17,12.53,3.17ZM1328.36,384.29c-3.14,0-5.9-.71-8.3-2.14-2.4-1.42-4.26-3.41-5.6-5.94-1.34-2.54-2.01-5.49-2.01-8.85s.67-6.31,2.01-8.85c1.34-2.54,3.19-4.52,5.56-5.94,2.37-1.42,5.12-2.14,8.25-2.14,2.74,0,5.35.73,7.83,2.18s4.35,3.41,5.6,5.86l1.11,2.22-5.73,2.22-1.11-1.8c-.74-1.31-1.83-2.38-3.25-3.21-1.43-.83-2.91-1.24-4.45-1.24-2.79,0-5.06.98-6.8,2.95-1.74,1.97-2.61,4.55-2.61,7.74s.88,5.7,2.65,7.7c1.77,2,4.05,2.99,6.84,2.99,1.54,0,3.04-.48,4.49-1.45,1.45-.97,2.61-2.19,3.46-3.68l.77-1.54,5.99,2.14-1.03,2.05c-1.31,2.62-3.22,4.73-5.73,6.33-2.51,1.6-5.16,2.39-7.96,2.39Z"/></svg>
+                    </span>
+                  </td>
+                  <td align="right" valign="middle" style="padding:0;">
+                    <span class="es-ink-subtle" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#808080;">Release notes</span>
+                  </td>
+                </tr>
+              </table>
+              <!-- hairline under header -->
+              <div class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb; margin-top:24px;">&nbsp;</div>
+            </td>
+          </tr>
+
+          <!-- ============ HERO ============ -->
+          <tr>
+            <td class="es-px" style="padding:56px 40px 0 40px;">
+              <p class="es-ink-subtle" style="margin:0 0 20px 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#808080;">Release&nbsp;α-25&nbsp;&nbsp;·&nbsp;&nbsp;8&nbsp;July&nbsp;2026</p>
+
+              <!-- The one loud moment: a heavy display headline (type, not colour) -->
+              <h1 class="es-hero-h1 es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:44px; line-height:48px; font-weight:700; letter-spacing:-1.6px; color:#000000;">The intelligence release</h1>
+
+              <p class="es-ink-muted" style="margin:20px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:26px; font-weight:400; color:#4d4d4d;">Sharper fan profiles, a faster checkout, and a rebuilt analytics workspace. Here&rsquo;s everything that shipped in α-25.</p>
+
+              <!-- Primary pill button (bulletproof + VML for Outlook) -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
+                <tr>
+                  <td class="es-btn-primary" bgcolor="#000000" style="border-radius:999px; background-color:#000000;">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://stadli.example/changelog/a-25" style="height:40px;v-text-anchor:middle;width:220px;" arcsize="50%" fillcolor="#000000" stroke="f">
+                      <center style="color:#ffffff;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;font-weight:500;">Read the full changelog</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="https://stadli.example/changelog/a-25" style="display:inline-block; padding:11px 22px; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:20px; color:#ffffff; border-radius:999px;">Read the full changelog</a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ============ METRIC ROW (pure chrome — print the number) ============ -->
+          <tr>
+            <td class="es-px" style="padding:48px 40px 0 40px;">
+              <table role="presentation" class="es-surface-1 es-hairline-td" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; border:1px solid #ebebeb; border-radius:14px;">
+                <tr>
+                  <td class="es-metric-cell es-hairline-td" width="33.33%" valign="top" style="padding:22px 24px; border-right:1px solid #ebebeb;">
+                    <p class="es-ink-subtle" style="margin:0 0 8px 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#808080;">New</p>
+                    <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:32px; line-height:36px; font-weight:600; letter-spacing:-0.96px; color:#000000; font-feature-settings:'tnum'; -moz-font-feature-settings:'tnum'; -webkit-font-feature-settings:'tnum';">14</p>
+                  </td>
+                  <td class="es-metric-cell es-hairline-td" width="33.33%" valign="top" style="padding:22px 24px; border-right:1px solid #ebebeb;">
+                    <p class="es-ink-subtle" style="margin:0 0 8px 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#808080;">Improved</p>
+                    <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:32px; line-height:36px; font-weight:600; letter-spacing:-0.96px; color:#000000; font-feature-settings:'tnum'; -moz-font-feature-settings:'tnum'; -webkit-font-feature-settings:'tnum';">27</p>
+                  </td>
+                  <td class="es-metric-cell" width="33.33%" valign="top" style="padding:22px 24px;">
+                    <p class="es-ink-subtle" style="margin:0 0 8px 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#808080;">Fixed</p>
+                    <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:32px; line-height:36px; font-weight:600; letter-spacing:-0.96px; color:#000000; font-feature-settings:'tnum'; -moz-font-feature-settings:'tnum'; -webkit-font-feature-settings:'tnum';">19</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ============ SECTION · NEW ============ -->
+          <tr><td class="es-px" style="padding:56px 40px 0 40px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+              <td valign="middle" style="padding:0;">
+                <span class="es-dot-new" style="color:#15803d; font-size:20px; line-height:1;">&#9679;</span>
+                <span class="es-ink" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; font-weight:600; letter-spacing:-0.48px; color:#000000; padding-left:10px; vertical-align:middle;">New</span>
+              </td>
+            </tr></table>
+          </td></tr>
+
+          <!-- New · item cards -->
+          <tr><td class="es-px" style="padding:20px 40px 0 40px;">
+            <table role="presentation" class="es-surface-1 es-hairline-td" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; border:1px solid #ebebeb; border-radius:14px;">
+              <tr><td class="es-card-p" style="padding:26px 28px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr><td style="padding:0;">
+                    <span class="es-badge" style="display:inline-block; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:16px; font-weight:500; color:#4d4d4d; background-color:#f7f7f7; border-radius:999px; padding:3px 10px;">Fan CRM</span>
+                  </td></tr>
+                  <tr><td style="padding-top:14px;">
+                    <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:20px; line-height:28px; font-weight:600; letter-spacing:-0.4px; color:#000000;">Unified Fan Timeline</p>
+                    <p class="es-ink-muted" style="margin:8px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Tickets, emails, surveys, and merch now live on one scrollable timeline per fan &mdash; every touchpoint in the order it happened.</p>
+                  </td></tr>
+                </table>
+              </td></tr>
+              <tr><td class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb;">&nbsp;</td></tr>
+              <tr><td class="es-card-p" style="padding:26px 28px;">
+                <span class="es-badge" style="display:inline-block; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:16px; font-weight:500; color:#4d4d4d; background-color:#f7f7f7; border-radius:999px; padding:3px 10px;">Ticketing</span>
+                <p class="es-ink" style="margin:14px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:20px; line-height:28px; font-weight:600; letter-spacing:-0.4px; color:#000000;">Predictive Sell-Out</p>
+                <p class="es-ink-muted" style="margin:8px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">A new model forecasts your sell-out date and recommends when to release held inventory &mdash; before the demand curve turns.</p>
+              </td></tr>
+              <tr><td class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb;">&nbsp;</td></tr>
+              <tr><td class="es-card-p" style="padding:26px 28px;">
+                <span class="es-badge" style="display:inline-block; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:16px; font-weight:500; color:#4d4d4d; background-color:#f7f7f7; border-radius:999px; padding:3px 10px;">Audiences</span>
+                <p class="es-ink" style="margin:14px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:20px; line-height:28px; font-weight:600; letter-spacing:-0.4px; color:#000000;">Segment Builder v2</p>
+                <p class="es-ink-muted" style="margin:8px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Compose audiences from any mix of behaviour, spend, and attendance, with a live count that updates as you add each rule.</p>
+              </td></tr>
+            </table>
+          </td></tr>
+
+          <!-- ============ SECTION · IMPROVED ============ -->
+          <tr><td class="es-px" style="padding:48px 40px 0 40px;">
+            <span class="es-dot-neutral" style="color:#808080; font-size:20px; line-height:1;">&#9679;</span>
+            <span class="es-ink" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; font-weight:600; letter-spacing:-0.48px; color:#000000; padding-left:10px; vertical-align:middle;">Improved</span>
+          </td></tr>
+
+          <tr><td class="es-px" style="padding:20px 40px 0 40px;">
+            <table role="presentation" class="es-surface-2 es-hairline-td" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f7f7f7; border:1px solid #ebebeb; border-radius:14px;">
+              <tr><td class="es-card-p" style="padding:24px 28px;">
+                <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:24px; font-weight:600; color:#000000;">Faster checkout</p>
+                <p class="es-ink-muted" style="margin:6px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Ticket checkout is about 40% faster on mobile, with Apple Pay and Google Pay moved to the top of the flow.</p>
+              </td></tr>
+              <tr><td class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb;">&nbsp;</td></tr>
+              <tr><td class="es-card-p" style="padding:24px 28px;">
+                <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:24px; font-weight:600; color:#000000;">Bulk email scheduling</p>
+                <p class="es-ink-muted" style="margin:6px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Schedule up to 50 campaigns at once and stagger send windows by the recipient&rsquo;s local timezone.</p>
+              </td></tr>
+              <tr><td class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb;">&nbsp;</td></tr>
+              <tr><td class="es-card-p" style="padding:24px 28px;">
+                <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:24px; font-weight:600; color:#000000;">Smarter CRM import mapping</p>
+                <p class="es-ink-muted" style="margin:6px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Column mapping now auto-detects common fields and remembers the layout from your last import.</p>
+              </td></tr>
+            </table>
+          </td></tr>
+
+          <!-- ============ SECTION · FIXED ============ -->
+          <tr><td class="es-px" style="padding:48px 40px 0 40px;">
+            <span class="es-dot-neutral" style="color:#808080; font-size:20px; line-height:1;">&#9679;</span>
+            <span class="es-ink" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; font-weight:600; letter-spacing:-0.48px; color:#000000; padding-left:10px; vertical-align:middle;">Fixed</span>
+          </td></tr>
+
+          <tr><td class="es-px" style="padding:18px 40px 0 40px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td valign="top" width="16" style="padding:2px 0 0 0;"><span class="es-ink-tertiary" style="color:#b3b3b3; font-size:15px; line-height:24px;">&mdash;</span></td>
+                <td valign="top" style="padding:0 0 12px 8px;"><p class="es-ink-muted" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Survey responses could be double-counted in analytics exports. Counts are now reconciled at export time.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" width="16" style="padding:2px 0 0 0;"><span class="es-ink-tertiary" style="color:#b3b3b3; font-size:15px; line-height:24px;">&mdash;</span></td>
+                <td valign="top" style="padding:0 0 12px 8px;"><p class="es-ink-muted" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Recurring event reminders drifted by an hour across daylight-saving changes. Reminders now pin to the event&rsquo;s timezone.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" width="16" style="padding:2px 0 0 0;"><span class="es-ink-tertiary" style="color:#b3b3b3; font-size:15px; line-height:24px;">&mdash;</span></td>
+                <td valign="top" style="padding:0 0 0 8px;"><p class="es-ink-muted" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Revenue rounding was inconsistent in multi-currency reports. Totals now round once, at the report level.</p></td>
+              </tr>
+            </table>
+          </td></tr>
+
+          <!-- ============ SECTION · DEPRECATED (caution whisper) ============ -->
+          <tr><td class="es-px" style="padding:48px 40px 0 40px;">
+            <span class="es-dot-caution" style="color:#b45309; font-size:20px; line-height:1;">&#9679;</span>
+            <span class="es-ink" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; font-weight:600; letter-spacing:-0.48px; color:#000000; padding-left:10px; vertical-align:middle;">Deprecated</span>
+          </td></tr>
+
+          <tr><td class="es-px" style="padding:18px 40px 0 40px;">
+            <table role="presentation" class="es-surface-1 es-hairline-td" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; border:1px solid #ebebeb; border-radius:14px;">
+              <tr><td class="es-card-p" style="padding:24px 28px;">
+                <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:24px; font-weight:600; color:#000000;">Reports API v1 retires 30 September 2026</p>
+                <p class="es-ink-muted" style="margin:6px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Move to v2 before the cutoff to keep exports running. The migration guide maps every v1 endpoint to its replacement.</p>
+                <p style="margin:14px 0 0 0;"><a href="https://stadli.example/docs/reports-api/migrate" class="es-link" style="font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; color:#000000; text-decoration:underline;">Read the migration guide</a></p>
+              </td></tr>
+            </table>
+          </td></tr>
+
+          <!-- ============ CTA BLOCK ============ -->
+          <tr><td class="es-px" style="padding:56px 40px 0 40px;">
+            <table role="presentation" class="es-surface-2 es-hairline-td" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f7f7f7; border:1px solid #ebebeb; border-radius:16px;">
+              <tr><td class="es-card-p" align="left" style="padding:36px 32px;">
+                <p class="es-ink" style="margin:0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; line-height:32px; font-weight:600; letter-spacing:-0.48px; color:#000000;">Ready to try α-25?</p>
+                <p class="es-ink-muted" style="margin:10px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#4d4d4d;">Everything above is live in your workspace now &mdash; no upgrade needed.</p>
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;"><tr>
+                  <td class="es-btn-primary" bgcolor="#000000" style="border-radius:999px; background-color:#000000;">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://stadli.example/app" style="height:40px;v-text-anchor:middle;width:150px;" arcsize="50%" fillcolor="#000000" stroke="f">
+                      <center style="color:#ffffff;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;font-weight:500;">Open Stadli</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="https://stadli.example/app" style="display:inline-block; padding:11px 22px; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:20px; color:#ffffff; border-radius:999px;">Open Stadli</a>
+                    <!--<![endif]-->
+                  </td>
+                  <td style="width:10px; font-size:1px; line-height:1px;">&nbsp;</td>
+                  <td class="es-btn-secondary" bgcolor="#ffffff" style="border-radius:999px; background-color:#ffffff; border:1px solid #d4d4d4;">
+                    <a href="https://stadli.example/docs" style="display:inline-block; padding:10px 22px; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:20px; color:#000000; border-radius:999px;">View docs</a>
+                  </td>
+                </tr></table>
+              </td></tr>
+            </table>
+          </td></tr>
+
+          <!-- ============ FOOTER ============ -->
+          <tr><td class="es-px" style="padding:56px 40px 48px 40px;">
+            <div class="es-rule" style="height:1px; line-height:1px; font-size:1px; background-color:#ebebeb; margin-bottom:28px;">&nbsp;</div>
+            <span class="es-logo" style="color:#111111;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1375 405" role="img" aria-label="Stadli" width="102" height="30" fill="currentColor" style="display:inline-block;"><g><path d="M1051.69,394.57h-54.65l-2.02-2.02v-33.06c-42.56,49.75-117.24,53.96-170.74,18.93-78.29-51.26-81.53-180.87-9.37-238.84,49.67-39.91,129.04-42.78,173.35,6.71l1.36-141.69h61.4l.67,389.98ZM893.51,170.95c-87.55,10.51-90.94,159.71,6.53,169.48,117.59,11.79,121.12-184.81-6.53-169.48Z"/><path d="M679.26,356.79c-42.34,48.71-111.23,58.07-166.88,25.87-89.21-51.62-91.14-196.86-4.39-251.79,46.28-29.3,111.66-29.62,155.09,5.28l16.18,16.88v-37.78h56.68v279.33h-56.68v-37.78ZM585.92,169.55c-101.03,2.6-103.13,162.67-4.47,171.03,117.35,9.94,120.05-174,4.47-171.03Z"/><path d="M204.27,194.86c-10.91-35.78-68.12-38.63-96.73-27.23-25.2,10.04-27.56,30.88-.79,41.76,49.3,20.02,153.48,18.37,160.77,87.52,5.15,48.85-27.44,82.07-72.42,93.22-72.52,17.97-169.96-6.31-181.1-91.36h60.72c5.34,28.33,32.46,39.88,58.72,41.81,19.34,1.43,66.25,1.8,71.57-22.84,4.2-19.43-14.07-24.71-28.79-29.38-60.82-19.3-170.98-21.31-146.2-115.93,22.64-86.43,198.37-88.08,229.59,2.85.89,2.58,6.66,19.59,2.01,19.59h-57.35Z"/><path d="M351.35,24.84v90.41h86.36v59.37h-86.36l1.3,128.92c.82,14.68,10.18,28.78,25.33,31.34,7.14,1.21,21.35,1.42,29.31,1.73,11,.42,22.12-.42,33.12-.06v58.02h-65.45c-42.34,0-83.34-40.72-84.32-83.01l-1.33-244.19c.29-2.95,2.91-4.23,4.93-5.87,11.48-9.31,39.68-28.28,52.67-35.05,1.51-.79,2.36-2.11,4.44-1.63Z"/><rect x="1094.87" y="4.6" width="63.42" height="391.33"/><rect x="1200.13" y="115.25" width="60.72" height="280.68"/><path d="M1225.47,3.63c46.2-4.43,58.77,59.87,17.22,73.89-55.1,18.6-70.9-68.74-17.22-73.89Z"/></g><path d="M1328.45,398.23c-4.33,0-8.38-.78-12.15-2.35s-7.06-3.76-9.88-6.59c-2.82-2.82-5.02-6.1-6.59-9.84-1.57-3.73-2.35-7.77-2.35-12.1s.78-8.38,2.35-12.15c1.57-3.76,3.76-7.06,6.59-9.88,2.82-2.82,6.12-5.02,9.88-6.59,3.76-1.57,7.81-2.35,12.15-2.35s8.37.78,12.1,2.35c3.73,1.57,7.01,3.76,9.84,6.59,2.82,2.82,5.02,6.12,6.59,9.88s2.35,7.81,2.35,12.15-.78,8.37-2.35,12.1c-1.57,3.74-3.76,7.01-6.59,9.84-2.82,2.82-6.1,5.02-9.84,6.59-3.74,1.57-7.77,2.35-12.1,2.35ZM1328.45,392.16c4.73,0,8.92-1.05,12.57-3.17,3.65-2.11,6.51-5.05,8.6-8.81,2.08-3.76,3.12-8.04,3.12-12.83s-1.06-9.15-3.17-12.92c-2.11-3.76-4.99-6.7-8.64-8.81-3.65-2.11-7.81-3.17-12.49-3.17s-8.85,1.06-12.53,3.17c-3.68,2.11-6.57,5.05-8.68,8.81-2.11,3.76-3.17,8.07-3.17,12.92s1.05,9.07,3.17,12.83c2.11,3.76,5,6.7,8.68,8.81,3.68,2.11,7.85,3.17,12.53,3.17ZM1328.36,384.29c-3.14,0-5.9-.71-8.3-2.14-2.4-1.42-4.26-3.41-5.6-5.94-1.34-2.54-2.01-5.49-2.01-8.85s.67-6.31,2.01-8.85c1.34-2.54,3.19-4.52,5.56-5.94,2.37-1.42,5.12-2.14,8.25-2.14,2.74,0,5.35.73,7.83,2.18s4.35,3.41,5.6,5.86l1.11,2.22-5.73,2.22-1.11-1.8c-.74-1.31-1.83-2.38-3.25-3.21-1.43-.83-2.91-1.24-4.45-1.24-2.79,0-5.06.98-6.8,2.95-1.74,1.97-2.61,4.55-2.61,7.74s.88,5.7,2.65,7.7c1.77,2,4.05,2.99,6.84,2.99,1.54,0,3.04-.48,4.49-1.45,1.45-.97,2.61-2.19,3.46-3.68l.77-1.54,5.99,2.14-1.03,2.05c-1.31,2.62-3.22,4.73-5.73,6.33-2.51,1.6-5.16,2.39-7.96,2.39Z"/></svg>
+            </span>
+            <p class="es-ink-muted" style="margin:16px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:20px; color:#4d4d4d;">Event intelligence for live experiences.</p>
+            <p class="es-ink-subtle" style="margin:6px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:18px; color:#808080;">Stadli, Inc. &middot; 500 Terry Francois Blvd &middot; San Francisco, CA 94158</p>
+
+            <p style="margin:20px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:13px; line-height:20px;">
+              <a href="https://stadli.example/preferences" class="es-link-muted" style="color:#4d4d4d; text-decoration:underline;">Manage preferences</a>
+              <span class="es-ink-tertiary" style="color:#b3b3b3;">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+              <a href="https://stadli.example/unsubscribe" class="es-link-muted" style="color:#4d4d4d; text-decoration:underline;">Unsubscribe</a>
+              <span class="es-ink-tertiary" style="color:#b3b3b3;">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+              <a href="https://stadli.example/changelog" class="es-link-muted" style="color:#4d4d4d; text-decoration:underline;">All release notes</a>
+            </p>
+            <p class="es-ink-tertiary" style="margin:16px 0 0 0; font-family:'Inter',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:16px; color:#b3b3b3;">&copy; 2026 Stadli, Inc. All rights reserved.</p>
+          </td></tr>
+
+        </table>
+        <!--[if mso]></td></tr></table><![endif]-->
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
