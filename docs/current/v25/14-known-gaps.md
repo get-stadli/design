@@ -1,6 +1,0 @@
-## Known Gaps
-
-- **Dark-canvas floor calibration.** Canvas-aware extraction and the canvas-contrast floor are now specified as *behavior* (re-weight lightness per canvas; earned color must clear a minimum contrast against the active canvas), but the exact numeric targets — the perceived-loudness curve per hue band on `#0a0a0a`, the contrast-floor value, and how they interact with the chart-mark chroma floor at the hardest hues (deep blue, violet) — are not pinned to numbers, so implementers could still differ at the edges. Ties to the reference-implementation gap below.
-- **Extraction reference implementation.** Color Computation defines the intended *result* (anchor hue → cusp-relative L/C per canvas → rotations → floors), but there is no reference algorithm, library, or fixed rotation direction/step documented, so two implementers could disagree at the edges.
-- **Ambient-background exception** is deliberately narrow (full-viewport, content-free — it may not carry even a logo lockup) and untested at scale; revisit if it begins leaking onto content surfaces.
-- **Annotation vocabulary.** In-place callouts over imagery and ink-drawn editorial marks (circles, arrows) were considered and deferred; if they recur in practice, they need a dedicated type role and scrim rules before use.

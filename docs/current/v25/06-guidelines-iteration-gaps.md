@@ -29,3 +29,28 @@
 - Don't square up a layout out of habit. Centering a lone block, equalizing column widths, or snapping a cluster's edges to shared rows are claims of balance that must be earned by the content — unearned symmetry is the layout equivalent of an unearned hue.
 - Don't ship light-only. Never hardcode a hex where a chrome token exists (a literal `#000` ink dies on the dark canvas), never reuse a light-mode swatch on `#0a0a0a`, and never "fix" dark mode by treating imagery — re-resolve color per canvas and re-crop instead.
 - Don't mirror the examples as a kit. Reuse chrome primitives verbatim, but build story components to fit the content in front of you, and pull a named composite like the rail only when the content already has its shape. The catalog is inspiration spent once, not a checklist to instantiate.
+
+## Iteration Guide
+
+To extend this system, keep all chrome tokens within the black/white/gray ramp — usage of color is chosen per instance from the content, not tokenized — and reuse the 8px spacing scale for any new component. Any new component or token is defined on both canvases at once: give chrome values a `colors` and a `colors-dark` entry, and make sure any earned color it carries is re-resolved per canvas (Color Computation → Canvas-aware extraction) rather than hardcoded. A component that only has a light-mode design is not finished.
+
+## Known Gaps
+
+- **Dark-canvas floor calibration.** Canvas-aware extraction and the canvas-contrast floor are now specified as *behavior* (re-weight lightness per canvas; earned color must clear a minimum contrast against the active canvas), but the exact numeric targets — the perceived-loudness curve per hue band on `#0a0a0a`, the contrast-floor value, and how they interact with the chart-mark chroma floor at the hardest hues (deep blue, violet) — are not pinned to numbers, so implementers could still differ at the edges. Ties to the reference-implementation gap below.
+- **Extraction reference implementation.** Color Computation defines the intended *result* (anchor hue → cusp-relative L/C per canvas → rotations → floors), but there is no reference algorithm, library, or fixed rotation direction/step documented, so two implementers could disagree at the edges.
+- **Ambient-background exception** is deliberately narrow (full-viewport, content-free — it may not carry even a logo lockup) and untested at scale; revisit if it begins leaking onto content surfaces.
+- **Annotation vocabulary.** In-place callouts over imagery and ink-drawn editorial marks (circles, arrows) were considered and deferred; if they recur in practice, they need a dedicated type role and scrim rules before use.
+## Inspirations
+
+- The Economist
+- Shopify
+- Stripe
+- Spotify Wrapped
+
+## Keywords
+- Data-driven visuals
+- Editorial hierarchy
+- Vibrant accents
+- Modern tech
+- Startup neo-corporate
+- Vibrant utilitarian
