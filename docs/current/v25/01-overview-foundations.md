@@ -1,3 +1,7 @@
+## Overview
+
+A marketing/product surface with a split personality: monochrome chrome, earned-color content. The core visual thesis is that all color comes from content, and that color — like color on a chart mark — must be earned by a claim. Chrome is the resting state of every block. Across a whole document expect a mix of photography, color, and chrome; on any single viewport, expect mostly chrome with one loud moment.
+
 ## Colors
 
 ### Both Canvases Are One Deliverable
@@ -53,3 +57,23 @@ Scope is strict and matches Data Visualization → Color Scope: a semantic color
 One functional exception: an invalid form field may print `semantic-error` on its border and its helper text (see Inputs & Forms → States). This is a state a control reports, not a decoration a vessel wears — the field's background stays canvas, the label stays chrome, and no other border in the system ever takes a semantic or content color.
 
 Light and dark modes carry their own semantic values (already tokenized) so contrast holds on either canvas.
+
+## Typography
+
+### Font Family
+
+Inter is the only typeface in the system, used for every text role. There is no secondary display face and no monospace face — even code, numeric readouts, and tabular figures set in Inter (use its tabular-figures feature for alignment, never a monospaced font).
+
+### Hierarchy
+
+Display sizes map to hero and section headers, headline/card-title to component titles, body sizes to paragraph copy, and caption/eyebrow to metadata and labels.
+
+### Principles
+
+Larger sizes carry tighter (negative) letter-spacing for density; body and smaller sizes sit at 0 tracking for readability. Weight (400–600) does the work that a second typeface normally would.
+
+600 is the working ceiling and the default for every display role; a single hero headline — the one loud typographic moment on a viewport — may go heavier (up to 700) when the story calls for it, but body and UI text never exceed 500. Italic is available for display and headline roles as editorial emphasis (a stressed word, a stance), never for body or UI copy; like weight, it is a tool of the one loud moment, not a texture spread across the page.
+
+### Note on Font Substitutes
+
+If Inter is unavailable, fall back to the system sans-serif stack (-apple-system, "Segoe UI", sans-serif). Preserve weight and size exactly; do not substitute a serif or display face.
