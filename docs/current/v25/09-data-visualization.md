@@ -1,0 +1,49 @@
+## Data Visualization
+
+### Color Scope
+
+A chart is not a special case — it is a block, and it obeys a one-block-one-color law. A chart may carry one hue, extracted from its own content the same way any block is. The hue is spent only on the marks that encode a value — bars, line, points, filled area. Everything structural stays chrome: the plot background is canvas or surface, gridlines are hairline, axis ticks and labels are ink-muted. Color lives strictly on the geometry that carries data and leaks nowhere else — the same discipline that keeps content color out of the nav.
+
+**Directional status is the one licensed exception to the chrome law:** a metric's delta or status may print in `semantic-success` (up/good), `semantic-warning` (caution), or `semantic-error` (down/bad) — applied only to the figure, its sign or arrow glyph, or a small inline dot, never to the card, surface, badge, or container, which stay chrome. This is a whisper of hue on the number itself, the same "hue on the marks, the vessel stays chrome" logic that governs charts.
+
+### The Chart Container
+
+Dataviz cards are never colored. A chart's card, panel, or section stays chrome (canvas, surface-1, or surface-2 with a hairline border), and the hue enters only through the marks inside the plot. In a chart, the data is the content, so the data takes the color; the vessel never does. A colored card behind a chart would make the container compete with the marks it exists to frame — the one place in the system where the full-bleed pattern and legibility pull in opposite directions, resolved in legibility's favor.
+
+### Gray by Default
+
+Gray is the resting state of data. An all-gray chart — ink marks on a neutral plot — is a complete chart, not an unfinished one; ink-weight, size, and a large printed value do the structural work. Color must be earned by a claim: hue appears only when the chart has something to say — a single point to emphasize (a peak, a problem, a winner, a "this one") or, per Multiple Series, a comparison between named categories that is itself the claim. No claim, no color. This is why a page of charts never drifts toward a rainbow: most marks were never candidates for color at all.
+
+### Direct Labeling
+
+Values are printed, not looked up. Key figures sit directly on or beside the marks at display or headline sizes; series are named by direct labels at the mark, and annotations point at the moment they describe. There are no legends — a legend is a lookup table, and the system labels everything with text in place, the same rule that bars icons from standing in for words (see Iconography).
+
+**Value-bearing key rows are not legends.** A row of dot + name + printed figure sitting beside a chart (the dashboard pattern) is direct labeling in tabular form: it carries the actual values, so nothing is looked up. These rows are permitted and follow the same color law as the marks they name — the claim's row may carry the hue on its dot, every other dot falls to the ink ramp. A swatch-only list that names series without printing their values remains a lookup table and remains banned. The test: delete the chart — if the rows still inform (they print the numbers), they are a table; if they only decode, they were a legend.
+
+### Sparklines & Micro-charts
+
+A sparkline is a chart stripped to its claim: no axes, no gridlines, no ticks — just the marks and one printed value at card-title size or larger doing the reading for you. Sparklines live inside chrome cards (stat cards, rail cards, table rows) and obey every law of full charts: gray by default, one hue only when the trend *is* the claim, the current or final point may carry the emphasis (a filled dot, the one saturated bar in a gray series). Because a sparkline prints its value, it never needs the scale it omits. An all-gray sparkline beside a large figure is a finished component.
+
+### Pattern Fills
+
+Texture is a hue you don't have to spend. Hatching, dashed strokes, and dot fills — rendered in the series' existing color or in the ink ramp — may differentiate series or distinguish states (projected vs. actual, target vs. delivered) without adding a hue to the viewport budget. A projection hatched in the anchor hue against the actual drawn solid in the same hue is one color telling two states. Patterns are line-work: fine, regular, and quiet (hairline-weight strokes at consistent spacing), never a decorative texture, and never a substitute for a direct label — the series is still named in text at the mark.
+
+### Multiple Series
+
+There is no category palette, but color may encode category when the comparison *is* the claim. The default remains emphasis: one hue marks the single series that carries the message — the focus, the latest, the total, the "you are here" — and every other series drops into the ink ramp (ink-muted → ink-subtle → ink-tertiary), separated by weight and direct labels rather than hue. A five-line chart is one saturated line and four gray ones, not five hues competing.
+
+**Nested series step one hue through lightness.** When series are related rather than rivals — total → subtotal → part, a whole and its components, this year layered over the aggregate — they may share one hue at two or three lightness steps (the anchor at its cusp-relative weight, plus lighter steps of the same hue), each direct-labeled at the mark. This is the series form of the Sequential Scales rule: one hue, varying lightness, never a second hue — family, not rainbow. It costs one hue against the viewport budget, not one per step.
+
+The exception is the chart whose entire point is the contest between named categories — East vs. West, this vs. that, the parts of a whole — where no series is background because the comparison itself is the claim. There, two or three hues may each encode a named category, but only hues the system would have produced anyway: derived from the viewport's anchor by the standard rotations, each then rendered at its own cusp-relative lightness and chroma (with the chart-mark floor), counted against the same three-hue viewport budget, and bound to their roles document-wide like any other character. Each series is direct-labeled in its own hue at the mark — the label is the legend, so the no-legend rule holds. Everything that is not party to the claim still falls to the ink ramp; categorical color is a license for the contestants, never for the crowd. If a chart needs more hues than the budget allows, the claim is too diffuse — split the chart or collapse the categories, don't grow the palette.
+
+### Sequential Scales
+
+Ordered or quantitative encodings — a heatmap, a choropleth, a magnitude scale — may step the single hue through lightness only: fixed hue, varying lightness, never a second hue. The ramp is anchored at the hue's cusp-relative color and runs toward near-white on the light end (and, if the data demands more range, toward a darker step of the same hue on the deep end), so a yellow ramp lives in the light half of the scale where yellow is vivid instead of forcing it down into olive. This is the one place a ramp is legitimate, because here the gradient *is* the data rather than decoration. One exception: a diverging scale — data that splits around a meaningful midpoint, above vs. below average — may run the anchor hue on one side and its complement on the other, meeting at a neutral center. That is not a second color entering the system; it is the anchor and its computed opponent telling an opposition story. Anything beyond one hue and its complement turns the ramp into a rainbow, which the system does not permit.
+
+### Viewport Palette
+
+The color budget is measured per viewport — what is visible at once — not per chart and not per document. A viewport carries at most three hues: one anchor, extracted from its content like any block, plus extra hues derived from it, never hand-picked. Extra hues come by fixed rotation on the OKLCH hue wheel, each then rendered at its own cusp-relative lightness and chroma, so harmony is arithmetic rather than taste: the rotation moves hue alone, and the gamut supplies each hue's correct weight. A rotation that lands in the yellow band therefore produces a bright, light yellow — a legitimate sibling — never an olive, because no hue is ever forced to another hue's lightness. Two relationships are sanctioned — analogous (±30–40°) when the story is variation within one family, and complementary (180°) when the story is opposition; one opponent, never a third party.
+
+A long, scrolling surface may therefore hold more than three hues in total, but adjacent viewports must share blood: each new viewport's palette is derived by continuing the same rotation from a hue already on screen, so scrolling reads as one palette slowly turning through the wheel — analogous drift of ±30–40° per viewport — never as a palette swap. The drift is a storytelling device: sections feel different while provably belonging to one family. A hard 180° flip is permitted once per document, and only at a genuine narrative turn — results to problems, before to after — because a complement is a plot twist, not a transition.
+
+Roles are document-wide even though budgets are not. Every hue is a character bound to a named role — the protagonist (the focus, the "you are here"), the counterpoint (the comparison, the opposing force), at most one supporting note per viewport — and once bound, it keeps that meaning on every viewport it reappears in; no other hue may take over that role downpage. New viewports may introduce new characters, never re-cast old ones. A color that changes meaning between charts is worse than a rainbow. Gray remains the resting state of everything that is not a character, and a viewport of all-gray charts with one large printed number per panel is a finished viewport.
