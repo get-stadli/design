@@ -1,3 +1,129 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Concert Pass — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><link rel="stylesheet" href="../current/stadli.tokens.css"><style>
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Concert Pass — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><!-- Inline tokens keep this example working when downloaded as a standalone HTML file. -->
+<style>
+/* Stadli v25 design tokens. Generated from ../../docs/current/v25/tokens.json. */
+:root, :root[data-theme="light"] {
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-hover: #1a1a1a;
+  --color-primary-focus: #000000;
+  --color-ink: #000000;
+  --color-ink-muted: #4d4d4d;
+  --color-ink-subtle: #808080;
+  --color-ink-tertiary: #b3b3b3;
+  --color-canvas: #ffffff;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f7f7f7;
+  --color-surface-3: #f0f0f0;
+  --color-hairline: #ebebeb;
+  --color-hairline-strong: #d4d4d4;
+  --color-semantic-success: #15803d;
+  --color-semantic-error: #b91c1c;
+  --color-semantic-warning: #b45309;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root[data-theme="dark"], html.dark {
+  --color-primary: #f5f5f5;
+  --color-on-primary: #0a0a0a;
+  --color-primary-hover: #e1e1e1;
+  --color-primary-focus: #d1d1d1;
+  --color-ink: #f5f5f5;
+  --color-ink-muted: #cfcfcf;
+  --color-ink-subtle: #a8a8a8;
+  --color-ink-tertiary: #828282;
+  --color-canvas: #0a0a0a;
+  --color-surface-1: #111111;
+  --color-surface-2: #171717;
+  --color-surface-3: #1e1e1e;
+  --color-hairline: #262626;
+  --color-hairline-strong: #404040;
+  --color-semantic-success: #4ade80;
+  --color-semantic-error: #f87171;
+  --color-semantic-warning: #fbbf24;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root {
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-xxl: 24px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 56px;
+  --space-xxl: 96px;
+  --space-section: 144px;
+  --r-xs: var(--radius-xs);
+  --r-sm: var(--radius-sm);
+  --r-md: var(--radius-md);
+  --r-lg: var(--radius-lg);
+  --r-xl: var(--radius-xl);
+  --r-xxl: var(--radius-xxl);
+  --r-pill: var(--radius-pill);
+  --r-full: var(--radius-full);
+  --sp-xxs: var(--space-xxs);
+  --sp-xs: var(--space-xs);
+  --sp-sm: var(--space-sm);
+  --sp-md: var(--space-md);
+  --sp-lg: var(--space-lg);
+  --sp-xl: var(--space-xl);
+  --sp-xxl: var(--space-xxl);
+  --sp-section: var(--space-section);
+  --duration-instant: 160ms;
+  --duration-fast: 320ms;
+  --duration-base: 560ms;
+  --duration-slow: 1400ms;
+  --duration-deliberate: 1600ms;
+  --d-instant: var(--duration-instant);
+  --d-fast: var(--duration-fast);
+  --d-base: var(--duration-base);
+  --d-slow: var(--duration-slow);
+  --d-deliberate: var(--duration-deliberate);
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+  --font-sans: Inter, -apple-system, "Segoe UI", sans-serif;
+  --reveal-blur: 6px;
+}
+
+</style><style>
 :root{--poster:#f1552a;--poster-dark:#1a0d08;--on-poster:#fff}*{box-sizing:border-box}body{margin:0;font-family:var(--font-sans);background:var(--canvas);color:var(--ink)}.page{max-width:1200px;margin:0 auto;padding:28px 32px 96px}.nav{display:flex;justify-content:space-between;align-items:center}.logo{font-weight:700;letter-spacing:-.04em}.links{display:flex;gap:24px;color:var(--ink-muted);font-size:14px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--r-pill);min-height:44px;padding:0 18px;border:1px solid var(--hairline-strong);color:var(--ink);text-decoration:none;font-weight:500}.hero{display:grid;grid-template-columns:minmax(0,1.05fr) 420px;gap:80px;align-items:end;padding-top:104px}.eyebrow{color:var(--ink-subtle);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:16px 0 24px;font-size:clamp(58px,9vw,122px);line-height:.88;letter-spacing:-.08em}.copy{max-width:520px;color:var(--ink-muted);font-size:18px;line-height:1.55}.poster{position:relative;min-height:620px;border-radius:var(--r-xxl);background:var(--poster);color:var(--on-poster);overflow:hidden;padding:32px;display:flex;flex-direction:column;justify-content:space-between}.poster:before{content:"";position:absolute;inset:92px 32px 142px;border:1px solid rgba(255,255,255,.45);border-radius:50%;transform:rotate(-18deg)}.poster:after{content:"";position:absolute;width:270px;height:270px;right:-64px;top:90px;border-radius:50%;background:#f7c2e4}.poster>*{position:relative}.poster-title{font-size:64px;line-height:.86;letter-spacing:-.07em;font-weight:700}.date{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.45);padding-top:18px;font-weight:600}.rail{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}.card{border:1px solid var(--hairline);border-radius:var(--r-xl);padding:24px;background:var(--surface-1)}.metric{font-size:38px;letter-spacing:-.05em;font-weight:650;margin-top:30px}.muted{color:var(--ink-muted);line-height:1.45}@media(max-width:860px){.page{padding:24px 18px 72px}.links{display:none}.hero,.rail{grid-template-columns:1fr;gap:32px}.poster{min-height:500px}.hero{padding-top:64px}}
 </style></head><body><main class="page"><nav class="nav"><div class="logo">Stadli</div><div class="links"><span>Lineup</span><span>Venue</span><span>Access</span></div><a class="btn" href="index.html">Review hub</a></nav><section class="hero"><div><div class="eyebrow">Night pass 04</div><h1>One room. No warmup.</h1><p class="copy">A ticketing concept where the only saturated block is earned by the show poster. Controls, nav, metrics, and detail cards stay chrome.</p></div><aside class="poster" aria-label="Show poster"><div class="eyebrow">Live at warehouse 18</div><div class="poster-title">Mira<br>Vale</div><div class="date"><span>Fri 22:30</span><span>Docklands</span></div></aside></section><section class="rail"><article class="card"><div class="eyebrow">Capacity</div><div class="metric">840</div><p class="muted">Single floor, no reserved seating.</p></article><article class="card"><div class="eyebrow">Entry window</div><div class="metric">90m</div><p class="muted">Pass remains live until headline starts.</p></article><article class="card"><div class="eyebrow">Transfer</div><div class="metric">1×</div><p class="muted">One verified transfer before doors.</p></article></section></main></body></html>

@@ -1,3 +1,129 @@
-<!DOCTYPE html><html lang="en" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Founder Dashboard — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><link rel="stylesheet" href="../current/stadli.tokens.css"><style>
+<!DOCTYPE html><html lang="en" class="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Founder Dashboard — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><!-- Inline tokens keep this example working when downloaded as a standalone HTML file. -->
+<style>
+/* Stadli v25 design tokens. Generated from ../../docs/current/v25/tokens.json. */
+:root, :root[data-theme="light"] {
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-hover: #1a1a1a;
+  --color-primary-focus: #000000;
+  --color-ink: #000000;
+  --color-ink-muted: #4d4d4d;
+  --color-ink-subtle: #808080;
+  --color-ink-tertiary: #b3b3b3;
+  --color-canvas: #ffffff;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f7f7f7;
+  --color-surface-3: #f0f0f0;
+  --color-hairline: #ebebeb;
+  --color-hairline-strong: #d4d4d4;
+  --color-semantic-success: #15803d;
+  --color-semantic-error: #b91c1c;
+  --color-semantic-warning: #b45309;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root[data-theme="dark"], html.dark {
+  --color-primary: #f5f5f5;
+  --color-on-primary: #0a0a0a;
+  --color-primary-hover: #e1e1e1;
+  --color-primary-focus: #d1d1d1;
+  --color-ink: #f5f5f5;
+  --color-ink-muted: #cfcfcf;
+  --color-ink-subtle: #a8a8a8;
+  --color-ink-tertiary: #828282;
+  --color-canvas: #0a0a0a;
+  --color-surface-1: #111111;
+  --color-surface-2: #171717;
+  --color-surface-3: #1e1e1e;
+  --color-hairline: #262626;
+  --color-hairline-strong: #404040;
+  --color-semantic-success: #4ade80;
+  --color-semantic-error: #f87171;
+  --color-semantic-warning: #fbbf24;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root {
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-xxl: 24px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 56px;
+  --space-xxl: 96px;
+  --space-section: 144px;
+  --r-xs: var(--radius-xs);
+  --r-sm: var(--radius-sm);
+  --r-md: var(--radius-md);
+  --r-lg: var(--radius-lg);
+  --r-xl: var(--radius-xl);
+  --r-xxl: var(--radius-xxl);
+  --r-pill: var(--radius-pill);
+  --r-full: var(--radius-full);
+  --sp-xxs: var(--space-xxs);
+  --sp-xs: var(--space-xs);
+  --sp-sm: var(--space-sm);
+  --sp-md: var(--space-md);
+  --sp-lg: var(--space-lg);
+  --sp-xl: var(--space-xl);
+  --sp-xxl: var(--space-xxl);
+  --sp-section: var(--space-section);
+  --duration-instant: 160ms;
+  --duration-fast: 320ms;
+  --duration-base: 560ms;
+  --duration-slow: 1400ms;
+  --duration-deliberate: 1600ms;
+  --d-instant: var(--duration-instant);
+  --d-fast: var(--duration-fast);
+  --d-base: var(--duration-base);
+  --d-slow: var(--duration-slow);
+  --d-deliberate: var(--duration-deliberate);
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+  --font-sans: Inter, -apple-system, "Segoe UI", sans-serif;
+  --reveal-blur: 6px;
+}
+
+</style><style>
 *{box-sizing:border-box}body{margin:0;font-family:var(--font-sans);background:var(--canvas);color:var(--ink)}.shell{max-width:1180px;margin:0 auto;padding:36px 28px 88px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:72px}.brand{font-weight:700;letter-spacing:-.04em}.btn{border:1px solid var(--hairline-strong);border-radius:var(--r-pill);padding:11px 18px;color:var(--ink);text-decoration:none;font-size:14px}.intro{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:end;margin-bottom:24px}h1{font-size:clamp(48px,8vw,96px);line-height:.92;letter-spacing:-.075em;margin:0}.muted{color:var(--ink-muted);line-height:1.55}.panel{border:1px solid var(--hairline);border-radius:var(--r-xxl);background:var(--surface-1);padding:28px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hairline);border-radius:var(--r-xl);overflow:hidden;margin:28px 0}.cell{padding:22px;border-right:1px solid var(--hairline)}.cell:last-child{border-right:0}.label{color:var(--ink-subtle);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}.value{font-size:34px;letter-spacing:-.05em;font-weight:650;margin:18px 0 4px}.up{color:var(--semantic-success)}.warn{color:var(--semantic-warning)}.grid{display:grid;grid-template-columns:1.4fr .6fr;gap:16px}.chart{height:310px;display:flex;align-items:end;gap:10px;padding-top:30px}.bar{flex:1;background:var(--surface-3);border-radius:var(--r-sm) var(--r-sm) 0 0}.bar.hot{background:#4ade80}.aside{display:flex;flex-direction:column;gap:16px}.note{min-height:147px}.big{font-size:52px;letter-spacing:-.06em;font-weight:650;margin-top:34px}@media(max-width:900px){.intro,.grid{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.cell{border-right:0;border-bottom:1px solid var(--hairline)}.cell:last-child{border-bottom:0}}
 </style></head><body><main class="shell"><header class="top"><div class="brand">Stadli</div><a href="index.html" class="btn">Review hub</a></header><section class="intro"><h1>Runway without confetti.</h1><p class="muted">A SaaS operating view that keeps dashboards neutral: cards, charts, and containers are chrome while positive and cautionary changes are limited to semantic text and marks.</p></section><section class="metrics"><div class="cell"><div class="label">MRR</div><div class="value">$84.2k</div><div class="up">↗ 12.4%</div></div><div class="cell"><div class="label">Net retention</div><div class="value">118%</div><div class="up">↗ 4.1%</div></div><div class="cell"><div class="label">Burn multiple</div><div class="value">1.6×</div><div class="warn">→ watch</div></div><div class="cell"><div class="label">Runway</div><div class="value">19 mo</div><div class="up">↗ 2 mo</div></div></section><section class="grid"><article class="panel"><div class="label">Revenue by cohort</div><div class="chart" aria-hidden="true"><div class="bar" style="height:32%"></div><div class="bar" style="height:48%"></div><div class="bar" style="height:42%"></div><div class="bar" style="height:61%"></div><div class="bar" style="height:58%"></div><div class="bar hot" style="height:74%"></div><div class="bar hot" style="height:88%"></div></div></article><aside class="aside"><article class="panel note"><div class="label">Activation</div><div class="big">42%</div><p class="muted">New teams reaching first shared report.</p></article><article class="panel note"><div class="label">Risk</div><div class="big">7</div><p class="muted">Accounts need founder follow-up this week.</p></article></aside></section></main></body></html>

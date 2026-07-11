@@ -7,4 +7,4 @@ Standalone Stadli v25 concept pages for review before any promotion into `apps/c
 - `founder-dashboard.html` — product analytics dashboard using chrome metric cards and semantic deltas.
 - `city-guide.html` — editorial/travel itinerary with photography-led color extraction.
 
-These examples intentionally link to `../current/stadli.tokens.css` so they stay aligned with the current v25 token source while they are in triage.
+These examples inline the current v25 token CSS so each HTML file keeps its styling when downloaded and opened standalone from the repository. Refresh the inline token block from `../current/stadli.tokens.css` whenever the triage examples need to pick up token changes.

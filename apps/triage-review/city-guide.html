@@ -1,3 +1,129 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>City Guide — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><link rel="stylesheet" href="../current/stadli.tokens.css"><style>
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>City Guide — Stadli triage</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css"><!-- Inline tokens keep this example working when downloaded as a standalone HTML file. -->
+<style>
+/* Stadli v25 design tokens. Generated from ../../docs/current/v25/tokens.json. */
+:root, :root[data-theme="light"] {
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-hover: #1a1a1a;
+  --color-primary-focus: #000000;
+  --color-ink: #000000;
+  --color-ink-muted: #4d4d4d;
+  --color-ink-subtle: #808080;
+  --color-ink-tertiary: #b3b3b3;
+  --color-canvas: #ffffff;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f7f7f7;
+  --color-surface-3: #f0f0f0;
+  --color-hairline: #ebebeb;
+  --color-hairline-strong: #d4d4d4;
+  --color-semantic-success: #15803d;
+  --color-semantic-error: #b91c1c;
+  --color-semantic-warning: #b45309;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root[data-theme="dark"], html.dark {
+  --color-primary: #f5f5f5;
+  --color-on-primary: #0a0a0a;
+  --color-primary-hover: #e1e1e1;
+  --color-primary-focus: #d1d1d1;
+  --color-ink: #f5f5f5;
+  --color-ink-muted: #cfcfcf;
+  --color-ink-subtle: #a8a8a8;
+  --color-ink-tertiary: #828282;
+  --color-canvas: #0a0a0a;
+  --color-surface-1: #111111;
+  --color-surface-2: #171717;
+  --color-surface-3: #1e1e1e;
+  --color-hairline: #262626;
+  --color-hairline-strong: #404040;
+  --color-semantic-success: #4ade80;
+  --color-semantic-error: #f87171;
+  --color-semantic-warning: #fbbf24;
+  --primary: var(--color-primary);
+  --on-primary: var(--color-on-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-focus: var(--color-primary-focus);
+  --ink: var(--color-ink);
+  --ink-muted: var(--color-ink-muted);
+  --ink-subtle: var(--color-ink-subtle);
+  --ink-tertiary: var(--color-ink-tertiary);
+  --canvas: var(--color-canvas);
+  --surface-1: var(--color-surface-1);
+  --surface-2: var(--color-surface-2);
+  --surface-3: var(--color-surface-3);
+  --hairline: var(--color-hairline);
+  --hairline-strong: var(--color-hairline-strong);
+  --semantic-success: var(--color-semantic-success);
+  --semantic-error: var(--color-semantic-error);
+  --semantic-warning: var(--color-semantic-warning);
+}
+:root {
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-xxl: 24px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 56px;
+  --space-xxl: 96px;
+  --space-section: 144px;
+  --r-xs: var(--radius-xs);
+  --r-sm: var(--radius-sm);
+  --r-md: var(--radius-md);
+  --r-lg: var(--radius-lg);
+  --r-xl: var(--radius-xl);
+  --r-xxl: var(--radius-xxl);
+  --r-pill: var(--radius-pill);
+  --r-full: var(--radius-full);
+  --sp-xxs: var(--space-xxs);
+  --sp-xs: var(--space-xs);
+  --sp-sm: var(--space-sm);
+  --sp-md: var(--space-md);
+  --sp-lg: var(--space-lg);
+  --sp-xl: var(--space-xl);
+  --sp-xxl: var(--space-xxl);
+  --sp-section: var(--space-section);
+  --duration-instant: 160ms;
+  --duration-fast: 320ms;
+  --duration-base: 560ms;
+  --duration-slow: 1400ms;
+  --duration-deliberate: 1600ms;
+  --d-instant: var(--duration-instant);
+  --d-fast: var(--duration-fast);
+  --d-base: var(--duration-base);
+  --d-slow: var(--duration-slow);
+  --d-deliberate: var(--duration-deliberate);
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+  --font-sans: Inter, -apple-system, "Segoe UI", sans-serif;
+  --reveal-blur: 6px;
+}
+
+</style><style>
 :root{--anchor:#315ccf;--sibling:#cfe94d;--on-anchor:#fff}*{box-sizing:border-box}body{margin:0;font-family:var(--font-sans);background:var(--canvas);color:var(--ink)}.page{max-width:1160px;margin:0 auto;padding:30px 28px 96px}.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:80px}.brand{font-weight:700;letter-spacing:-.04em}.btn{border:1px solid var(--hairline-strong);border-radius:var(--r-pill);padding:11px 18px;color:var(--ink);text-decoration:none;font-size:14px}.hero{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}.photo{height:620px;border-radius:var(--r-xxl);border:1px solid var(--hairline);background:linear-gradient(145deg,#111 0 18%,var(--anchor) 18% 58%,#f8b3e6 58% 75%,#f6efe2 75%);position:relative;overflow:hidden}.photo:before{content:"";position:absolute;left:12%;bottom:9%;width:54%;height:54%;border-radius:50% 50% 8% 8%;background:#0a0a0a}.photo:after{content:"";position:absolute;right:12%;top:12%;width:120px;height:120px;border-radius:50%;background:var(--sibling)}.eyebrow{color:var(--ink-subtle);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(56px,9vw,112px);line-height:.9;letter-spacing:-.08em;margin:14px 0 28px}.copy{color:var(--ink-muted);font-size:18px;line-height:1.55;max-width:460px}.tag{display:inline-flex;margin-top:34px;border-radius:var(--r-pill);background:var(--primary);color:var(--on-primary);padding:12px 20px;font-weight:500}.cards{display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:16px;margin-top:32px}.card{border:1px solid var(--hairline);border-radius:var(--r-xl);background:var(--surface-1);padding:24px;min-height:220px}.loud{background:var(--anchor);color:var(--on-anchor);border:0}.time{font-size:44px;line-height:1;letter-spacing:-.06em;font-weight:650;margin:48px 0 10px}.muted{color:var(--ink-muted);line-height:1.45}.loud .muted,.loud .eyebrow{color:rgba(255,255,255,.76)}@media(max-width:860px){.hero,.cards{grid-template-columns:1fr}.photo{height:420px}.nav{margin-bottom:48px}}
 </style></head><body><main class="page"><nav class="nav"><div class="brand">Stadli</div><a href="index.html" class="btn">Review hub</a></nav><section class="hero"><div class="photo" role="img" aria-label="Abstract night street color study"></div><div><div class="eyebrow">36-hour guide</div><h1>Lisbon after blue hour.</h1><p class="copy">An editorial itinerary where the hero image carries the loud viewport moment and one downstream itinerary card reuses its extracted anchor hue.</p><span class="tag">Save route</span></div></section><section class="cards"><article class="card loud"><div class="eyebrow">First stop</div><div class="time">18:40</div><p class="muted">Arrive while the tiled streets still hold the last blue from the river.</p></article><article class="card"><div class="eyebrow">Walk</div><div class="time">24m</div><p class="muted">Stay on the ridge; the route keeps stairs to short bursts.</p></article><article class="card"><div class="eyebrow">Table</div><div class="time">21:15</div><p class="muted">Book a two-top; the room turns over once after sunset.</p></article></section></main></body></html>
