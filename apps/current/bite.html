@@ -7,32 +7,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./stadli.tokens.css">
 <style>
-  /* ============================================================
-     STADLI — chrome tokens, resolved on both canvases at once.
-     Chrome stays strictly black / white / gray. Two content hues:
-     an ORANGE anchor pulled from the food, plus a ROSE sibling by
-     rotation — each re-resolved per canvas.
-     ============================================================ */
+  /* Stadli v25 chrome tokens are loaded from ./stadli.tokens.css.
+     Bite owns only its earned food hues, resolved on both canvases. */
   :root[data-theme="light"] {
-    --canvas: #ffffff;
-    --surface-2: #f7f7f7;
-    --ink: #000000;
-    --ink-muted: #4d4d4d;
-    --hairline: #ebebeb;
-    --hairline-strong: #d4d4d4;
     --anchor-orange: #f1552a;
     --sibling-rose:  #f7c2e4;
     --on-orange: #ffffff;
     --on-rose:  #000000;
   }
   :root[data-theme="dark"] {
-    --canvas: #0a0a0a;
-    --surface-2: #171717;
-    --ink: #f5f5f5;
-    --ink-muted: #cfcfcf;
-    --hairline: #262626;
-    --hairline-strong: #404040;
     --anchor-orange: #ff6a34;
     --sibling-rose:  #f6bfe1;
     --on-orange: #ffffff;
@@ -43,24 +28,24 @@
   html { -webkit-text-size-adjust: 100%; }
 
   body {
-    font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
+    font-family: var(--font-sans);
     background: var(--canvas);
     color: var(--ink);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    transition: background-color .32s cubic-bezier(0.16,1,0.3,1),
-                color .32s cubic-bezier(0.16,1,0.3,1);
+    transition: background-color var(--d-fast) var(--ease-standard),
+                color var(--d-fast) var(--ease-standard);
   }
 
   /* ---- chrome: theme toggle ---- */
   .theme-toggle {
     position: fixed; top: 24px; right: 24px; z-index: 50;
     display: inline-flex; align-items: center; gap: 8px;
-    min-height: 44px; padding: 10px 18px; border-radius: 999px;
+    min-height: 44px; padding: 10px 18px; border-radius: var(--r-pill);
     border: 1px solid var(--hairline-strong);
     background: var(--canvas); color: var(--ink);
-    font: 500 14px/20px "Inter", sans-serif; cursor: pointer;
-    transition: background-color .32s cubic-bezier(0.16,1,0.3,1);
+    font: 500 14px/20px var(--font-sans); cursor: pointer;
+    transition: background-color var(--d-fast) var(--ease-standard);
   }
   .theme-toggle:hover { background: var(--surface-2); }
   .theme-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -89,7 +74,7 @@
   /* raw imagery — full strength, hairline defines the edge */
   .frame {
     position: relative;
-    border-radius: 20px;
+    border-radius: var(--r-xl);
     overflow: hidden;
     border: 1px solid var(--hairline);
     background: var(--surface-2);
@@ -105,14 +90,14 @@
     width: 380px;
     max-width: 100%;
     padding: 20px 24px 18px;
-    border-radius: 24px;
+    border-radius: var(--r-xxl);
   }
-  .pill h2 { font: 700 40px/44px "Inter", sans-serif; letter-spacing: -1.2px; }
+  .pill h2 { font: 700 40px/44px var(--font-sans); letter-spacing: -1.2px; }
   .pill .meta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-  .pill .author { font: 500 16px/24px "Inter", sans-serif; }
+  .pill .author { font: 500 16px/24px var(--font-sans); }
   .pill .time {
-    font: 500 14px/20px "Inter", sans-serif;
-    padding: 4px 14px; border-radius: 999px; border: 1.5px solid currentColor;
+    font: 500 14px/20px var(--font-sans);
+    padding: 4px 14px; border-radius: var(--r-pill); border: 1.5px solid currentColor;
   }
   .pill-rose   { background: var(--sibling-rose);  color: var(--on-rose); }
   .pill-orange { background: var(--anchor-orange); color: var(--on-orange); }
@@ -128,19 +113,19 @@
     align-self: start;
     max-width: 360px;
     margin-top: 152px;
-    font: 400 26px/36px "Inter", sans-serif;
+    font: 400 26px/36px var(--font-sans);
     letter-spacing: -0.5px;
     color: var(--ink);
   }
   .lede .brand { font-weight: 600; }
 
   /* ---- motion: cluster = one loud moment, plays on load ---- */
-  .rise { opacity: 0; transform: translateY(8px); filter: blur(6px); }
+  .rise { opacity: 0; transform: translateY(8px); filter: blur(var(--reveal-blur)); }
   .play .rise {
     opacity: 1; transform: none; filter: none;
-    transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1),
-                transform 1.4s cubic-bezier(0.16,1,0.3,1),
-                filter 1.4s cubic-bezier(0.16,1,0.3,1);
+    transition: opacity var(--d-slow) var(--ease-standard),
+                transform var(--d-slow) var(--ease-standard),
+                filter var(--d-slow) var(--ease-standard);
   }
   .play .d1 { transition-delay: .00s; }
   .play .d2 { transition-delay: .18s; }
