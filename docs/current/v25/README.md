@@ -5,6 +5,7 @@ This folder is the maintainable, split version of the current Stadli design-syst
 ## Sections
 
 1. [Machine-readable spec](00-machine-readable-spec.md)
+   - [Canonical JSON tokens](tokens.json) — consumed by generated CSS in the HTML examples.
 2. [Overview & Foundations](01-overview-foundations.md)
 3. [Layout, Shapes & Depth](02-layout-shapes-depth.md)
 4. [Components & Brand Assets](03-components-brand-assets.md)

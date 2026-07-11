@@ -5,44 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Discover — Stadli</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css">
+<link rel="stylesheet" href="./stadli.tokens.css">
 <style>
-  /* ————— Stadli v25 chrome tokens · both canvases are one deliverable ————— */
+  /* Stadli v25 chrome tokens are loaded from ./stadli.tokens.css.
+     This example only owns its earned-content color decisions. */
   :root{
-    --primary:#000000; --on-primary:#ffffff; --primary-hover:#1a1a1a;
-    --ink:#000000; --ink-muted:#4d4d4d; --ink-subtle:#808080; --ink-tertiary:#b3b3b3;
-    --canvas:#ffffff; --surface-1:#ffffff; --surface-2:#f7f7f7; --surface-3:#f0f0f0;
-    --hairline:#ebebeb; --hairline-strong:#d4d4d4;
-
-    /* Earned color — extracted from the portrait (amber goggles → anchor ≈ 55°),
-       rotations only: −40° analogous → pink · +40° analogous → lime,
-       lime stepped darker for the nested pair. Three hues, one family. */
-    --anchor:#f4551f;      --on-anchor:#ffffff;
-    --rot-pink:#f8b3e6;    --on-rot-pink:#701a4e;
-    --rot-lime:#cfe94d;    --on-rot-lime:#1d3a12;
+    --anchor:#f4551f; --on-anchor:#ffffff;
+    --rot-pink:#f8b3e6; --on-rot-pink:#701a4e;
+    --rot-lime:#cfe94d; --on-rot-lime:#1d3a12;
     --rot-lime-deep:#0f5233; --on-rot-lime-deep:#cfe94d;
-
-    --r-md:8px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
-    --sp-xxs:2px; --sp-xs:4px; --sp-sm:8px; --sp-md:16px; --sp-lg:32px; --sp-xl:56px; --sp-xxl:96px;
-
-    --ease-standard:cubic-bezier(0.16,1,0.3,1);
-    --d-instant:160ms; --d-fast:320ms; --d-slow:1400ms; --d-deliberate:1600ms;
   }
   html.dark{
-    --primary:#f5f5f5; --on-primary:#0a0a0a; --primary-hover:#e1e1e1;
-    --ink:#f5f5f5; --ink-muted:#cfcfcf; --ink-subtle:#a8a8a8; --ink-tertiary:#828282;
-    --canvas:#0a0a0a; --surface-1:#111111; --surface-2:#171717; --surface-3:#1e1e1e;
-    --hairline:#262626; --hairline-strong:#404040;
-
-    /* Same hue angles, lightness re-resolved for #0a0a0a — present, not glaring. */
-    --anchor:#e8511e;      --on-anchor:#ffffff;
-    --rot-pink:#e394cf;    --on-rot-pink:#4a0d33;
-    --rot-lime:#bcd743;    --on-rot-lime:#182d0e;
+    --anchor:#e8511e; --on-anchor:#ffffff;
+    --rot-pink:#e394cf; --on-rot-pink:#4a0d33;
+    --rot-lime:#bcd743; --on-rot-lime:#182d0e;
     --rot-lime-deep:#155f3c; --on-rot-lime-deep:#c9e451;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
   body{
-    font-family:'Inter',-apple-system,'Segoe UI',sans-serif;
+    font-family:var(--font-sans);
     background:var(--canvas); color:var(--ink);
     transition:background var(--d-fast) var(--ease-standard), color var(--d-fast) var(--ease-standard);
     -webkit-font-smoothing:antialiased;
@@ -52,7 +34,7 @@
   /* ————— chrome: mode toggle ————— */
   .mode-toggle{
     position:fixed;top:var(--sp-md);right:var(--sp-md);z-index:10;
-    font:500 14px/20px 'Inter',sans-serif;color:var(--ink);
+    font:500 14px/20px var(--font-sans);color:var(--ink);
     background:var(--canvas);border:1px solid var(--hairline-strong);
     border-radius:var(--r-pill);padding:10px 18px;cursor:pointer;
     transition:background var(--d-fast) var(--ease-standard);
@@ -83,7 +65,7 @@
   .photo img{display:block;width:100%;height:auto;border-radius:inherit}
   .tag{
     position:absolute;display:inline-flex;align-items:center;
-    font:500 15px/20px 'Inter',sans-serif;color:var(--on-primary);
+    font:500 15px/20px var(--font-sans);color:var(--on-primary);
     background:var(--primary);border:none;
     border-radius:var(--r-pill);padding:10px 18px;white-space:nowrap;
     transition:background var(--d-fast) var(--ease-standard);
@@ -114,8 +96,8 @@
     display:flex;flex-direction:column;
     border:1px solid var(--hairline);
   }
-  .cell .eyebrow{font:400 12px/16px 'Inter',sans-serif;letter-spacing:0;margin-bottom:var(--sp-xs);opacity:.78}
-  .cell h3{font:600 20px/28px 'Inter',sans-serif;letter-spacing:-0.02em}
+  .cell .eyebrow{font:400 12px/16px var(--font-sans);letter-spacing:0;margin-bottom:var(--sp-xs);opacity:.78}
+  .cell h3{font:600 20px/28px var(--font-sans);letter-spacing:-0.02em}
   .cell .figure{
     margin-top:auto;align-self:flex-end;
     font-weight:600;letter-spacing:-0.03em;line-height:1;
@@ -149,7 +131,7 @@
   }
 
   /* ————— motion: fade-rise ≤8px + 6px blur; count-up is the one loud moment ————— */
-  .reveal{opacity:0;transform:translateY(8px);filter:blur(6px)}
+  .reveal{opacity:0;transform:translateY(8px);filter:blur(var(--reveal-blur))}
   .reveal.in{
     opacity:1;transform:none;filter:blur(0);
     transition:opacity var(--d-slow) var(--ease-standard),
