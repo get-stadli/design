@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stadli Design System — Start</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --canvas: #010101;
+      --surface: #080808;
+      --surface-elevated: #141414;
+      --line: #242424;
+      --line-strong: #3a3a3a;
+      --ink: #ffffff;
+      --body: #dedede;
+      --muted: #8c8c8c;
+      --muted-soft: #666666;
+      --accent: #ecfc3b;
+      --accent-2: #d633ff;
+      --accent-3: #00d4a8;
+      --font: "Helvetica Neue", "Helvetica Now", Inter, Helvetica, Arial, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(214, 51, 255, 0.18), transparent 34rem),
+        radial-gradient(circle at 86% 18%, rgba(0, 212, 168, 0.14), transparent 28rem),
+        var(--canvas);
+      color: var(--body);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 32px 0 80px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0 40px;
+    }
+
+    .brand {
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      text-decoration: none;
+    }
+
+    .topnav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .topnav a {
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+
+    .topnav a:hover { color: var(--ink); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 44px;
+      align-items: end;
+      padding: 72px 0 88px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 28px rgba(236, 252, 59, 0.54);
+    }
+
+    h1 {
+      max-width: 10ch;
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(54px, 10vw, 132px);
+      font-weight: 520;
+      letter-spacing: -0.07em;
+      line-height: 0.9;
+    }
+
+    .lede {
+      max-width: 52ch;
+      margin: 28px 0 0;
+      color: var(--body);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.5;
+    }
+
+    .quick-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(20, 20, 20, 0.92), rgba(8, 8, 8, 0.92));
+      padding: 26px;
+    }
+
+    .quick-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(236, 252, 59, 0.14), transparent 38%, rgba(214, 51, 255, 0.12));
+      pointer-events: none;
+    }
+
+    .quick-card > * { position: relative; }
+
+    .quick-card h2,
+    .section-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 620;
+      letter-spacing: -0.025em;
+    }
+
+    .quick-card p {
+      margin: 12px 0 22px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .primary-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 12px;
+      background: var(--ink);
+      color: #000;
+      padding: 15px 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 160ms ease, opacity 160ms ease;
+    }
+
+    .primary-link:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .section {
+      padding: 72px 0 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-head p {
+      max-width: 48ch;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      display: flex;
+      min-height: 190px;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(8, 8, 8, 0.72);
+      padding: 22px;
+      text-decoration: none;
+      transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+    }
+
+    .card:hover {
+      border-color: var(--line-strong);
+      background: var(--surface-elevated);
+      transform: translateY(-2px);
+    }
+
+    .card .kicker {
+      color: var(--muted-soft);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      margin: 18px 0 10px;
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 620;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .card .path {
+      margin-top: 28px;
+      color: var(--muted-soft);
+      font-family: var(--mono);
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .span-2 { grid-column: span 2; }
+
+    footer {
+      margin-top: 72px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted-soft);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 42px; }
+      .grid { grid-template-columns: 1fr; }
+      .span-2 { grid-column: auto; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="Primary navigation">
+      <a class="brand" href="./index.html">Stadli</a>
+      <nav class="topnav">
+        <a href="#current">Current</a>
+        <a href="#apps">Apps</a>
+        <a href="#docs">Docs</a>
+        <a href="#assets">Assets</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Design system start</p>
+        <h1 id="page-title">Everything starts here.</h1>
+        <p class="lede">A single root entry point for the Stadli design-system workspace. Start with the canonical v25 specification, then move into current demos, prototypes, brand guidance, prompts, and assets.</p>
+      </div>
+      <aside class="quick-card" aria-labelledby="quick-start-title">
+        <h2 id="quick-start-title">Canonical source</h2>
+        <p>The maintained design-system documentation lives in the split v25 spec.</p>
+        <a class="primary-link" href="./docs/current/v25/README.md">
+          Open current v25 spec
+          <span aria-hidden="true">→</span>
+        </a>
+      </aside>
+    </section>
+
+    <section class="section" id="current" aria-labelledby="current-title">
+      <div class="section-head">
+        <h2 id="current-title">Current system</h2>
+        <p>Use these links first when implementing or reviewing current Stadli design work.</p>
+      </div>
+      <div class="grid">
+        <a class="card span-2" href="./docs/current/v25/README.md">
+          <span class="kicker">Specification</span>
+          <div>
+            <h3>Stadli Design System v25</h3>
+            <p>Overview, foundations, layout, components, brand assets, visualization, motion, and iteration notes.</p>
+          </div>
+          <span class="path">docs/current/v25/README.md</span>
+        </a>
+        <a class="card" href="./docs/current/v25/tokens.json">
+          <span class="kicker">Tokens</span>
+          <div>
+            <h3>Machine-readable tokens</h3>
+            <p>Current v25 token values for implementation handoff.</p>
+          </div>
+          <span class="path">docs/current/v25/tokens.json</span>
+        </a>
+        <a class="card" href="./apps/current/bite.html">
+          <span class="kicker">Demo</span>
+          <div>
+            <h3>Bite</h3>
+            <p>Current app surface aligned to the maintained design system.</p>
+          </div>
+          <span class="path">apps/current/bite.html</span>
+        </a>
+        <a class="card" href="./apps/current/discover-bento.html">
+          <span class="kicker">Demo</span>
+          <div>
+            <h3>Discover bento</h3>
+            <p>Current bento-style discovery prototype.</p>
+          </div>
+          <span class="path">apps/current/discover-bento.html</span>
+        </a>
+        <a class="card" href="./apps/current/stadli-release-notes.html">
+          <span class="kicker">Release</span>
+          <div>
+            <h3>Release notes</h3>
+            <p>Current Stadli release-note presentation.</p>
+          </div>
+          <span class="path">apps/current/stadli-release-notes.html</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="apps" aria-labelledby="apps-title">
+      <div class="section-head">
+        <h2 id="apps-title">Apps and prototypes</h2>
+        <p>Browse current demos, triage-review concepts, and older standalone explorations.</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="./apps/current/">
+          <span class="kicker">Directory</span>
+          <div>
+            <h3>Current demos</h3>
+            <p>HTML demos aligned to the active v25 system.</p>
+          </div>
+          <span class="path">apps/current/</span>
+        </a>
+        <a class="card" href="./apps/triage-review/index.html">
+          <span class="kicker">Review</span>
+          <div>
+            <h3>Triage review hub</h3>
+            <p>Entry point for triage-review app concepts.</p>
+          </div>
+          <span class="path">apps/triage-review/index.html</span>
+        </a>
+        <a class="card" href="./apps/prototypes/index.html">
+          <span class="kicker">Archive</span>
+          <div>
+            <h3>Prototype index</h3>
+            <p>Older standalone prototype and styleguide entry point.</p>
+          </div>
+          <span class="path">apps/prototypes/index.html</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="docs" aria-labelledby="docs-title">
+      <div class="section-head">
+        <h2 id="docs-title">Documentation</h2>
+        <p>Reference brand voice, prompts, templates, archives, and repository orientation.</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="./README.md">
+          <span class="kicker">Repo</span>
+          <div>
+            <h3>Workspace README</h3>
+            <p>Repository map and maintenance rules.</p>
+          </div>
+          <span class="path">README.md</span>
+        </a>
+        <a class="card" href="./docs/brand/manifesto.md">
+          <span class="kicker">Brand</span>
+          <div>
+            <h3>Manifesto</h3>
+            <p>Stadli brand direction and voice foundation.</p>
+          </div>
+          <span class="path">docs/brand/manifesto.md</span>
+        </a>
+        <a class="card" href="./docs/prompts/component-recreation-prompt.md">
+          <span class="kicker">Prompts</span>
+          <div>
+            <h3>Component recreation</h3>
+            <p>Reusable prompt for design-to-component work.</p>
+          </div>
+          <span class="path">docs/prompts/component-recreation-prompt.md</span>
+        </a>
+        <a class="card" href="./docs/templates/design-system-template.md">
+          <span class="kicker">Template</span>
+          <div>
+            <h3>Design-system template</h3>
+            <p>Reusable structure for future design-system documents.</p>
+          </div>
+          <span class="path">docs/templates/design-system-template.md</span>
+        </a>
+        <a class="card span-2" href="./docs/archive/versions/README.md">
+          <span class="kicker">Archive</span>
+          <div>
+            <h3>Historical versions</h3>
+            <p>Versioned design-system history retained for comparison and auditability.</p>
+          </div>
+          <span class="path">docs/archive/versions/README.md</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="assets" aria-labelledby="assets-title">
+      <div class="section-head">
+        <h2 id="assets-title">Assets</h2>
+        <p>Jump to brand exports, references, and asset documentation.</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="./assets/README.md">
+          <span class="kicker">Guide</span>
+          <div>
+            <h3>Assets README</h3>
+            <p>Asset structure and usage notes.</p>
+          </div>
+          <span class="path">assets/README.md</span>
+        </a>
+        <a class="card" href="./assets/logos/v25/logo-dark-web.svg">
+          <span class="kicker">Logo</span>
+          <div>
+            <h3>Dark logo SVG</h3>
+            <p>Current v25 dark logo export for web usage.</p>
+          </div>
+          <span class="path">assets/logos/v25/logo-dark-web.svg</span>
+        </a>
+        <a class="card" href="./assets/logos/v25/logo-white-web.svg">
+          <span class="kicker">Logo</span>
+          <div>
+            <h3>White logo SVG</h3>
+            <p>Current v25 white logo export for dark surfaces.</p>
+          </div>
+          <span class="path">assets/logos/v25/logo-white-web.svg</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      Root index for the Stadli design-system workspace. Keep new start points linked from this page.
+    </footer>
+  </main>
+</body>
+</html>
